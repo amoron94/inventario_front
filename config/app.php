@@ -185,4 +185,5 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+    'base_url' => env('BASE_URL', 'http://localhost/inv_backend/controlador/'),
 ];

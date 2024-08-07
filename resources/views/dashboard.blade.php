@@ -1,689 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Required Meta Tags Always Come First -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- Title -->
-    <title>SST | CLIENTES</title>
+    <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="icon" href="{{ asset('img/icons/entradadoc.png') }}" type="image/x-icon"/>
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="./favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{asset('css/bootstrap-select.css')}}">
 
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="{{asset('css/app.css')}}" rel="stylesheet">
 
-    <!-- CSS Implementing Plugins -->
-    <link rel="stylesheet" href="{{asset('vendor/bootstrap-icons/font/bootstrap-icons.css')}}">
-
-    <link rel="stylesheet" href="{{asset('vendor/daterangepicker/daterangepicker.css')}}">
-    <link rel="stylesheet" href="{{asset('vendor/tom-select/dist/css/tom-select.bootstrap5.css')}}">
-
-    <!-- CSS Front Template -->
-
-    <link rel="preload" href="{{asset('css/theme.min.css')}}" data-hs-appearance="default" as="style">
-    <link rel="preload" href="{{asset('css/theme-dark.min.css')}}" data-hs-appearance="dark" as="style">
-
-    <style data-hs-appearance-onload-styles>
-        * {
-            transition: unset !important;
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap.css">
+    <style>
+        .sidebar-link .feather-chevron-down,
+        .sidebar-link .feather-chevron-up {
+            transition: transform 0.3s;
         }
 
-        body {
-            opacity: 0;
+        .sidebar-link.collapsed .feather-chevron-up {
+            display: none;
+        }
+
+        .sidebar-link:not(.collapsed) .feather-chevron-down {
+            display: none;
+        }
+
+        .sidebar-link:not(.collapsed) .feather-chevron-up {
+            display: inline;
+        }
+
+        .txt-flecha{
+            color: #9a9a9b;
+        }
+
+        .txt-flecha:hover{
+            color: #d1d1d1;
+        }
+
+        a.sidebar-link.sub-pag {
+            padding-left: 50px;
         }
     </style>
-
-    <script>
-        window.hs_config = {
-            "autopath": "@@autopath",
-            "deleteLine": "hs-builder:delete",
-            "deleteLine:build": "hs-builder:build-delete",
-            "deleteLine:dist": "hs-builder:dist-delete",
-            "previewMode": false,
-            "startPath": "/index.html",
-            "vars": {
-                "themeFont": "https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap",
-                "version": "?v=1.0"
-            },
-            "layoutBuilder": {
-                "extend": {
-                    "switcherSupport": true
-                },
-                "header": {
-                    "layoutMode": "default",
-                    "containerMode": "container-fluid"
-                },
-                "sidebarLayout": "default"
-            },
-            "themeAppearance": {
-                "layoutSkin": "default",
-                "sidebarSkin": "default",
-                "styles": {
-                    "colors": {
-                        "primary": "#377dff",
-                        "transparent": "transparent",
-                        "white": "#fff",
-                        "dark": "132144",
-                        "gray": {
-                            "100": "#f9fafc",
-                            "900": "#1e2022"
-                        }
-                    },
-                    "font": "Inter"
-                }
-            },
-            "languageDirection": {
-                "lang": "en"
-            },
-            "skipFilesFromBundle": {
-                "dist": ["assets/js/hs.theme-appearance.js", "assets/js/hs.theme-appearance-charts.js", "assets/js/demo.js"],
-                "build": ["assets/css/theme.css", "assets/vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js", "assets/js/demo.js", "assets/css/theme-dark.css", "assets/css/docs.css", "assets/vendor/icon-set/style.css", "assets/js/hs.theme-appearance.js", "assets/js/hs.theme-appearance-charts.js", "node_modules/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js", "assets/js/demo.js"]
-            },
-            "minifyCSSFiles": ["assets/css/theme.css", "assets/css/theme-dark.css"],
-            "copyDependencies": {
-                "dist": {
-                    "*assets/js/theme-custom.js": ""
-                },
-                "build": {
-                    "*assets/js/theme-custom.js": "",
-                    "node_modules/bootstrap-icons/font/*fonts/**": "assets/css"
-                }
-            },
-            "buildFolder": "",
-            "replacePathsToCDN": {},
-            "directoryNames": {
-                "src": "./src",
-                "dist": "./dist",
-                "build": "./build"
-            },
-            "fileNames": {
-                "dist": {
-                    "js": "theme.min.js",
-                    "css": "theme.min.css"
-                },
-                "build": {
-                    "css": "theme.min.css",
-                    "js": "theme.min.js",
-                    "vendorCSS": "vendor.min.css",
-                    "vendorJS": "vendor.min.js"
-                }
-            },
-            "fileTypes": "jpg|png|svg|mp4|webm|ogv|json"
-        }
-        window.hs_config.gulpRGBA = (p1) => {
-            const options = p1.split(',')
-            const hex = options[0].toString()
-            const transparent = options[1].toString()
-
-            var c;
-            if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-                c = hex.substring(1).split('');
-                if (c.length == 3) {
-                    c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-                }
-                c = '0x' + c.join('');
-                return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',' + transparent + ')';
-            }
-            throw new Error('Bad Hex');
-        }
-        window.hs_config.gulpDarken = (p1) => {
-            const options = p1.split(',')
-
-            let col = options[0].toString()
-            let amt = -parseInt(options[1])
-            var usePound = false
-
-            if (col[0] == "#") {
-                col = col.slice(1)
-                usePound = true
-            }
-            var num = parseInt(col, 16)
-            var r = (num >> 16) + amt
-            if (r > 255) {
-                r = 255
-            } else if (r < 0) {
-                r = 0
-            }
-            var b = ((num >> 8) & 0x00FF) + amt
-            if (b > 255) {
-                b = 255
-            } else if (b < 0) {
-                b = 0
-            }
-            var g = (num & 0x0000FF) + amt
-            if (g > 255) {
-                g = 255
-            } else if (g < 0) {
-                g = 0
-            }
-            return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16)
-        }
-        window.hs_config.gulpLighten = (p1) => {
-            const options = p1.split(',')
-
-            let col = options[0].toString()
-            let amt = parseInt(options[1])
-            var usePound = false
-
-            if (col[0] == "#") {
-                col = col.slice(1)
-                usePound = true
-            }
-            var num = parseInt(col, 16)
-            var r = (num >> 16) + amt
-            if (r > 255) {
-                r = 255
-            } else if (r < 0) {
-                r = 0
-            }
-            var b = ((num >> 8) & 0x00FF) + amt
-            if (b > 255) {
-                b = 255
-            } else if (b < 0) {
-                b = 0
-            }
-            var g = (num & 0x0000FF) + amt
-            if (g > 255) {
-                g = 255
-            } else if (g < 0) {
-                g = 0
-            }
-            return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16)
-        }
-    </script>
 </head>
+<body>
 
-<body class="has-navbar-vertical-aside navbar-vertical-aside-show-xl   footer-offset">
+    <?php $usuario = session('usuario_logueado'); ?>
 
-    <script src="{{asset('js/hs.theme-appearance.js')}}"></script>
-
-    <script src="{{asset('vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside-mini-cache.js')}}"></script>
-
-    <!-- ========== HEADER ========== -->
-
-    <header id="header" class="navbar navbar-expand-lg navbar-fixed navbar-height navbar-container navbar-bordered bg-white">
-        <div class="navbar-nav-wrap">
-        <!-- Logo -->
-        <a class="navbar-brand" href="{{ url('/dashboard') }}" aria-label="Front">
-            <img class="navbar-brand-logo" src="{{asset('svg/logos/logo.svg')}}" alt="Logo" data-hs-theme-appearance="default">
-            <img class="navbar-brand-logo" src="{{asset('svg/logos-light/logo.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
-            <img class="navbar-brand-logo-mini" src="{{asset('svg/logos/logo-short.svg')}}" alt="Logo" data-hs-theme-appearance="default">
-            <img class="navbar-brand-logo-mini" src="{{asset('svg/logos-light/logo-short.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
-        </a>
-        <!-- End Logo -->
-
-        <div class="navbar-nav-wrap-content-start">
-            <!-- Navbar Vertical Toggle -->
-            <button type="button" class="js-navbar-vertical-aside-toggle-invoker navbar-aside-toggler">
-            <i class="bi-arrow-bar-left navbar-toggler-short-align" data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>' data-bs-toggle="tooltip" data-bs-placement="right" title="Collapse"></i>
-            <i class="bi-arrow-bar-right navbar-toggler-full-align" data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>' data-bs-toggle="tooltip" data-bs-placement="right" title="Expand"></i>
-            </button>
-
-            <!-- End Navbar Vertical Toggle -->
-
-
-        </div>
-
-        <div class="navbar-nav-wrap-content-end">
-            <!-- Navbar -->
-            <ul class="navbar-nav">
-
-            <li class="nav-item">
-                <!-- Account -->
-                <div class="dropdown">
-                <a class="navbar-dropdown-account-wrapper" href="javascript:;" id="accountNavbarDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside" data-bs-dropdown-animation>
-                    <div class="avatar avatar-sm avatar-circle">
-                    <img class="avatar-img" src="{{asset('img/160x160/img6.jpg')}}" alt="Image Description">
-                    <span class="avatar-status avatar-sm-status avatar-status-success"></span>
-                    </div>
+    <div class="wrapper">
+		<nav id="sidebar" class="sidebar js-sidebar">
+			<div class="sidebar-content js-simplebar">
+				<a class="sidebar-brand" href="index.html">
+                    <span class="align-middle">AdminKit</span>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-end navbar-dropdown-menu navbar-dropdown-menu-borderless navbar-dropdown-account" aria-labelledby="accountNavbarDropdown" style="width: 16rem;">
-                    <div class="dropdown-item-text">
-                    <div class="d-flex align-items-center">
-                        <div class="avatar avatar-sm avatar-circle">
-                        <img class="avatar-img" src="{{asset('img/160x160/img6.jpg')}}" alt="Image Description">
-                        </div>
-                        <div class="flex-grow-1 ms-3">
-                        <h5 class="mb-0">Mark Williams</h5>
-                        </div>
-                    </div>
-                    </div>
+				<ul class="sidebar-nav">
 
-                    <div class="dropdown-divider"></div>
-
-                    <a class="dropdown-item" href="#">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <span class="icon icon-soft-primary icon-xs icon-circle">
-                                    <i class="bi-person-lines-fill"></i>
-                                </span>
-                            </div>
-
-                            <div class="flex-grow-1 text-truncate ms-2">
-                                <span>Configuracion del Perfil</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a class="dropdown-item" href="#">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <span class="icon icon-soft-secondary icon-xs icon-circle">
-                                    <i class="bi-people-fill"></i>
-                                </span>
-                            </div>
-
-                            <div class="flex-grow-1 text-truncate ms-2">
-                                <span>Datos de Contacto</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a class="dropdown-item" href="#">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <span class="icon icon-soft-danger icon-xs icon-circle">
-                                    <i class="bi-file-earmark-pdf-fill"></i>
-                                </span>
-                            </div>
-
-                            <div class="flex-grow-1 text-truncate ms-2">
-                                <span>Mis Documentos Legales</span>
-                            </div>
-                        </div>
-                    </a>
-
-                    <div class="dropdown-divider"></div>
-
-                    <a class="dropdown-item" href="#">
-                        <div class="d-flex align-items-center">
-                            <div class="flex-shrink-0">
-                                <span class="icon icon-soft-danger icon-xs icon-circle">
-                                    <i class="bi-door-open"></i>
-                                </span>
-                            </div>
-
-                            <div class="flex-grow-1 text-truncate ms-2">
-                                <span>Cerrar Sesion</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                </div>
-                <!-- End Account -->
-            </li>
-            </ul>
-            <!-- End Navbar -->
-        </div>
-        </div>
-    </header>
-
-    <!-- ========== END HEADER ========== -->
-
-
-    <!-- ========== MAIN CONTENT ========== -->
-    <!-- Navbar Vertical -->
-
-    <aside class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered bg-white  ">
-        <div class="navbar-vertical-container">
-        <div class="navbar-vertical-footer-offset">
-            <!-- Logo -->
-
-            <a class="navbar-brand" href="{{ url('/dashboard') }}" aria-label="Front">
-            <img class="navbar-brand-logo" src="{{asset('svg/logos/logo.svg')}}" alt="Logo" data-hs-theme-appearance="default">
-            <img class="navbar-brand-logo" src="{{asset('svg/logos-light/logo.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
-            <img class="navbar-brand-logo-mini" src="{{asset('svg/logos/logo-short.svg')}}" alt="Logo" data-hs-theme-appearance="default">
-            <img class="navbar-brand-logo-mini" src="{{asset('svg/logos-light/logo-short.svg')}}" alt="Logo" data-hs-theme-appearance="dark">
-            </a>
-
-            <!-- End Logo -->
-
-            <!-- Navbar Vertical Toggle -->
-            <button type="button" class="js-navbar-vertical-aside-toggle-invoker navbar-aside-toggler">
-            <i class="bi-arrow-bar-left navbar-toggler-short-align" data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>' data-bs-toggle="tooltip" data-bs-placement="right" title="Collapse"></i>
-            <i class="bi-arrow-bar-right navbar-toggler-full-align" data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>' data-bs-toggle="tooltip" data-bs-placement="right" title="Expand"></i>
-            </button>
-
-            <!-- End Navbar Vertical Toggle -->
-
-            <!-- Content -->
-            <div class="navbar-vertical-content">
-                <div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav">
-                    <!-- Collapse -->
-                    <div class="nav-item">
-                        <a class="nav-link dropdown-toggle active" href="#navbarVerticalMenuDashboards" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuDashboards" aria-expanded="true" aria-controls="navbarVerticalMenuDashboards">
-                            <i class="bi-house-door nav-icon"></i>
-                            <span class="nav-link-title">Operaciones</span>
+                    <li class="sidebar-item">
+						<a class="sidebar-link" href="#">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Usuario</span>
                         </a>
+					</li>
 
-                        <div id="navbarVerticalMenuDashboards" class="nav-collapse collapse show" data-bs-parent="#navbarVerticalMenu">
-                            <a class="nav-link " href="{{ url('operacion/importacion') }}"><i class="bi-house-door me-1"></i>Importaciones</a>
-                            <a class="nav-link " href="{{ url('/dashboard') }}"><i class="bi-house-door me-1"></i>Alternative</a>
-                            <a class="nav-link " href="{{ url('/dashboard') }}"><i class="bi-house-door me-1"></i>Teams</a>
-                            <a class="nav-link " href="{{ url('/dashboard') }}"><i class="bi-house-door me-1"></i>Projects</a>
-                            <a class="nav-link " href="{{ url('/dashboard') }}"><i class="bi-house-door me-1"></i>Connections</a>
-                            <a class="nav-link " href="{{ url('/dashboard') }}"><i class="bi-house-door me-1"></i>My Profile</a>
-                        </div>
-                    </div>
-                    <!-- End Collapse -->
+                    <li class="sidebar-item">
+						<a data-bs-target="#productos" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle txt-flecha">Parametros</span>
+                            <svg class="feather feather-chevron-down align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                            <svg class="feather feather-chevron-up align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="18 15 12 9 6 15"></polyline>
+                            </svg>
+						</a>
+						<ul id="productos" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="{{ url('u_medida') }}">
+                                    <i class="align-middle" data-feather="user"></i> U. Medida
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="#">
+                                    <i class="align-middle" data-feather="user"></i> Categoria
+                                </a>
+                            </li>
+						</ul>
+					</li>
 
-                </div>
+                    <li class="sidebar-item">
+						<a class="sidebar-link" href="#">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Productos</span>
+                        </a>
+					</li>
 
-            </div>
-            <!-- End Content -->
+                    <li class="sidebar-item">
+						<a data-bs-target="#inventario" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle txt-flecha">Inventario</span>
+                            <svg class="feather feather-chevron-down align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                            <svg class="feather feather-chevron-up align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="18 15 12 9 6 15"></polyline>
+                            </svg>
+						</a>
+						<ul id="inventario" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="{{ url('sucursal') }}">
+                                    <i class="align-middle" data-feather="user"></i> Sucursal
+                                </a>
+                            </li>
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="#">
+                                    <i class="align-middle" data-feather="user"></i> Movimiento
+                                </a>
+                            </li>
+						</ul>
+					</li>
 
 
-        </div>
-        </div>
-    </aside>
 
-    <!-- End Navbar Vertical -->
-
-
-    <main id="content" role="main" class="main">
-        <!-- Content -->
-        <div class="content container-fluid">
-            <div class="container">
-                <div class="row">
-                    @yield('contenido')
-                </div>
-            </div>
-        </div>
-    </main>
+                    <li class="sidebar-header">
+						Ingresos
+					</li>
 
 
-    <!-- ========== END SECONDARY CONTENTS ========== -->
 
-    <!-- JS Global Compulsory  -->
-    <script src="{{asset('vendor/jquery/dist/jquery.min.js')}}"></script>
-    <script src="{{asset('vendor/jquery-migrate/dist/jquery-migrate.min.js')}}"></script>
-    <script src="{{asset('vendor/bootstrap/dist/js/bootstrap.bundle.min.js')}}"></script>
+                    <li class="sidebar-item">
+						<a data-bs-target="#ventas" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle txt-flecha">Ventas</span>
+                            <svg class="feather feather-chevron-down align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                            <svg class="feather feather-chevron-up align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="18 15 12 9 6 15"></polyline>
+                            </svg>
+						</a>
+						<ul id="ventas" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="#">
+                                    <i class="align-middle" data-feather="user"></i> Cliente
+                                </a>
+                            </li>
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="#">
+                                    <i class="align-middle" data-feather="user"></i> POS
+                                </a>
+                            </li>
+						</ul>
+					</li>
 
-    <!-- JS Implementing Plugins -->
-    <script src="{{asset('vendor/hs-navbar-vertical-aside/dist/hs-navbar-vertical-aside.min.js')}}"></script>
-    <script src="{{asset('vendor/hs-form-search/dist/hs-form-search.min.js')}}"></script>
+                    <li class="sidebar-header">
+						Egresos
+					</li>
 
-    <script src="{{asset('vendor/chart.js/dist/Chart.min.js')}}"></script>
-    <script src="{{asset('vendor/chartjs-chart-matrix/dist/chartjs-chart-matrix.min.js')}}"></script>
-    <script src="{{asset('vendor/chartjs-plugin-datalabels/dist/chartjs-plugin-datalabels.min.js')}}"></script>
-    <script src="{{asset('vendor/daterangepicker/moment.min.js')}}"></script>
-    <script src="{{asset('vendor/daterangepicker/daterangepicker.js')}}"></script>
-    <script src="{{asset('vendor/tom-select/dist/js/tom-select.complete.min.js')}}"></script>
-    <script src="{{asset('vendor/clipboard/dist/clipboard.min.js')}}"></script>
-    <script src="{{asset('vendor/datatables/media/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('vendor/datatables.net.extensions/select/select.min.js')}}"></script>
+                    <li class="sidebar-item">
+						<a class="sidebar-link" href="pages-sign-up.html">
+                            <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Gastos</span>
+                        </a>
+					</li>
 
-    <!-- JS Front -->
-    <script src="{{asset('js/theme.min.js')}}"></script>
-    <script src="{{asset('js/hs.theme-appearance-charts.js')}}"></script>
+                    <li class="sidebar-item">
+						<a data-bs-target="#compras" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
+							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle txt-flecha">Compras</span>
+                            <svg class="feather feather-chevron-down align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                            <svg class="feather feather-chevron-up align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="18 15 12 9 6 15"></polyline>
+                            </svg>
+						</a>
+						<ul id="compras" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="#">
+                                    <i class="align-middle" data-feather="user"></i> Proveedor
+                                </a>
+                            </li>
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="#">
+                                    <i class="align-middle" data-feather="user"></i> Orden Compra
+                                </a>
+                            </li>
+						</ul>
+					</li>
 
-    <!-- JS Plugins Init. -->
+
+
+
+
+				</ul>
+			</div>
+		</nav>
+
+        <div class="main">
+			<nav class="navbar navbar-expand navbar-light navbar-bg">
+				<a class="sidebar-toggle js-sidebar-toggle">
+                    <i class="hamburger align-self-center"></i>
+                </a>
+
+				<div class="navbar-collapse collapse">
+					<ul class="navbar-nav navbar-align">
+						<li class="nav-item dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+                                <i class="align-middle" data-feather="settings"></i>
+                            </a>
+
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
+                                <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-2" /> <span class="text-dark">{{ $usuario['data']['nombre'] }} {{ $usuario['data']['apellido_p'] }}</span>
+                            </a>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="{{ url('cerrar-sesion') }}">Cerrar Sesion</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</nav>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+                    <div class="row">
+						<div class="col-12">
+							<div class="card">
+								@yield('contenido')
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+
+			<footer class="footer">
+				<div class="container-fluid">
+					<div class="row text-muted">
+						<div class="col-6 text-start">
+							<p class="mb-0">
+								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>AdminKit</strong></a> &copy;
+							</p>
+						</div>
+						<div class="col-6 text-end">
+							<ul class="list-inline">
+								<li class="list-inline-item">
+									<a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+    </div>
+
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('js/bootstrap-select.js')}}"></script>
+
+    <script src="{{asset('js/app.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
     <script>
-        $(document).on('ready', function() {
-            // INITIALIZATION OF DATERANGEPICKER
-            // =======================================================
-            $('.js-daterangepicker').daterangepicker();
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentUrl = window.location.href;
+            var sidebarItems = document.querySelectorAll(".sidebar-item a");
 
-            $('.js-daterangepicker-times').daterangepicker({
-                timePicker: true,
-                startDate: moment().startOf('hour'),
-                endDate: moment().startOf('hour').add(32, 'hour'),
-                locale: {
-                    format: 'M/DD hh:mm A'
+            sidebarItems.forEach(function(item) {
+                if (item.href === currentUrl) {
+                    item.parentElement.classList.add("active");
+
+                    // Encuentra el contenedor del menú padre y expándelo
+                    var parentCollapse = item.closest('.collapse');
+                    if (parentCollapse) {
+                        parentCollapse.classList.add('show');
+                        var parentLink = parentCollapse.previousElementSibling;
+                        if (parentLink) {
+                            parentLink.classList.remove('collapsed');
+                            parentLink.setAttribute('aria-expanded', 'true');
+                        }
+                    }
                 }
             });
-
-            var start = moment();
-            var end = moment();
-
-            function cb(start, end) {
-                $('#js-daterangepicker-predefined .js-daterangepicker-predefined-preview').html(start.format('MMM D') + ' - ' + end.format('MMM D, YYYY'));
-            }
-
-            $('#js-daterangepicker-predefined').daterangepicker({
-                startDate: start,
-                endDate: end,
-                ranges: {
-                    'Today': [moment(), moment()],
-                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                }
-            }, cb);
-
-            cb(start, end);
         });
 
+        $(document).ready(function() {
+            @if(session('success'))
+                Swal.fire({
+                    icon: "success",
+                    title: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            @endif
 
-        // INITIALIZATION OF DATATABLES
-        // =======================================================
-        HSCore.components.HSDatatables.init($('#datatable'), {
-            select: {
-                style: 'multi',
-                selector: 'td:first-child input[type="checkbox"]',
-                classMap: {
-                    checkAll: '#datatableCheckAll',
-                    counter: '#datatableCounter',
-                    counterInfo: '#datatableCounterInfo'
-                }
-            },
-            language: {
-                zeroRecords: `<div class="text-center p-4">
-              <img class="mb-3" src="./assets/svg/illustrations/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="default">
-              <img class="mb-3" src="./assets/svg/illustrations-light/oc-error.svg" alt="Image Description" style="width: 10rem;" data-hs-theme-appearance="dark">
-            <p class="mb-0">No data to show</p>
-            </div>`
-            }
-        });
+            @if(session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: '{{ session('error') }}',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            @endif
 
-        const datatable = HSCore.components.HSDatatables.getItem(0)
-
-        document.querySelectorAll('.js-datatable-filter').forEach(function(item) {
-            item.addEventListener('change', function(e) {
-                const elVal = e.target.value,
-                    targetColumnIndex = e.target.getAttribute('data-target-column-index'),
-                    targetTable = e.target.getAttribute('data-target-table');
-
-                HSCore.components.HSDatatables.getItem(targetTable).column(targetColumnIndex).search(elVal !== 'null' ? elVal : '').draw()
-            })
-        })
-    </script>
-
-    <!-- JS Plugins Init. -->
-    <script>
-        (function() {
-            localStorage.removeItem('hs_theme')
-
-            window.onload = function() {
-
-
-                // INITIALIZATION OF NAVBAR VERTICAL ASIDE
-                // =======================================================
-                new HSSideNav('.js-navbar-vertical-aside').init()
-
-
-                // INITIALIZATION OF FORM SEARCH
-                // =======================================================
-                const HSFormSearchInstance = new HSFormSearch('.js-form-search')
-
-                if (HSFormSearchInstance.collection.length) {
-                    HSFormSearchInstance.getItem(1).on('close', function(el) {
-                        el.classList.remove('top-0')
-                    })
-
-                    document.querySelector('.js-form-search-mobile-toggle').addEventListener('click', e => {
-                        let dataOptions = JSON.parse(e.currentTarget.getAttribute('data-hs-form-search-options')),
-                            $menu = document.querySelector(dataOptions.dropMenuElement)
-
-                        $menu.classList.add('top-0')
-                        $menu.style.left = 0
-                    })
-                }
-
-
-                // INITIALIZATION OF BOOTSTRAP DROPDOWN
-                // =======================================================
-                HSBsDropdown.init()
-
-
-                // INITIALIZATION OF CHARTJS
-                // =======================================================
-                HSCore.components.HSChartJS.init('.js-chart')
-
-
-                // INITIALIZATION OF CHARTJS
-                // =======================================================
-                HSCore.components.HSChartJS.init('#updatingBarChart')
-                const updatingBarChart = HSCore.components.HSChartJS.getItem('updatingBarChart')
-
-                // Call when tab is clicked
-                document.querySelectorAll('[data-bs-toggle="chart-bar"]').forEach(item => {
-                    item.addEventListener('click', e => {
-                        let keyDataset = e.currentTarget.getAttribute('data-datasets')
-
-                        const styles = HSCore.components.HSChartJS.getTheme('updatingBarChart', HSThemeAppearance.getAppearance())
-
-                        if (keyDataset === 'lastWeek') {
-                            updatingBarChart.data.labels = ["Apr 22", "Apr 23", "Apr 24", "Apr 25", "Apr 26", "Apr 27", "Apr 28", "Apr 29", "Apr 30", "Apr 31"];
-                            updatingBarChart.data.datasets = [{
-                                    "data": [120, 250, 300, 200, 300, 290, 350, 100, 125, 320],
-                                    "backgroundColor": styles.data.datasets[0].backgroundColor,
-                                    "hoverBackgroundColor": styles.data.datasets[0].hoverBackgroundColor,
-                                    "borderColor": styles.data.datasets[0].borderColor,
-                                    "maxBarThickness": 10
-                                },
-                                {
-                                    "data": [250, 130, 322, 144, 129, 300, 260, 120, 260, 245, 110],
-                                    "backgroundColor": styles.data.datasets[1].backgroundColor,
-                                    "borderColor": styles.data.datasets[1].borderColor,
-                                    "maxBarThickness": 10
-                                }
-                            ];
-                            updatingBarChart.update();
-                        } else {
-                            updatingBarChart.data.labels = ["May 1", "May 2", "May 3", "May 4", "May 5", "May 6", "May 7", "May 8", "May 9", "May 10"];
-                            updatingBarChart.data.datasets = [{
-                                    "data": [200, 300, 290, 350, 150, 350, 300, 100, 125, 220],
-                                    "backgroundColor": styles.data.datasets[0].backgroundColor,
-                                    "hoverBackgroundColor": styles.data.datasets[0].hoverBackgroundColor,
-                                    "borderColor": styles.data.datasets[0].borderColor,
-                                    "maxBarThickness": 10
-                                },
-                                {
-                                    "data": [150, 230, 382, 204, 169, 290, 300, 100, 300, 225, 120],
-                                    "backgroundColor": styles.data.datasets[1].backgroundColor,
-                                    "borderColor": styles.data.datasets[1].borderColor,
-                                    "maxBarThickness": 10
-                                }
-                            ]
-                            updatingBarChart.update();
+            $('#tab').DataTable({
+                responsive: true,
+                lengthMenu: [10, 50, 100],
+                pageLength: 10,
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json"
+                },
+                layout: {
+                    bottomEnd: {
+                        paging: {
+                            firstLast: false
                         }
-                    })
-                })
-
-
-                // INITIALIZATION OF CHARTJS
-                // =======================================================
-                HSCore.components.HSChartJS.init('.js-chart-datalabels', {
-                    plugins: [ChartDataLabels],
-                    options: {
-                        plugins: {
-                            datalabels: {
-                                anchor: function(context) {
-                                    var value = context.dataset.data[context.dataIndex];
-                                    return value.r < 20 ? 'end' : 'center';
-                                },
-                                align: function(context) {
-                                    var value = context.dataset.data[context.dataIndex];
-                                    return value.r < 20 ? 'end' : 'center';
-                                },
-                                color: function(context) {
-                                    var value = context.dataset.data[context.dataIndex];
-                                    return value.r < 20 ? context.dataset.backgroundColor : context.dataset.color;
-                                },
-                                font: function(context) {
-                                    var value = context.dataset.data[context.dataIndex],
-                                        fontSize = 25;
-
-                                    if (value.r > 50) {
-                                        fontSize = 35;
-                                    }
-
-                                    if (value.r > 70) {
-                                        fontSize = 55;
-                                    }
-
-                                    return {
-                                        weight: 'lighter',
-                                        size: fontSize
-                                    };
-                                },
-                                formatter: function(value) {
-                                    return value.r
-                                },
-                                offset: 2,
-                                padding: 0
-                            }
-                        },
                     }
-                })
-
-                // INITIALIZATION OF SELECT
-                // =======================================================
-                HSCore.components.HSTomSelect.init('.js-select')
-
-
-                // INITIALIZATION OF CLIPBOARD
-                // =======================================================
-                HSCore.components.HSClipboard.init('.js-clipboard')
-            }
-        })()
+                }
+            });
+        });
     </script>
 
-    <!-- Style Switcher JS -->
-    <script>
-        (function() {
-            // STYLE SWITCHER
-            // =======================================================
-            const $dropdownBtn = document.getElementById('selectThemeDropdown') // Dropdowon trigger
-            const $variants = document.querySelectorAll(`[aria-labelledby="selectThemeDropdown"] [data-icon]`) // All items of the dropdown
-
-            // Function to set active style in the dorpdown menu and set icon for dropdown trigger
-            const setActiveStyle = function() {
-                $variants.forEach($item => {
-                    if ($item.getAttribute('data-value') === HSThemeAppearance.getOriginalAppearance()) {
-                        $dropdownBtn.innerHTML = `<i class="${$item.getAttribute('data-icon')}" />`
-                        return $item.classList.add('active')
-                    }
-
-                    $item.classList.remove('active')
-                })
-            }
-
-            // Add a click event to all items of the dropdown to set the style
-            $variants.forEach(function($item) {
-                $item.addEventListener('click', function() {
-                    HSThemeAppearance.setAppearance($item.getAttribute('data-value'))
-                })
-            })
-
-            // Call the setActiveStyle on load page
-            setActiveStyle()
-
-            // Add event listener on change style to call the setActiveStyle function
-            window.addEventListener('on-hs-appearance-change', function() {
-                setActiveStyle()
-            })
-        })()
-    </script>
-
-    <!-- End Style Switcher JS -->
+    @stack('scripts')
 </body>
-
 </html>
+
