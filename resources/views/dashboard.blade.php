@@ -84,7 +84,7 @@
                                 </a>
                             </li>
                             <li class="sidebar-item">
-                                <a class="sidebar-link sub-pag" href="#">
+                                <a class="sidebar-link sub-pag" href="{{ url('categoria') }}">
                                     <i class="align-middle" data-feather="user"></i> Categoria
                                 </a>
                             </li>

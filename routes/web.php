@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SucursalController;
@@ -40,6 +41,9 @@ Route::get('u_medida', [UnidadController::class, 'index'])->middleware('custom.a
 Route::post('/guardar-medida', [UnidadController::class, 'store'])->name('guardar_medida');
 Route::patch('/editar-medida/{id}', [UnidadController::class, 'update'])->name('editar_medida');
 Route::delete('/eliminar-medida/{id}', [UnidadController::class, 'destroy'])->name('eliminar_medida');
+
+
+Route::get('categoria', [CategoriaController::class, 'index'])->middleware('custom.auth');
 
 
 Route::get('sucursal', [SucursalController::class, 'index'])->middleware('custom.auth');
