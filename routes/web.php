@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\UnidadController;
 use Illuminate\Support\Facades\Http;
@@ -43,7 +44,20 @@ Route::patch('/editar-medida/{id}', [UnidadController::class, 'update'])->name('
 Route::delete('/eliminar-medida/{id}', [UnidadController::class, 'destroy'])->name('eliminar_medida');
 
 
+
 Route::get('categoria', [CategoriaController::class, 'index'])->middleware('custom.auth');
+Route::delete('/eliminar-categoria/{id}', [CategoriaController::class, 'destroy'])->name('eliminar_categoria');
+
 
 
 Route::get('sucursal', [SucursalController::class, 'index'])->middleware('custom.auth');
+Route::post('/guardar-sucursal', [SucursalController::class, 'store'])->name('guardar_sucursal');
+Route::patch('/editar-sucursal/{id}', [SucursalController::class, 'update'])->name('editar_sucursal');
+Route::delete('/eliminar-sucursal/{id}', [SucursalController::class, 'destroy'])->name('eliminar_sucursal');
+
+
+
+Route::get('producto', [ProductoController::class, 'index'])->middleware('custom.auth');
+Route::post('/guardar-producto', [ProductoController::class, 'store'])->name('guardar_producto');
+Route::patch('/editar-producto/{id}', [ProductoController::class, 'update'])->name('editar_producto');
+Route::delete('/eliminar-producto/{id}', [ProductoController::class, 'destroy'])->name('eliminar_producto');

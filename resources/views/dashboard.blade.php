@@ -17,6 +17,9 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap.css">
+
+    <link href="{{asset('css/radiobutton.css')}}" rel="stylesheet">
+
     <style>
         .sidebar-link .feather-chevron-down,
         .sidebar-link .feather-chevron-up {
@@ -55,7 +58,7 @@
     <div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
-				<a class="sidebar-brand" href="index.html">
+				<a class="sidebar-brand" href="{{ url('dashboard') }}">
                     <span class="align-middle">AdminKit</span>
                 </a>
 
@@ -80,19 +83,19 @@
 						<ul id="productos" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
 							<li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="{{ url('u_medida') }}">
-                                    <i class="align-middle" data-feather="user"></i> U. Medida
+                                    <i class="align-middle" data-feather="filter"></i> U. Medida
                                 </a>
                             </li>
                             <li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="{{ url('categoria') }}">
-                                    <i class="align-middle" data-feather="user"></i> Categoria
+                                    <i class="align-middle" data-feather="folder"></i> Categoria
                                 </a>
                             </li>
 						</ul>
 					</li>
 
                     <li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="{{ url('producto') }}">
                             <i class="align-middle" data-feather="user"></i> <span class="align-middle">Productos</span>
                         </a>
 					</li>
@@ -196,20 +199,26 @@
 		</nav>
 
         <div class="main">
-			<nav class="navbar navbar-expand navbar-light navbar-bg">
+			<nav class="navbar navbar-expand navbar-light navbar-bg p-2 px-4">
 				<a class="sidebar-toggle js-sidebar-toggle">
                     <i class="hamburger align-self-center"></i>
                 </a>
 
-				<div class="navbar-collapse collapse">
+				<div class="navbar-collapse collapse ">
 					<ul class="navbar-nav navbar-align">
+                        <li class="nav-item align-content-center">
+                            <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded-3 me-2" />
+                        </li>
 						<li class="nav-item dropdown">
-							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
+							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" data-bs-toggle="dropdown">
                                 <i class="align-middle" data-feather="settings"></i>
                             </a>
+							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" data-bs-toggle="dropdown">
 
-							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                                <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-2" /> <span class="text-dark">{{ $usuario['data']['nombre'] }} {{ $usuario['data']['apellido_p'] }}</span>
+                                <small class="badge bg-danger rounded-3 fw-semibold" style="font-size: 9px;">{{$usuario['data']['tipo']}}</small>
+                                <br>
+                                <span class="text-dark" style="font-size: 12px;"><b>{{ $usuario['data']['nombre'] }} {{ $usuario['data']['apellido_p'] }}</b></span>
+
                             </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
@@ -301,7 +310,7 @@
                     icon: "success",
                     title: '{{ session('success') }}',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 2000
                 });
             @endif
 
@@ -310,13 +319,13 @@
                     icon: 'error',
                     title: '{{ session('error') }}',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 2000
                 });
             @endif
 
             $('#tab').DataTable({
                 responsive: true,
-                lengthMenu: [10, 50, 100],
+                lengthMenu: [5, 10, 50, 100],
                 pageLength: 10,
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json"

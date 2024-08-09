@@ -1,0 +1,18 @@
+.radio-img {
+    display: inline-block;
+    cursor: pointer;
+}
+.radio-img input[type="radio"] {
+    display: none;
+}
+.radio-img label {
+    display: block;
+    border: 3px solid transparent;
+}
+.radio-img input[type="radio"]:checked + label {
+    border: 3px solid #1CBB8C;
+}
+.radio-img img {
+    width: 100px; /* Adjust size as needed */
+    height: 100px; /* Adjust size as needed */
+}

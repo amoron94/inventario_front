@@ -17,15 +17,32 @@ class CategoriaController extends Controller
 
     public function index()
     {
-        $response_med = Http::get($this->base_url . 'parametro/listado_uni_medida.php');
-        $u_medidas = $response_med->json();
-        //dd($u_medidas);
+        $response_cat = Http::get($this->base_url . 'parametro/listado_categoria.php');
+        $categorias = $response_cat->json();
+        //dd($categorias);
 
         // Verificar la respuesta
-        if ($u_medidas['success']) {
-            return view('parametro.categoria.listado_categoria', compact('u_medidas'));
+        if ($categorias['success']) {
+            return view('parametro.categoria.listado_categoria', compact('categorias'));
         }else{
             return back()->with('error', 'No se puede conectar con la BD');
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $response = Http::delete($this->base_url . 'parametro/eliminar_categoria.php', [
+                'codigo'        => $id,
+            ]);
+
+            $response->throw();
+
+            return back()->with('success', 'Unidad de Medida Eliminada');
+        } catch (\Illuminate\Http\Client\RequestException $exception) {
+            return back()->with('error', 'Error al eliminar el dato');
+        }
+
+    }
+
 }
