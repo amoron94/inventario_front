@@ -33,7 +33,6 @@
                             </div>
                         </td>
                         <td>
-
                             @if( $producto['tipo'] == 'PRODUCTO TERMINADO')
                                 <span class="badge bg-info rounded-3 fw-semibold" style="font-size: 10px;">{{ $producto['tipo']}}</span>
                             @else
@@ -41,7 +40,7 @@
                             @endif
                         </td>
                         <td>{{ $producto['precio']}}</td>
-                        <td>{{ $producto['medida']}} ({{ $producto['av'] }})</td>
+                        <td>{{ $producto['medida']}} <b>({{ $producto['av'] }})</b></td>
                         <td>{{ $producto['categoria']}}</td>
                         <td>
                             <a data-bs-toggle="modal" data-bs-target="#editar{{ $producto['codigo'] }}" title="Editar">

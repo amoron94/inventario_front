@@ -72,7 +72,7 @@
 
                     <li class="sidebar-item">
 						<a data-bs-target="#productos" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
-							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle txt-flecha">Parametros</span>
+							<i class="align-middle" data-feather="paperclip"></i> <span class="align-middle txt-flecha">Parametros</span>
                             <svg class="feather feather-chevron-down align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
@@ -96,7 +96,7 @@
 
                     <li class="sidebar-item">
 						<a class="sidebar-link" href="{{ url('producto') }}">
-                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Productos</span>
+                            <i class="align-middle" data-feather="package"></i> <span class="align-middle">Productos</span>
                         </a>
 					</li>
 
@@ -113,12 +113,17 @@
 						<ul id="inventario" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
 							<li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="{{ url('sucursal') }}">
-                                    <i class="align-middle" data-feather="user"></i> Sucursal
+                                    <i class="align-middle" data-feather="home"></i> Sucursal
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="{{ url('stock') }}">
+                                    <i class="align-middle" data-feather="list"></i> Stock
                                 </a>
                             </li>
 							<li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="#">
-                                    <i class="align-middle" data-feather="user"></i> Movimiento
+                                    <i class="align-middle" data-feather="truck"></i> Movimiento
                                 </a>
                             </li>
 						</ul>
@@ -134,7 +139,7 @@
 
                     <li class="sidebar-item">
 						<a data-bs-target="#ventas" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
-							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle txt-flecha">Ventas</span>
+							<i class="align-middle" data-feather="shopping-bag"></i> <span class="align-middle txt-flecha">Ventas</span>
                             <svg class="feather feather-chevron-down align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
@@ -145,12 +150,12 @@
 						<ul id="ventas" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
 							<li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="#">
-                                    <i class="align-middle" data-feather="user"></i> Cliente
+                                    <i class="align-middle" data-feather="users"></i> Cliente
                                 </a>
                             </li>
 							<li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="#">
-                                    <i class="align-middle" data-feather="user"></i> POS
+                                    <i class="align-middle" data-feather="grid"></i> POS
                                 </a>
                             </li>
 						</ul>
@@ -162,13 +167,13 @@
 
                     <li class="sidebar-item">
 						<a class="sidebar-link" href="pages-sign-up.html">
-                            <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Gastos</span>
+                            <i class="align-middle" data-feather="clipboard"></i> <span class="align-middle">Gastos</span>
                         </a>
 					</li>
 
                     <li class="sidebar-item">
 						<a data-bs-target="#compras" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
-							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle txt-flecha">Compras</span>
+							<i class="align-middle" data-feather="shopping-cart"></i> <span class="align-middle txt-flecha">Compras</span>
                             <svg class="feather feather-chevron-down align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
@@ -179,12 +184,12 @@
 						<ul id="compras" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
 							<li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="#">
-                                    <i class="align-middle" data-feather="user"></i> Proveedor
+                                    <i class="align-middle" data-feather="users"></i> Proveedor
                                 </a>
                             </li>
 							<li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="#">
-                                    <i class="align-middle" data-feather="user"></i> Orden Compra
+                                    <i class="align-middle" data-feather="shopping-bag"></i> Orden Compra
                                 </a>
                             </li>
 						</ul>

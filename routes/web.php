@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\UnidadController;
 use Illuminate\Support\Facades\Http;
@@ -61,3 +62,5 @@ Route::get('producto', [ProductoController::class, 'index'])->middleware('custom
 Route::post('/guardar-producto', [ProductoController::class, 'store'])->name('guardar_producto');
 Route::patch('/editar-producto/{id}', [ProductoController::class, 'update'])->name('editar_producto');
 Route::delete('/eliminar-producto/{id}', [ProductoController::class, 'destroy'])->name('eliminar_producto');
+
+Route::get('stock', [StockController::class, 'index'])->middleware('custom.auth');
