@@ -102,7 +102,7 @@
             // Verificar si hay productos seleccionados
             if (selectedProducts.length > 0) {
                 // Enviar los datos mediante AJAX
-                fetch('/ruta-para-actualizar-stock', {
+                fetch('http://localhost/inv_backend/controlador/inventario/editar_stock.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -119,6 +119,9 @@
                             title: 'Stock actualizado correctamente.',
                             showConfirmButton: false,
                             timer: 2000
+                        }).then(() => {
+                            // Recargar la página después de mostrar el mensaje de éxito
+                            window.location.href = "{{ url('stock') }}";
                         });
                     } else {
                         Swal.fire({

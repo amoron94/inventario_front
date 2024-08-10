@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SucursalController;
@@ -31,9 +32,7 @@ Route::get('/dashboard', function () {
 
 
 Route::get('/', [LoginController::class, 'logeo'])->name('login_page');
-
 Route::post('/ingresar', [LoginController::class, 'acceder'])->name('acceder');
-
 Route::get('cerrar-sesion', [LoginController::class, 'logout']);
 
 
@@ -63,4 +62,11 @@ Route::post('/guardar-producto', [ProductoController::class, 'store'])->name('gu
 Route::patch('/editar-producto/{id}', [ProductoController::class, 'update'])->name('editar_producto');
 Route::delete('/eliminar-producto/{id}', [ProductoController::class, 'destroy'])->name('eliminar_producto');
 
+
+
 Route::get('stock', [StockController::class, 'index'])->middleware('custom.auth');
+
+
+
+Route::get('movimiento_stock', [MovimientoController::class, 'index'])->middleware('custom.auth');
+Route::get('/nuevo_movimiento', [MovimientoController::class, 'nuevo'])->middleware('custom.auth')->name('nuevo_movimiento');

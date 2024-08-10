@@ -122,7 +122,7 @@
                                 </a>
                             </li>
 							<li class="sidebar-item">
-                                <a class="sidebar-link sub-pag" href="#">
+                                <a class="sidebar-link sub-pag" href="{{ url('movimiento_stock') }}">
                                     <i class="align-middle" data-feather="truck"></i> Movimiento
                                 </a>
                             </li>
