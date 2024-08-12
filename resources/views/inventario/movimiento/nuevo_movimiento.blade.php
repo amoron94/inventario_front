@@ -48,8 +48,8 @@
                 </div>
             </div>
 
-            <div class="container border-success" style="border: 1px solid ">
-                <h4 class="d-inline align-middle mt-2">Detalle de Productos</h4>
+            <div class="container border-success pt-3" style="border: 1px solid ">
+                <h4 class="d-inline align-middle">Detalle de Productos</h4>
                 <div class="row pt-2">
                     <div class="col-lg-4 col-xs-12">
                         <div class="form-group">
@@ -207,9 +207,11 @@
                                         <td>${unidad}</td>
                                         <td>${cantidad}</td>
                                         <td>
+                                            <center>
                                             <a class="eliminarProducto">
                                                 <i class="align-middle text-danger" data-feather="trash-2"></i>
                                             </a>
+                                            </center>
                                         </td>
                                     </tr>`;
 

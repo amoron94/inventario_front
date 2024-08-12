@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Dashboard</title>
+    <title>Panel Principal</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="icon" href="{{ asset('img/icons/entradadoc.png') }}" type="image/x-icon"/>
 
@@ -50,6 +50,8 @@
             padding-left: 50px;
         }
     </style>
+
+    @stack('styles')
 </head>
 <body>
 
@@ -212,7 +214,7 @@
 				<div class="navbar-collapse collapse ">
 					<ul class="navbar-nav navbar-align">
                         <li class="nav-item align-content-center">
-                            <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded-3 me-2" />
+                            <img src="{{ asset('img/usuario/' . $usuario['data']['img']) }}" class="avatar img-fluid rounded-3 me-2">
                         </li>
 						<li class="nav-item dropdown">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" data-bs-toggle="dropdown">

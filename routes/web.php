@@ -70,3 +70,6 @@ Route::get('stock', [StockController::class, 'index'])->middleware('custom.auth'
 
 Route::get('movimiento_stock', [MovimientoController::class, 'index'])->middleware('custom.auth');
 Route::get('/nuevo_movimiento', [MovimientoController::class, 'nuevo'])->middleware('custom.auth')->name('nuevo_movimiento');
+Route::get('/ver_movimiento/{id}', [MovimientoController::class, 'ver'])->middleware('custom.auth')->name('ver_movimiento');
+Route::get('/descargar_mov/{id}', [MovimientoController::class, 'descargar_mov'])->middleware('custom.auth')->name('descargar_mov');
+Route::delete('/eliminar-movimiento/{id}', [MovimientoController::class, 'destroy'])->name('eliminar_movimiento');
