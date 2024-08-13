@@ -5,6 +5,7 @@ use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\UnidadController;
@@ -46,6 +47,8 @@ Route::delete('/eliminar-medida/{id}', [UnidadController::class, 'destroy'])->na
 
 
 Route::get('categoria', [CategoriaController::class, 'index'])->middleware('custom.auth');
+Route::post('/guardar-categoria', [CategoriaController::class, 'store'])->name('guardar_categoria');
+Route::patch('/editar-categoria/{id}', [CategoriaController::class, 'update'])->name('editar_categoria');
 Route::delete('/eliminar-categoria/{id}', [CategoriaController::class, 'destroy'])->name('eliminar_categoria');
 
 
@@ -73,3 +76,7 @@ Route::get('/nuevo_movimiento', [MovimientoController::class, 'nuevo'])->middlew
 Route::get('/ver_movimiento/{id}', [MovimientoController::class, 'ver'])->middleware('custom.auth')->name('ver_movimiento');
 Route::get('/descargar_mov/{id}', [MovimientoController::class, 'descargar_mov'])->middleware('custom.auth')->name('descargar_mov');
 Route::delete('/eliminar-movimiento/{id}', [MovimientoController::class, 'destroy'])->name('eliminar_movimiento');
+
+
+
+Route::get('servicios', [ServicioController::class, 'index'])->middleware('custom.auth');

@@ -29,6 +29,43 @@ class CategoriaController extends Controller
         }
     }
 
+    public function store(Request $request)
+    {
+        //$usuario = session('usuario_logueado');
+
+        $response = Http::post($this->base_url . 'parametro/nueva_categoria.php', [
+            'descripcion'   => $request->descripcion,
+        ]);
+
+        $u_medidas = $response->json();
+
+        if ($u_medidas['success']) {
+            return back()->with('success', 'Categoria Registrada');
+        } else {
+            return back()->with('error', 'Error al guardar los datos');
+        }
+    }
+
+    public function update($id, Request $request)
+    {
+
+        try {
+            $response = Http::patch($this->base_url . 'parametro/editar_categoria.php', [
+                'codigo'        => $id,
+                'descripcion'   => $request->descripcion
+            ]);
+
+            $response->throw();
+
+            return back()->with('success', 'Categoria Editada');
+
+        } catch (\Illuminate\Http\Client\RequestException $exception) {
+
+            return back()->with('error', 'Error al editar los datos');
+
+        }
+    }
+
     public function destroy($id)
     {
         try {
@@ -38,7 +75,7 @@ class CategoriaController extends Controller
 
             $response->throw();
 
-            return back()->with('success', 'Unidad de Medida Eliminada');
+            return back()->with('success', 'Categoria Eliminada');
         } catch (\Illuminate\Http\Client\RequestException $exception) {
             return back()->with('error', 'Error al eliminar el dato');
         }

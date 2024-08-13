@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ERP - login</title>
-    <link rel="icon" href="{{ asset('img/icons/entradadoc.png') }}" type="image/x-icon"/>
+    <link rel="icon" href="{{ asset('img/photos/logo_digitaldev.jpg') }}" type="image/x-icon"/>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('css/login.css')}}" />
@@ -17,9 +17,8 @@
 
         <div class="login-box">
             <div class="cont-box">
-                <img src="{{asset('img/icons/favicon.ico')}}" alt="logo" width="40" height="40">
+                <img src="{{asset('img/photos/logo_digitaldev.jpg')}}" alt="logo" width="70" height="70">
                 <h1>Iniciar sesión</h1>
-                <p>¿Nuevo Usuario? <a href="#">Crea una Cuenta</a></p>
                 <form action="{{route('acceder')}}" method="POST">
                     @csrf
                     <input type="email" name="email" placeholder="Dirección de correo electrónico" value="alan.developer13@gmail.com" required>

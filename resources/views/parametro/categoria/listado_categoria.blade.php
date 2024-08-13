@@ -30,6 +30,38 @@
                             </a>
                         </td>
 
+                        <!--Modal Editar-->
+                        <div class="modal fade" id="editarC{{ $categoria['codigo'] }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header modal-colored-header bg-primary">
+                                        <h3 class="modal-title fs-5 text-white">Editar - {{ $categoria['descripcion'] }}</h3>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="{{ route('editar_categoria', ['id' => $categoria['codigo']]) }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <div class="modal-body">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label for="form-label">Descripcion</label>
+                                                            <input type="text" name="descripcion" class="form-control form-control-sm" value="{{ $categoria['descripcion'] }}" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary btn-sm">Editar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
                         <!--Modal Eliminar-->
                         <div class="modal fade" id="eliminarC{{ $categoria['codigo'] }}" tabindex="-1" aria-hidden="true">
@@ -70,6 +102,36 @@
         </div>
     </div>
 
+    <!--Modal Nuevo-->
+    <div class="modal fade" id="nuevoC" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-success">
+                    <h3 class="modal-title fs-5 text-white" id="exampleModalLabel">Agregar Categoria</h3>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('guardar_categoria') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="form-label">Descripcion</label>
+                                        <input type="text" name="descripcion" class="form-control form-control-sm" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success btn-sm">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 @push('scripts')
     <script>

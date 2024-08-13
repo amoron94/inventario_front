@@ -7,7 +7,7 @@
 
     <title>Panel Principal</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="icon" href="{{ asset('img/icons/entradadoc.png') }}" type="image/x-icon"/>
+    <link rel="icon" href="{{ asset('img/photos/logo_digitaldev.jpg') }}" type="image/x-icon"/>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -61,7 +61,7 @@
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
 				<a class="sidebar-brand" href="{{ url('dashboard') }}">
-                    <span class="align-middle">AdminKit</span>
+                    <img src="{{ asset('img/photos/logo_remove-1.png') }}" width="200" height="60">
                 </a>
 
 				<ul class="sidebar-nav">
@@ -123,11 +123,13 @@
                                     <i class="align-middle" data-feather="list"></i> Stock
                                 </a>
                             </li>
+                            @if ($usuario['data']['sucursales'] == 'SI')
 							<li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="{{ url('movimiento_stock') }}">
                                     <i class="align-middle" data-feather="truck"></i> Movimiento
                                 </a>
                             </li>
+                            @endif
 						</ul>
 					</li>
 
@@ -168,7 +170,13 @@
 					</li>
 
                     <li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-up.html">
+						<a class="sidebar-link" href="{{ url('servicios') }}">
+                            <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Servicios</span>
+                        </a>
+					</li>
+
+                    <li class="sidebar-item">
+						<a class="sidebar-link" href="#">
                             <i class="align-middle" data-feather="clipboard"></i> <span class="align-middle">Gastos</span>
                         </a>
 					</li>

@@ -21,7 +21,7 @@ body {
 
 img{
     background: no-repeat center center/cover;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .login-box h1 {
@@ -100,12 +100,12 @@ p {
 
 .image-box {
     flex: 1;
-    background: url('../images/condo_login.jpg') no-repeat center center/cover;
+    background: url('../img/photos/login.jpg') no-repeat center center/cover;
 }
 
 @media (max-width: 768px) {
     .login-box{
-        background: url('../images/condo_login.jpg') no-repeat center center/cover;
+        background: url('../img/photos/login.jpg') no-repeat center center/cover;
     }
 
     .cont-box {
