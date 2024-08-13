@@ -1,0 +1,43 @@
+.table tbody tr {
+    transition: background-color 0.1s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #edf2fc;
+    cursor: pointer;
+}
+
+div.dt-container select.dt-input {
+    padding: 2px;
+}
+
+div.dt-container .dt-search input {
+    padding: 2px;
+}
+
+
+button.dt-paging-button.disabled.previous {
+    padding: 2px 4px !important;
+}
+
+button.dt-paging-button.previous {
+    padding: 2px 4px !important;
+}
+
+
+button.dt-paging-button.disabled.next {
+    padding: 2px 4px !important;
+}
+
+button.dt-paging-button.next {
+    padding: 2px 4px !important;
+}
+
+
+button.dt-paging-button {
+    padding: 2px 4px !important;
+}
+
+button.dt-paging-button.current {
+    padding: 2px 6px !important;
+}

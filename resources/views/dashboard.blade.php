@@ -17,8 +17,11 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.3/css/dataTables.dataTables.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.2/css/responsive.bootstrap.css">
+    <link href="{{asset('css/stilosDataTable.css')}}" rel="stylesheet">
 
     <link href="{{asset('css/radiobutton.css')}}" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <style>
         .sidebar-link .feather-chevron-down,
@@ -176,7 +179,7 @@
 					</li>
 
                     <li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="{{ url('gastos') }}">
                             <i class="align-middle" data-feather="clipboard"></i> <span class="align-middle">Gastos</span>
                         </a>
 					</li>
@@ -296,6 +299,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.datatables.net/2.1.3/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/responsive/3.0.2/js/dataTables.responsive.js"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var currentUrl = window.location.href;
@@ -355,6 +362,7 @@
             });
         });
     </script>
+
 
     @stack('scripts')
 </body>

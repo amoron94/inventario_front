@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CondominioController;
+use App\Http\Controllers\GastoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\ProductoController;
@@ -80,3 +81,13 @@ Route::delete('/eliminar-movimiento/{id}', [MovimientoController::class, 'destro
 
 
 Route::get('servicios', [ServicioController::class, 'index'])->middleware('custom.auth');
+Route::post('/guardar-servicio', [ServicioController::class, 'store'])->name('guardar_servicio');
+Route::patch('/editar-servicio/{id}', [ServicioController::class, 'update'])->name('editar_servicio');
+Route::delete('/eliminar-servicio/{id}', [ServicioController::class, 'destroy'])->name('eliminar_servicio');
+
+
+
+Route::get('gastos', [GastoController::class, 'index'])->middleware('custom.auth');
+Route::post('/guardar-gasto', [GastoController::class, 'store'])->name('guardar_gasto');
+Route::patch('/editar-gasto/{id}', [GastoController::class, 'update'])->name('editar_gasto');
+Route::delete('/eliminar-gasto/{id}', [GastoController::class, 'destroy'])->name('eliminar_gasto');

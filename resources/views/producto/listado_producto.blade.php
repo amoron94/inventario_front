@@ -226,7 +226,7 @@
                                 <div class="col-lg-2 col-xs-12">
                                     <div class="form-group">
                                         <label for="form-label">Precio</label>
-                                        <input type="number" name="precio" class="form-control form-control-sm" required step="0.01" min="0" required>
+                                        <input type="number" name="precio" class="form-control form-control-sm" step="0.01" min="0" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-xs-12">
