@@ -16,3 +16,8 @@
     width: 100px; /* Adjust size as needed */
     height: 100px; /* Adjust size as needed */
 }
+
+.img-prov{
+    width: 80px !important; /* Adjust size as needed */
+    height: 80px !important; /* Adjust size as needed */
+}

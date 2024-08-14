@@ -39,9 +39,9 @@ class GastoController extends Controller
             'descripcion'   => $request->descripcion,
         ]);
 
-        $servicio = $response->json();
+        $gastos = $response->json();
 
-        if ($servicio['success']) {
+        if ($gastos['success']) {
             return back()->with('success', 'Gasto Registrado');
         } else {
             return back()->with('error', 'Error al guardar los datos');

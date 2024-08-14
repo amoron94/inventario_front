@@ -6,6 +6,7 @@ use App\Http\Controllers\GastoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SucursalController;
@@ -91,3 +92,10 @@ Route::get('gastos', [GastoController::class, 'index'])->middleware('custom.auth
 Route::post('/guardar-gasto', [GastoController::class, 'store'])->name('guardar_gasto');
 Route::patch('/editar-gasto/{id}', [GastoController::class, 'update'])->name('editar_gasto');
 Route::delete('/eliminar-gasto/{id}', [GastoController::class, 'destroy'])->name('eliminar_gasto');
+
+
+
+Route::get('proveedor', [ProveedorController::class, 'index'])->middleware('custom.auth');
+Route::post('/guardar-proveedor', [ProveedorController::class, 'store'])->name('guardar_proveedor');
+Route::patch('/editar-proveedor/{id}', [ProveedorController::class, 'update'])->name('editar_proveedor');
+Route::delete('/eliminar-proveedor/{id}', [ProveedorController::class, 'destroy'])->name('eliminar_proveedor');

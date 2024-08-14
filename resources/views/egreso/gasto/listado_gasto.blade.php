@@ -55,7 +55,8 @@
                                                     <div class="col-lg-6 col-xs-12">
                                                         <div class="form-group">
                                                             <label for="form-label">Servicio</label>
-                                                            <select name="servicio" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" required>
+                                                            <input type="text" id="servicio-{{ $gasto['codigo'] }}" name="servicio" value="{{ $gasto['cod_servicio'] }}" hidden>
+                                                            <select id="select-servicio-{{ $gasto['codigo'] }}" name="ser" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" required>
                                                                 <option value="" disabled selected>Seleccionar...</option>
                                                                 @foreach ($servicios['data']  as $servicio)
                                                                     @if($servicio['codigo'] == $gasto['cod_servicio'])
@@ -217,6 +218,14 @@
         }, function(start, end, label) {
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });*/
+
+        document.addEventListener("DOMContentLoaded", function() {
+            @foreach($gastos['data'] as $gasto)
+            document.getElementById('select-servicio-{{ $gasto['codigo'] }}').addEventListener('change', function() {
+                document.getElementById('servicio-{{ $gasto['codigo'] }}').value = this.value;
+            });
+            @endforeach
+        });
     </script>
 @endpush
 
