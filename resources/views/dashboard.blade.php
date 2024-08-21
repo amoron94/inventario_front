@@ -161,7 +161,7 @@
                                 </a>
                             </li>
 							<li class="sidebar-item">
-                                <a class="sidebar-link sub-pag" href="#">
+                                <a class="sidebar-link sub-pag" href="{{ url('pos') }}" target="_blank">
                                     <i class="align-middle" data-feather="grid"></i> POS
                                 </a>
                             </li>
@@ -201,7 +201,7 @@
                                 </a>
                             </li>
 							<li class="sidebar-item">
-                                <a class="sidebar-link sub-pag" href="#">
+                                <a class="sidebar-link sub-pag" href="{{ url('compras') }}">
                                     <i class="align-middle" data-feather="shopping-bag"></i> Orden Compra
                                 </a>
                             </li>

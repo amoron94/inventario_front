@@ -267,7 +267,7 @@
                                 </div>
                             </div>
                             <div class="border-success px-3 pt-1" style="border:2px solid">
-                                <h5 class="text-success">Informacion de Contacto</h5>
+                                <h5 class="text-success"><b>Informacion de Contacto</b></h5>
 
                                 <div class="row">
                                     <div class="col-lg-5 col-xs-12">

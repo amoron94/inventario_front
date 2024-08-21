@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\GastoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovimientoController;
+use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ServicioController;
@@ -99,3 +101,16 @@ Route::get('proveedor', [ProveedorController::class, 'index'])->middleware('cust
 Route::post('/guardar-proveedor', [ProveedorController::class, 'store'])->name('guardar_proveedor');
 Route::patch('/editar-proveedor/{id}', [ProveedorController::class, 'update'])->name('editar_proveedor');
 Route::delete('/eliminar-proveedor/{id}', [ProveedorController::class, 'destroy'])->name('eliminar_proveedor');
+
+
+
+Route::get('compras', [CompraController::class, 'index'])->middleware('custom.auth');
+Route::get('/nueva_compra', [CompraController::class, 'nuevo'])->middleware('custom.auth')->name('nueva_compra');
+Route::get('/ver_compra/{id}', [CompraController::class, 'ver'])->middleware('custom.auth')->name('ver_compra');
+Route::get('/descargar_comp/{id}', [CompraController::class, 'descargar_comp'])->middleware('custom.auth')->name('descargar_comp');
+Route::delete('/eliminar-compra/{id}', [CompraController::class, 'destroy'])->name('eliminar_compra');
+
+
+
+Route::get('pos', [PosController::class, 'index'])->middleware('custom.auth');
+Route::post('/guardar-caja', [PosController::class, 'crearCaja'])->middleware('custom.auth')->name('guardar_caja');
