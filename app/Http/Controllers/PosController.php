@@ -35,13 +35,18 @@ class PosController extends Controller
         $response_pro = Http::get($this->base_url . 'ingreso/get_productos.php?codigo='.$cod_sucursal);
         $productos = $response_pro->json();
 
-        //-----------------------------Sirve Apertura --------------------------------
+        //----------------------------- Sirve Apertura --------------------------------
 
         $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php');
         $sucursales = $response_suc->json();
 
 
-        return view('ingreso.pos.apertura_caja', compact('cajas', 'sucursales', 'categorias', 'productos'));
+        //----------------------------- Sirve Cierre --------------------------------
+
+        $response_bi = Http::get($this->base_url . 'ingreso/listado_billete.php');
+        $billetes = $response_bi->json();
+
+        return view('ingreso.pos.apertura_caja', compact('cajas', 'sucursales', 'categorias', 'productos', 'billetes'));
     }
 
     public function crearCaja(Request $request)

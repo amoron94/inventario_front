@@ -250,18 +250,66 @@
                             <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header modal-colored-header bg-danger">
-                                        <h3 class="modal-title fs-5 text-white">Cerrar Caja</h3>
+                                        <h3 class="modal-title fs-5 text-white">Cerrar/Arqueo de Caja</h3>
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="{{ route('eliminar_producto', ['id' => $cajas['data']['codigo']]) }}" method="POST">
+                                    <form action="" method="POST">
                                         @csrf
-                                        @method('DELETE')
                                         <div class="modal-body">
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-lg-12 col-xs-12">
+                                                        <div class="table-responsive">
+                                                            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
+                                                                <thead class="bg-primary" style="font-size: 12px;">
+                                                                    <tr class="text-white">
+                                                                        <th hidden>Codigo</th>
+                                                                        <th>Denominacion (Bs.)</th>
+                                                                        <th>Cantidad</th>
+                                                                        <th>Subtotal (Bs.)</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody style="font-size: 11px;">
+                                                                    @foreach($billetes['data'] as $billete)
+                                                                    <tr>
+                                                                        <td hidden>{{ $billete['codigo']}}</td>
+                                                                        <td>{{ $billete['descripcion']}}</td>
+                                                                        <td>
+                                                                            <input type="number" class="form-control form-control-sm cantidad-input" min="0" data-denominacion="{{ $billete['descripcion'] }}" value="0" required>
+                                                                        </td>
+                                                                        <td class="subtotal">0</td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                                <tfoot style="font-size: 12px; background: #a2c0eb">
+                                                                    <tr>
+                                                                        <td colspan="2" class="text-end text-dark"><span style="font-size: 15px"><b>Total a Cancelar</b></span></td>
+                                                                        <td id="totalContado" class="text-dark"><span style="font-size: 15px"><b>0.00</b></span></td>
+                                                                    </tr>
+                                                                </tfoot>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-xs-12">
                                                         <div class="form-group">
-                                                            <h6>¿Estás seguro que quieres Cerrar la Caja?</h6>
+                                                            <label for="form-label">Cantidad en Tarjetas (Bs.)</label>
+                                                            <input type="number" name="tarjeta" class="form-control form-control-sm" min="0" value="0" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label for="form-label">Cantidad en Qr (Bs.)</label>
+                                                            <input type="number" name="qr" class="form-control form-control-sm" min="0" value="0" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label for="form-label">Observaciones</label>
+                                                            <textarea name="observacion" class="form-control form-control-sm" rows="2" placeholder="Ingrese sus observaciones aquí"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -270,7 +318,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Cerrar Caja</button>
                                         </div>
                                     </form>
                                 </div>
@@ -418,7 +466,6 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-end mt-3">
-                                <button type="button" class="btn btn-outline-dark btn-sm me-2" onclick="window.history.back();">Cancelar</button>
                                 <button type="submit" class="btn btn-success btn-sm">Aperturar Caja</button>
                             </div>
                             </form>
@@ -741,6 +788,140 @@
             });
 
         });
+    </script>
+
+    <script>
+        function actualizarTotal() {
+            let total = 0;
+
+            // Recorre todas las filas para sumar los subtotales
+            document.querySelectorAll('.subtotal').forEach(function(subtotalTd) {
+                let subtotal = parseFloat(subtotalTd.textContent) || 0;
+                total += subtotal;
+            });
+
+            // Actualiza el total en el tfoot
+            document.getElementById('totalContado').innerHTML = '<b style="font-size: 15px">' + total.toFixed(2) + '</b>';
+        }
+
+        document.querySelectorAll('.cantidad-input').forEach(function(input) {
+            input.addEventListener('input', function() {
+                // Obtener la denominación y la cantidad ingresada
+                let denominacion = parseFloat(this.getAttribute('data-denominacion'));
+                let cantidad = parseFloat(this.value);
+
+                // Calcular el subtotal
+                let subtotal = denominacion * cantidad;
+
+                // Actualizar el campo de subtotal
+                let subtotalTd = this.closest('tr').querySelector('.subtotal');
+                subtotalTd.textContent = subtotal.toFixed(2);
+
+                // Actualizar el total
+                actualizarTotal();
+            });
+        });
+
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita el envío normal del formulario
+
+            // Capturar los valores de los inputs ocultos
+            const monto = document.querySelector('input[name="monto"]').value;
+            const caja = document.querySelector('input[name="caja"]').value;
+
+            // Capturar los datos de la tabla
+            const tabla = document.querySelectorAll('#tab tbody tr');
+            const billetes = [];
+
+            tabla.forEach(row => {
+                const denominacion = row.querySelector('td:nth-child(2)').innerText;
+                const cantidad = row.querySelector('input.cantidad-input').value;
+                const subtotal = row.querySelector('.subtotal').innerText;
+
+                billetes.push({
+                    denominacion: denominacion,
+                    cantidad: cantidad,
+                    subtotal: subtotal
+                });
+            });
+
+            // Capturar el total de contado
+            const totalContado = document.querySelector('#totalContado').innerText;
+
+            // Capturar los valores de las tarjetas y QR
+            const totalTarjeta = document.querySelector('input[name="tarjeta"]').value;
+            const totalQr = document.querySelector('input[name="qr"]').value;
+
+            // Capturar la observación
+            const observacion = document.querySelector('textarea[name="observacion"]').value;
+
+            // Crear el cuerpo de la solicitud
+            const datos = {
+                monto: monto,
+                caja: caja,
+                billetes: billetes,
+                total_contado: totalContado,
+                total_tarjeta: totalTarjeta,
+                total_qr: totalQr,
+                observacion: observacion
+            };
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Estás a punto de realizar el cierre y arqueo de caja. ¿Deseas continuar?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, cerrar caja',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    // Realizar la petición fetch
+                    fetch('http://localhost/inv_backend/controlador/ingreso/cierre_caja.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value // Token CSRF para seguridad
+                        },
+                        body: JSON.stringify(datos)
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.success) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Compra guardada correctamente",
+                                showConfirmButton: false,
+                                timer: 2000
+                            }).then(() => {
+                                // Recargar la página después de mostrar el mensaje de éxito
+                                window.location.href = "{{ url('dashboard') }}";
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error al guardar la compra",
+                                text: result.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Error en la solicitud",
+                            text: "Ocurrió un error al enviar los datos",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    });
+                }
+            });
+        });
+
     </script>
 </body>
 </html>
