@@ -239,7 +239,8 @@
 
                             </a>
 							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
+								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
+                                <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="home"></i> Empresa</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="{{ url('cerrar-sesion') }}">Cerrar Sesion</a>
 							</div>

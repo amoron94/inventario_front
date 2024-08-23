@@ -202,6 +202,17 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
+        .btn-cliente{
+            background: #168500;
+            color: #fff;
+        }
+
+        .btn-cliente:hover{
+            background: #1a9b01;
+            color: #fff;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
         .totalprod{
             background: #ffffffd7;
             border-radius: 10px;
@@ -221,6 +232,23 @@
             border: 1px solid #b90000;
             box-sizing: border-box;
         }
+
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #recibo, #recibo * {
+                visibility: visible;
+            }
+            #recibo {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 58mm; /* Ajusta el ancho según tu impresora térmica */
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -253,8 +281,6 @@
                                         <h3 class="modal-title fs-5 text-white">Cerrar/Arqueo de Caja</h3>
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="" method="POST">
-                                        @csrf
                                         <div class="modal-body">
                                             <div class="container">
                                                 <div class="row">
@@ -318,9 +344,8 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="btn btn-danger btn-sm">Cerrar Caja</button>
+                                            <button id="ArqueoCaja" class="btn btn-danger btn-sm">Cerrar Caja</button>
                                         </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -369,10 +394,57 @@
             <div class="col-lg-3 col-md-12 cont-cart">
                 <div class=" d-flex flex-column h-100 cart">
                     <div class="p-1 bg-primary text-white text-center">
-                        Almacén activo: {{ $cajas['data']['sucursal'] }}
+                        {{ $cajas['data']['sucursal'] }}
                     </div>
                     <div class="p-1 flex-grow-1">
-                        <input type="text" id="cliente" name="cliente" class="form-control form-control-sm" placeholder="Escriba el nombre o NIT del cliente" value="1">
+
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <select name="clienteAg" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" required>
+                                <option value="1" selected>S/N</option>
+                                @foreach ($clientes['data'] as $cliente)
+                                <option value="{{ $cliente['codigo'] }}">{{ $cliente['nombre'] }}</option>
+                                @endforeach
+                            </select>
+
+                            <button data-bs-toggle="modal" data-bs-target="#nuevoCliente" class="btn btn-sm btn-cliente">
+                                <i class="text-linght" data-feather="user-plus"></i>
+                            </button>
+
+                            <!--Modal Nuevo-->
+                            <div class="modal fade" id="nuevoCliente" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header modal-colored-header bg-success">
+                                            <h3 class="modal-title fs-5 text-white" id="exampleModalLabel">Agregar Cliente</h3>
+                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-lg-8 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label for="form-label">Nombre</label>
+                                                            <input type="text" name="nombreC" class="form-control form-control-sm" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label for="form-label">Telefono</label>
+                                                            <input type="number" name="telefonoC" class="form-control form-control-sm">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">Cancelar</button>
+                                            <button id="AgregarNuevoCliente" class="btn btn-success btn-sm">Guardar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="col-lg-12 col-md-12 mt-2 cart-prod" style="overflow-y: auto; height: 230px">
 
@@ -481,6 +553,44 @@
     @endif
 
 
+    <div id="recibo" style="display: none; width: 58mm;">
+
+        <center>
+            <img src="{{asset('img/empresa/' . $empresas['data']['img']) }}" alt="Empresa" class="img-pos"><br><br>
+            <h4>{{ $empresas['data']['nombre'] }}</h4>
+            <span><b>Direccion: {{ $empresas['data']['direccion'] }}</b></span><br>
+            <span><b>Teléfono: {{ $empresas['data']['telefono'] }}</b></span><br>
+        </center>
+        <br>
+        <span>Fecha: <b><span id="fechaRecibo"></span> </b></span><br>
+        <span>Nombre: <b><span id="nombreRecibo"></span> </b></span><br>
+        <br>
+        <div class="table-responsive">
+            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
+                <thead class="bg-secondary" style="font-size: 9px;">
+                    <tr class="text-dark">
+                        <th>Producto</th>
+                        <th>Cant.</th>
+                        <th>Precio</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="recibo-detalle" style="font-size: 8px;">
+                    <!-- Aquí se llenarán los detalles de la venta -->
+                </tbody>
+            </table>
+        </div>
+        <span>Total: <b><span id="recibo-total"></span> Bs.</b></span><br>
+        <span>Monto Pagado: <b><span id="recibo-pagado"></span> Bs.</b></span><br>
+        <span>Cambio: <b><span id="recibo-vuelto"></span> Bs.</b></span>
+        <hr>
+        <center>
+            <span><b>{{ $empresas['data']['slogan'] }}</b></span><br><br>
+            <span><b>Lo Atendio: {{ $cajas['data']['usuario'] }}</b></span><br>
+            <span><b>Gracias por su compra!</b></span>
+        </center>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
@@ -517,6 +627,77 @@
     </script>
 
     <script>
+
+        $('#AgregarNuevoCliente').on('click', function (e) {
+            e.preventDefault(); // Evita el comportamiento por defecto del botón
+
+            // Obtener los valores de los campos del formulario
+            let nombreC = $('input[name="nombreC"]').val();
+            let telefonoC = $('input[name="telefonoC"]').val();
+
+            // Validación rápida (opcional)
+            if (nombreC === '') {
+                Swal.fire({
+                    icon: "error",
+                    title: "El Nombre es obligatorio",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                return;
+            }
+
+            // Enviar la solicitud AJAX
+            $.ajax({
+                url: 'http://localhost/inv_backend/controlador/ingreso/nuevo_cliente_pos.php', // URL a la que se enviará la solicitud
+                type: 'POST',
+                data: JSON.stringify({
+                    _token: '{{ csrf_token() }}', // Añadir el token CSRF si estás en Laravel
+                    nombre: nombreC,
+                    telefono: telefonoC
+                }),
+                success: function (response) {
+                    // Manejar la respuesta del servidor aquí
+                    if (response.success) {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Cliente agregado exitosamente.",
+                            showConfirmButton: false,
+                            timer: 2000
+                        }).then(() => {
+
+                            $('#nuevoCliente').modal('hide'); // Cerrar el modal
+
+                        });
+
+                        // Actualizar el select de clientes
+                        let newOption = new Option(response.data.nombre, response.data.codigo, false, false);
+                        $('select[name="clienteAg"]').append(newOption).trigger('change');
+
+                        // Refrescar el selectpicker para que se vea el nuevo cliente
+                        $('.selectpicker').selectpicker('refresh');
+
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Hubo un problema al agregar el cliente.",
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Manejar errores aquí
+                    console.error('Error al enviar la solicitud AJAX:', error);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error en la solicitud.",
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            });
+        });
+
         let todosLosProductos = @json($productos['data']); // Aquí guardas todos los productos
 
         function filtrarProductos(productos) {
@@ -692,6 +873,44 @@
         });
 
 
+        function generarRecibo(carrito, totalVenta, montoPagado) {
+            let reciboDetalle = document.getElementById('recibo-detalle');
+            reciboDetalle.innerHTML = ''; // Limpiar contenido previo
+
+            carrito.forEach(function(producto) {
+                let row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${producto.producto}</td>
+                    <td>${producto.cantidad}</td>
+                    <td>${producto.precio.toFixed(2)}</td>
+                    <td>${(producto.cantidad * producto.precio).toFixed(2)}</td>
+                `;
+                reciboDetalle.appendChild(row);
+            });
+
+            // Set total, pagado y vuelto
+            document.getElementById('recibo-total').textContent = totalVenta.toFixed(2);
+            document.getElementById('recibo-pagado').textContent = montoPagado.toFixed(2);
+            document.getElementById('recibo-vuelto').textContent = (montoPagado - totalVenta).toFixed(2);
+
+            // Obtener la fecha actual
+            let fechaActual = new Date();
+            let fechaFormateada = fechaActual.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('fechaRecibo').textContent = fechaFormateada;
+
+            // Obtener el nombre del cliente seleccionado
+            let selectCliente = document.querySelector('select[name="clienteAg"]');
+            let clienteSeleccionado = selectCliente.options[selectCliente.selectedIndex].text;
+            document.getElementById('nombreRecibo').textContent = clienteSeleccionado;
+        }
+
+
         //Realizar Orden
         document.getElementById('realizarOrdenBtn').addEventListener('click', function() {
 
@@ -699,16 +918,18 @@
             let carrito = [];
             document.querySelectorAll('.cart-prod .producto').forEach(function(producto) {
                 let codProd = producto.querySelector('input[name="cod_prod"]').value;
+                let nombreProducto = producto.querySelector('span').textContent;
                 let cantidad = parseInt(producto.querySelector('.input-cantidad').value);
                 let precioProducto = parseFloat(producto.querySelector('.precio').textContent.replace(' Bs.', '').trim());
 
                 if (codProd && cantidad > 0 && precioProducto) {
-                    carrito.push({ cod_prod: codProd, cantidad: cantidad, precio: precioProducto });
+                    carrito.push({ cod_prod: codProd, cantidad: cantidad, precio: precioProducto, producto: nombreProducto });
                 }
             });
 
             // Obtener otros datos
             let monto = $('input[name="monto"]').val();
+            let cliente = $('select[name="clienteAg"]').val();
             let sucursal = $('input[name="sucursal"]').val();
             let caja = $('input[name="caja"]').val();
             let responsable = $('input[name="responsable"]').val();
@@ -736,57 +957,81 @@
                 return;
             }
 
-            // Enviar petición AJAX
-            $.ajax({
-                url: 'http://localhost/inv_backend/controlador/ingreso/agregar_venta.php', // Cambia esta URL a la de tu endpoint
-                type: 'POST',
-                data: JSON.stringify({
-                    _token: '{{ csrf_token() }}', // Añadir el token CSRF si estás en Laravel
-                    productos: carrito,
-                    cliente: 1,
-                    sucursal: sucursal,
-                    caja: caja,
-                    totalVenta: totalPagar,
-                    montoPagado: montoPagado,
-                    tipo: tipo
-                }),
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                success: function (response) {
-                    // Manejar la respuesta aquí
-                    if(response.success){
-                        Swal.fire({
-                            icon: "success",
-                            title: "Orden realizada con éxito.",
-                            showConfirmButton: false,
-                            timer: 2000
-                        }).then(() => {
-                            // Recargar la página después de mostrar el mensaje de éxito
-                            window.location.href = "{{ url('pos') }}";
-                        });
-                    }else{
-                        Swal.fire({
-                            icon: "error",
-                            title: "Hubo un error al realizar la orden.",
-                            text: response.message,
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-                    }
+            Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Estás a punto de procesar y terminar la Orden. ¿Deseas continuar?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, Realizar Orden',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Enviar petición AJAX
+                        $.ajax({
+                            url: 'http://localhost/inv_backend/controlador/ingreso/agregar_venta.php', // Cambia esta URL a la de tu endpoint
+                            type: 'POST',
+                            data: JSON.stringify({
+                                _token: '{{ csrf_token() }}', // Añadir el token CSRF si estás en Laravel
+                                productos: carrito,
+                                cliente: cliente,
+                                sucursal: sucursal,
+                                caja: caja,
+                                totalVenta: totalPagar,
+                                montoPagado: montoPagado,
+                                tipo: tipo
+                            }),
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            success: function (response) {
+                                // Manejar la respuesta aquí
+                                if(response.success){
 
-                },
-                error: function (response) {
-                    // Manejar el error aquí
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error en la solicitud.",
-                        text: response.message,
-                        showConfirmButton: false,
-                        timer: 2000
-                    });
+                                    // Generar el contenido del recibo
+                                    generarRecibo(carrito, totalPagar, montoPagado);
+
+                                    // Mostrar el recibo y enviar a impresión
+                                    document.getElementById('recibo').style.display = 'block';
+
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "Orden realizada con éxito.",
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    }).then(() => {
+                                        window.print(); // Imprimir el recibo
+
+                                        // Ocultar el recibo después de la impresión
+                                        document.getElementById('recibo').style.display = 'none';
+
+                                        // Recargar la página después de mostrar el mensaje de éxito
+                                        window.location.href = "{{ url('pos') }}";
+                                    });
+                                }else{
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Hubo un error al realizar la orden.",
+                                        text: response.message,
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    });
+                                }
+
+                            },
+                            error: function (response) {
+                                // Manejar el error aquí
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error en la solicitud.",
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                            }
+                        });
                 }
             });
-
         });
     </script>
 
@@ -822,105 +1067,106 @@
             });
         });
 
-        document.querySelector('form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Evita el envío normal del formulario
+        document.getElementById('ArqueoCaja').addEventListener('click', function() {
+                event.preventDefault(); // Evita el envío normal del formulario
 
-            // Capturar los valores de los inputs ocultos
-            const monto = document.querySelector('input[name="monto"]').value;
-            const caja = document.querySelector('input[name="caja"]').value;
+                // Capturar los valores de los inputs ocultos
+                const monto = document.querySelector('input[name="monto"]').value;
+                const caja = document.querySelector('input[name="caja"]').value;
 
-            // Capturar los datos de la tabla
-            const tabla = document.querySelectorAll('#tab tbody tr');
-            const billetes = [];
+                // Capturar los datos de la tabla
+                const tabla = document.querySelectorAll('#tab tbody tr');
+                const billetes = [];
 
-            tabla.forEach(row => {
-                const denominacion = row.querySelector('td:nth-child(2)').innerText;
-                const cantidad = row.querySelector('input.cantidad-input').value;
-                const subtotal = row.querySelector('.subtotal').innerText;
+                tabla.forEach(row => {
+                    const denominacion = row.querySelector('td:nth-child(2)').innerText;
+                    const cantidad = row.querySelector('input.cantidad-input').value;
+                    const subtotal = row.querySelector('.subtotal').innerText;
 
-                billetes.push({
-                    denominacion: denominacion,
-                    cantidad: cantidad,
-                    subtotal: subtotal
+                    billetes.push({
+                        denominacion: denominacion,
+                        cantidad: cantidad,
+                        subtotal: subtotal
+                    });
+                });
+
+                // Capturar el total de contado
+                const totalContado = document.querySelector('#totalContado').innerText;
+
+                // Capturar los valores de las tarjetas y QR
+                const totalTarjeta = document.querySelector('input[name="tarjeta"]').value;
+                const totalQr = document.querySelector('input[name="qr"]').value;
+
+                // Capturar la observación
+                const observacion = document.querySelector('textarea[name="observacion"]').value;
+
+                // Crear el cuerpo de la solicitud
+                const datos = {
+                    _token: '{{ csrf_token() }}',
+                    monto: monto,
+                    caja: caja,
+                    billetes: billetes,
+                    total_contado: totalContado,
+                    total_tarjeta: totalTarjeta,
+                    total_qr: totalQr,
+                    observacion: observacion
+                };
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Estás a punto de realizar el cierre y arqueo de caja. ¿Deseas continuar?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, cerrar caja',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        // Realizar la petición fetch
+                        $.ajax({
+                            url:'http://localhost/inv_backend/controlador/ingreso/cierre_caja.php',
+                            method: 'POST',
+                            data: JSON.stringify(datos),
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            success: function (response) {
+                                // Manejar la respuesta aquí
+                                if(response.success){
+                                    Swal.fire({
+                                        icon: "success",
+                                        title: "Caja Cerrada y Arqueo Realizado con Exito.",
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    }).then(() => {
+                                        // Recargar la página después de mostrar el mensaje de éxito
+                                        window.location.href = "{{ url('dashboard') }}";
+                                    });
+                                }else{
+                                    Swal.fire({
+                                        icon: "error",
+                                        title: "Error al cerrar la caja",
+                                        text: result.message,
+                                        showConfirmButton: false,
+                                        timer: 2000
+                                    });
+                                }
+                            },
+                            error: function (response) {
+                                // Manejar el error aquí
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error en la solicitud",
+                                    text: "Ocurrió un error al enviar los datos",
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                });
+                            }
+                        });
+                    }
                 });
             });
-
-            // Capturar el total de contado
-            const totalContado = document.querySelector('#totalContado').innerText;
-
-            // Capturar los valores de las tarjetas y QR
-            const totalTarjeta = document.querySelector('input[name="tarjeta"]').value;
-            const totalQr = document.querySelector('input[name="qr"]').value;
-
-            // Capturar la observación
-            const observacion = document.querySelector('textarea[name="observacion"]').value;
-
-            // Crear el cuerpo de la solicitud
-            const datos = {
-                monto: monto,
-                caja: caja,
-                billetes: billetes,
-                total_contado: totalContado,
-                total_tarjeta: totalTarjeta,
-                total_qr: totalQr,
-                observacion: observacion
-            };
-
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Estás a punto de realizar el cierre y arqueo de caja. ¿Deseas continuar?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, cerrar caja',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-
-                    // Realizar la petición fetch
-                    fetch('http://localhost/inv_backend/controlador/ingreso/cierre_caja.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value // Token CSRF para seguridad
-                        },
-                        body: JSON.stringify(datos)
-                    })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.success) {
-                            Swal.fire({
-                                icon: "success",
-                                title: "Compra guardada correctamente",
-                                showConfirmButton: false,
-                                timer: 2000
-                            }).then(() => {
-                                // Recargar la página después de mostrar el mensaje de éxito
-                                window.location.href = "{{ url('dashboard') }}";
-                            });
-                        } else {
-                            Swal.fire({
-                                icon: "error",
-                                title: "Error al guardar la compra",
-                                text: result.message,
-                                showConfirmButton: false,
-                                timer: 2000
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Error en la solicitud",
-                            text: "Ocurrió un error al enviar los datos",
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-                    });
-                }
-            });
-        });
 
     </script>
 </body>

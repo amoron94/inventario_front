@@ -22,6 +22,9 @@ class PosController extends Controller
         $cod_user = $usuario['data']['codigo'];
         //dd($cod_user);
 
+        $response_emp = Http::get($this->base_url . 'listado_empresa.php');
+        $empresas = $response_emp->json();
+
         $response_caja = Http::get($this->base_url . 'ingreso/listado_caja.php?codigo='.$cod_user);
         $cajas = $response_caja->json();
 
@@ -35,6 +38,9 @@ class PosController extends Controller
         $response_pro = Http::get($this->base_url . 'ingreso/get_productos.php?codigo='.$cod_sucursal);
         $productos = $response_pro->json();
 
+        $response_cli = Http::get($this->base_url . 'ingreso/listado_cliente_pos.php');
+        $clientes = $response_cli->json();
+
         //----------------------------- Sirve Apertura --------------------------------
 
         $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php');
@@ -46,7 +52,7 @@ class PosController extends Controller
         $response_bi = Http::get($this->base_url . 'ingreso/listado_billete.php');
         $billetes = $response_bi->json();
 
-        return view('ingreso.pos.apertura_caja', compact('cajas', 'sucursales', 'categorias', 'productos', 'billetes'));
+        return view('ingreso.pos.apertura_caja', compact('empresas', 'cajas', 'sucursales', 'categorias', 'productos', 'billetes', 'clientes'));
     }
 
     public function crearCaja(Request $request)
@@ -64,7 +70,7 @@ class PosController extends Controller
         $cajas = $response->json();
 
         if ($cajas['success']) {
-            return back()->with('success', 'Proveedor Registrado');
+            return back()->with('success', 'Punto de Venta Abierto');
         } else {
             return back()->with('error', 'Error al guardar los datos');
         }
