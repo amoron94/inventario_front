@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\CondominioController;
+use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\GastoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovimientoController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\UnidadController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -114,3 +116,14 @@ Route::delete('/eliminar-compra/{id}', [CompraController::class, 'destroy'])->na
 
 Route::get('pos', [PosController::class, 'index'])->middleware('custom.auth');
 Route::post('/guardar-caja', [PosController::class, 'crearCaja'])->middleware('custom.auth')->name('guardar_caja');
+
+
+
+Route::get('empresa', [EmpresaController::class, 'index'])->middleware('custom.auth');
+Route::patch('/editar-empresa/{id}', [EmpresaController::class, 'update'])->middleware('custom.auth')->name('editar_empresa');
+
+
+Route::get('usuario', [UsuarioController::class, 'index'])->middleware('custom.auth');
+Route::post('/guardar-usuario', [UsuarioController::class, 'store'])->name('guardar_usuario');
+Route::patch('/editar-usuario/{id}', [UsuarioController::class, 'update'])->name('editar_usuario');
+Route::delete('/eliminar-usuario/{id}', [UsuarioController::class, 'destroy'])->name('eliminar_usuario');

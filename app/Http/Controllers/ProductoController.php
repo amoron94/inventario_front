@@ -91,7 +91,7 @@ class ProductoController extends Controller
 
             $response->throw();
 
-            return back()->with('success', 'Sucursal Editada');
+            return back()->with('success', 'Producto Editado');
 
         } catch (\Illuminate\Http\Client\RequestException $exception) {
 

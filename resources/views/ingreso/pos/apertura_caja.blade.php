@@ -498,7 +498,43 @@
         </div>
     </div>
 
+    <div id="recibo" style="display: none; width: 58mm;">
 
+        <center>
+            <img src="{{asset('img/empresa/' . $empresas['data']['img']) }}" alt="Empresa" class="img-pos"><br><br>
+            <h4>{{ $empresas['data']['nombre'] }}</h4>
+            <span><b>Direccion: {{ $empresas['data']['direccion'] }}</b></span><br>
+            <span><b>Teléfono: {{ $empresas['data']['telefono'] }}</b></span><br>
+        </center>
+        <br>
+        <span>Fecha: <b><span id="fechaRecibo"></span> </b></span><br>
+        <span>Nombre: <b><span id="nombreRecibo"></span> </b></span><br>
+        <br>
+        <div class="table-responsive">
+            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
+                <thead class="bg-secondary" style="font-size: 9px;">
+                    <tr class="text-dark">
+                        <th>Producto</th>
+                        <th>Cant.</th>
+                        <th>Precio</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody id="recibo-detalle" style="font-size: 8px;">
+                    <!-- Aquí se llenarán los detalles de la venta -->
+                </tbody>
+            </table>
+        </div>
+        <span>Total: <b><span id="recibo-total"></span> Bs.</b></span><br>
+        <span>Monto Pagado: <b><span id="recibo-pagado"></span> Bs.</b></span><br>
+        <span>Cambio: <b><span id="recibo-vuelto"></span> Bs.</b></span>
+        <hr>
+        <center>
+            <span><b>{{ $empresas['data']['slogan'] }}</b></span><br><br>
+            <span><b>Lo Atendio: {{ $cajas['data']['usuario'] }}</b></span><br>
+            <span><b>Gracias por su compra!</b></span>
+        </center>
+    </div>
 
     @else
 
@@ -552,44 +588,6 @@
 
     @endif
 
-
-    <div id="recibo" style="display: none; width: 58mm;">
-
-        <center>
-            <img src="{{asset('img/empresa/' . $empresas['data']['img']) }}" alt="Empresa" class="img-pos"><br><br>
-            <h4>{{ $empresas['data']['nombre'] }}</h4>
-            <span><b>Direccion: {{ $empresas['data']['direccion'] }}</b></span><br>
-            <span><b>Teléfono: {{ $empresas['data']['telefono'] }}</b></span><br>
-        </center>
-        <br>
-        <span>Fecha: <b><span id="fechaRecibo"></span> </b></span><br>
-        <span>Nombre: <b><span id="nombreRecibo"></span> </b></span><br>
-        <br>
-        <div class="table-responsive">
-            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
-                <thead class="bg-secondary" style="font-size: 9px;">
-                    <tr class="text-dark">
-                        <th>Producto</th>
-                        <th>Cant.</th>
-                        <th>Precio</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody id="recibo-detalle" style="font-size: 8px;">
-                    <!-- Aquí se llenarán los detalles de la venta -->
-                </tbody>
-            </table>
-        </div>
-        <span>Total: <b><span id="recibo-total"></span> Bs.</b></span><br>
-        <span>Monto Pagado: <b><span id="recibo-pagado"></span> Bs.</b></span><br>
-        <span>Cambio: <b><span id="recibo-vuelto"></span> Bs.</b></span>
-        <hr>
-        <center>
-            <span><b>{{ $empresas['data']['slogan'] }}</b></span><br><br>
-            <span><b>Lo Atendio: {{ $cajas['data']['usuario'] }}</b></span><br>
-            <span><b>Gracias por su compra!</b></span>
-        </center>
-    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
@@ -669,12 +667,19 @@
 
                         });
 
-                        // Actualizar el select de clientes
-                        let newOption = new Option(response.data.nombre, response.data.codigo, false, false);
-                        $('select[name="clienteAg"]').append(newOption).trigger('change');
+                        // Crear una nueva opción y marcarla como seleccionada
+                        let newOption = new Option(response.data.nombre, response.data.codigo, false, true); // El cuarto parámetro true establece la opción como seleccionada
+                        let selectCliente = $('select[name="clienteAg"]');
+                        selectCliente.append(newOption);
 
-                        // Refrescar el selectpicker para que se vea el nuevo cliente
-                        $('.selectpicker').selectpicker('refresh');
+                        // Refrescar el selectpicker para que se vea el nuevo cliente (si estás utilizando selectpicker)
+                        if ($('.selectpicker').length) {
+                            $('.selectpicker').selectpicker('refresh');
+                        }
+
+                        // Seleccionar la nueva opción usando selectpicker
+                        selectCliente.selectpicker('val', response.data.codigo);
+
 
                     } else {
                         Swal.fire({

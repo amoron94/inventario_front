@@ -8,6 +8,7 @@
     <title>Panel Principal</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="icon" href="{{ asset('img/photos/logo_digitaldev.jpg') }}" type="image/x-icon"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -68,9 +69,9 @@
                 </a>
 
 				<ul class="sidebar-nav">
-
+                    @if($usuario['data']['tipo'] != 'CAJERO')
                     <li class="sidebar-item">
-						<a class="sidebar-link" href="#">
+						<a class="sidebar-link" href="{{ url('usuario') }}">
                             <i class="align-middle" data-feather="user"></i> <span class="align-middle">Usuario</span>
                         </a>
 					</li>
@@ -136,7 +137,7 @@
 						</ul>
 					</li>
 
-
+                    @endif
 
                     <li class="sidebar-header">
 						Ingresos
@@ -168,6 +169,7 @@
 						</ul>
 					</li>
 
+                    @if($usuario['data']['tipo'] != 'CAJERO')
                     <li class="sidebar-header">
 						Egresos
 					</li>
@@ -209,7 +211,7 @@
 					</li>
 
 
-
+                    @endif
 
 
 				</ul>
@@ -240,9 +242,11 @@
                             </a>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
-                                <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="home"></i> Empresa</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="{{ url('cerrar-sesion') }}">Cerrar Sesion</a>
+                                @if($usuario['data']['tipo'] != 'CAJERO')
+                                <a class="dropdown-item" href="{{ url('empresa') }}"><i class="align-middle me-1" data-feather="home"></i> Empresa</a>
+                                @endif
+                                <div class="dropdown-divider"></div>
+								<a class="dropdown-item text-danger" href="{{ url('cerrar-sesion') }}"><i class="align-middle me-1 text-danger" data-feather="power"></i> Cerrar Sesion</a>
 							</div>
 						</li>
 					</ul>
