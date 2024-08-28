@@ -51,8 +51,11 @@ class MovimientoController extends Controller
         $response_mov = Http::get($this->base_url . 'inventario/ver_movimiento.php?codigo='.$id);
         $movimientos = $response_mov->json();
 
+        $response_emp = Http::get($this->base_url . 'listado_empresa.php');
+        $empresas = $response_emp->json();
+
         // Genera el PDF
-        $pdf = FacadePdf::loadView('inventario.movimiento.descargar_mov', compact('movimientos'));
+        $pdf = FacadePdf::loadView('inventario.movimiento.descargar_mov', compact('movimientos', 'empresas'));
 
         // Descarga el PDF
         return $pdf->stream('movimientos_sucursales.pdf');

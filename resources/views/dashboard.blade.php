@@ -138,9 +138,27 @@
 					</li>
 
                     <li class="sidebar-item">
-						<a class="sidebar-link" href="{{ url('produccion') }}">
-                            <i class="align-middle" data-feather="layers"></i> <span class="align-middle">Produccion</span>
-                        </a>
+						<a data-bs-target="#produccion" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
+							<i class="align-middle" data-feather="layers"></i> <span class="align-middle txt-flecha">Produccion</span>
+                            <svg class="feather feather-chevron-down align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                            <svg class="feather feather-chevron-up align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="18 15 12 9 6 15"></polyline>
+                            </svg>
+						</a>
+						<ul id="produccion" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="{{ url('produccion') }}">
+                                    <i class="align-middle" data-feather="list"></i> Recetas
+                                </a>
+                            </li>
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="#">
+                                    <i class="align-middle" data-feather="list"></i> Combos
+                                </a>
+                            </li>
+						</ul>
 					</li>
 
                     @endif

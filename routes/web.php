@@ -134,3 +134,4 @@ Route::delete('/eliminar-usuario/{id}', [UsuarioController::class, 'destroy'])->
 Route::get('produccion', [ProduccionController::class, 'index'])->middleware('custom.auth');
 Route::get('/nueva_produccion', [ProduccionController::class, 'nuevo'])->middleware('custom.auth')->name('nueva_receta');
 Route::get('/ver_receta/{id}', [ProduccionController::class, 'ver'])->middleware('custom.auth')->name('ver_receta');
+Route::delete('/eliminar-receta/{id}', [ProduccionController::class, 'destroy'])->name('eliminar_receta');

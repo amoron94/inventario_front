@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ public_path('img/photos/logo_digitaldev.jpg') }}" type="image/x-icon"/>
+    <link href="{{public_path('css/radiobutton.css')}}" rel="stylesheet">
     <title>Orden de Compra</title>
     <style>
         body {
@@ -71,6 +73,10 @@
 <body>
     @foreach($gastos['data'] as $gasto)
     <div class="header">
+        <center>
+            <img src="{{ public_path('img/empresa/' . $empresas['data']['img']) }}" alt="Empresa" class="img-pos"><br>
+            <span><b>{{ $empresas['data']['nombre'] }}</b></span>
+        </center>
         <h3>Orden de Compra Nº 00{{ $gasto['nro'] }}</h3>
     </div>
     <div class="content">

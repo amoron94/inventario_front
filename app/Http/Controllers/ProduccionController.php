@@ -39,13 +39,32 @@ class ProduccionController extends Controller
 
     public function ver($id)
     {
-        $response_gas = Http::get($this->base_url . 'egreso/ver_compra.php?codigo='.$id);
-        $gastos = $response_gas->json();
+        $response_rec = Http::get($this->base_url . 'produccion/ver_receta.php?codigo='.$id);
+        $recetas = $response_rec->json();
+
+        $response_emp = Http::get($this->base_url . 'listado_empresa.php');
+        $empresas = $response_emp->json();
 
         // Genera el PDF
-        $pdf = FacadePdf::loadView('produccion.ver_receta', compact('gastos'));
+        $pdf = FacadePdf::loadView('produccion.ver_receta', compact('recetas', 'empresas'));
 
         // Descarga el PDF
         return $pdf->stream('Receta (Produccion).pdf');
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $response = Http::delete($this->base_url . 'produccion/eliminar_receta.php', [
+                'codigo'        => $id,
+            ]);
+
+            $response->throw();
+
+            return back()->with('success', 'Receta Eliminada');
+        } catch (\Illuminate\Http\Client\RequestException $exception) {
+            return back()->with('error', 'Error al eliminar el dato');
+        }
+
     }
 }

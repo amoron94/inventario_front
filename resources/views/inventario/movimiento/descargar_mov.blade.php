@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ public_path('img/photos/logo_digitaldev.jpg') }}" type="image/x-icon"/>
+    <link href="{{public_path('css/radiobutton.css')}}" rel="stylesheet">
     <title>Movimientos de Productos entre Sucursales</title>
     <style>
         body {
@@ -67,6 +69,10 @@
 </head>
 <body>
     <div class="header">
+        <center>
+            <img src="{{ public_path('img/empresa/' . $empresas['data']['img']) }}" alt="Empresa" class="img-pos"><br>
+            <span><b>{{ $empresas['data']['nombre'] }}</b></span>
+        </center>
         <h3>Movimientos de Productos entre Sucursales</h3>
     </div>
     <div class="content">

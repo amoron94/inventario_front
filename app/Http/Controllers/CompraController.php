@@ -54,8 +54,11 @@ class CompraController extends Controller
         $response_gas = Http::get($this->base_url . 'egreso/ver_compra.php?codigo='.$id);
         $gastos = $response_gas->json();
 
+        $response_emp = Http::get($this->base_url . 'listado_empresa.php');
+        $empresas = $response_emp->json();
+
         // Genera el PDF
-        $pdf = FacadePdf::loadView('egreso.compra.descargar_comp', compact('gastos'));
+        $pdf = FacadePdf::loadView('egreso.compra.descargar_comp', compact('gastos', 'empresas'));
 
         // Descarga el PDF
         //return $pdf->download('Orden_Compra.pdf');
