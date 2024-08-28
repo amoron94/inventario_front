@@ -34,7 +34,9 @@
                         </td>
                         <td>
                             @if( $producto['tipo'] == 'PRODUCTO TERMINADO')
-                                <span class="badge bg-info rounded-3 fw-semibold" style="font-size: 10px;">{{ $producto['tipo']}}</span>
+                                <span class="badge bg-primary rounded-3 fw-semibold" style="font-size: 10px;">{{ $producto['tipo']}}</span>
+                            @elseif($producto['tipo'] == 'SEMITERMINADO')
+                            <span class="badge bg-success rounded-3 fw-semibold" style="font-size: 10px;">{{ $producto['tipo']}}</span>
                             @else
                                 <span class="badge bg-warning rounded-3 fw-semibold" style="font-size: 10px;">{{ $producto['tipo']}}</span>
                             @endif
@@ -180,9 +182,16 @@
                                             <span class="badge bg-success rounded-3 fw-semibold" style="font-size: 10px;">Materia Prima</span>
                                         </div>
                                         <div class="radio-img">
+                                            <input type="radio" id="p_semiterminado" name="tipo" value="3">
+                                            <label for="p_semiterminado">
+                                                <img src="{{asset('img/icons/semiterminado.png')}}" alt="Option 2">
+                                            </label>
+                                            <span class="badge bg-success rounded-3 fw-semibold" style="font-size: 10px;">Semi - Terminado</span>
+                                        </div>
+                                        <div class="radio-img">
                                             <input type="radio" id="p_terminado" name="tipo" value="2">
                                             <label for="p_terminado">
-                                                <img src="{{asset('img/icons/bienes.png')}}" alt="Option 2">
+                                                <img src="{{asset('img/icons/bienes.png')}}" alt="Option 3">
                                             </label>
                                             <span class="badge bg-success rounded-3 fw-semibold" style="font-size: 10px;">Producto Terminado</span>
                                         </div>
@@ -251,8 +260,9 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const medidaSelect = document.getElementById("medidaSelect");
-            const radioMateriaPrima = document.getElementById("m_prima");
-            const radioProductoTerminado = document.getElementById("p_terminado");
+            const radioMateriaPrima = document.getElementById("m_prima"); //1
+            const radioProductoTerminado = document.getElementById("p_terminado"); //2
+            const radioSemiTerminado = document.getElementById("p_semiterminado"); //3
             const unidadesMedida = @json($u_medidas['data']); // Obtén los datos de las unidades de medida desde el backend
 
             function actualizarMedidas() {
@@ -267,6 +277,9 @@
                         addOption(medida);
                     } else if (tipoSeleccionado === '2' && medida.codigo === '9') {
                         // Si es Producto Terminado, solo muestra la unidad con código 9
+                        addOption(medida);
+                    } else if (tipoSeleccionado === '3') {
+                        // Si es Semiterminado, muestra todas las unidades
                         addOption(medida);
                     } else if (tipoSeleccionado === '1' && medida.codigo === '9') {
                         // Si es Materia Prima, oculta la unidad con código 9
@@ -289,6 +302,7 @@
             // Event listeners
             radioMateriaPrima.addEventListener("change", actualizarMedidas);
             radioProductoTerminado.addEventListener("change", actualizarMedidas);
+            radioSemiTerminado.addEventListener("change", actualizarMedidas);
 
             // Carga inicial
             actualizarMedidas();

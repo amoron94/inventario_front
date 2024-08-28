@@ -8,6 +8,7 @@ use App\Http\Controllers\GastoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\PosController;
+use App\Http\Controllers\ProduccionController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ServicioController;
@@ -127,3 +128,9 @@ Route::get('usuario', [UsuarioController::class, 'index'])->middleware('custom.a
 Route::post('/guardar-usuario', [UsuarioController::class, 'store'])->name('guardar_usuario');
 Route::patch('/editar-usuario/{id}', [UsuarioController::class, 'update'])->name('editar_usuario');
 Route::delete('/eliminar-usuario/{id}', [UsuarioController::class, 'destroy'])->name('eliminar_usuario');
+
+
+
+Route::get('produccion', [ProduccionController::class, 'index'])->middleware('custom.auth');
+Route::get('/nueva_produccion', [ProduccionController::class, 'nuevo'])->middleware('custom.auth')->name('nueva_receta');
+Route::get('/ver_receta/{id}', [ProduccionController::class, 'ver'])->middleware('custom.auth')->name('ver_receta');

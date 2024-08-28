@@ -10,10 +10,10 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
+            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle" data-order-direction="desc">
                 <thead class="bg-primary" style="font-size: 12px;">
                     <tr class="text-white">
-                        <th>Nº Orden</th>
+                        <th>Orden</th>
                         <th>Proveedor</th>
                         <th>Almacen</th>
                         <th>Fecha</th>
@@ -30,7 +30,7 @@
                         <td>{{ $compra['fecha']}}</td>
                         <td><b>{{ $compra['total_gasto']}}</b></td>
                         <td>
-                            <a href="{{ route('ver_compra', ['id' => $compra['codigo']]) }}" title="Ver">
+                            <a href="{{ route('descargar_comp', ['id' => $compra['codigo']]) }}" title="Ver" target="_blank">
                                 <i class="text-primary" data-feather="eye"></i>
                             </a>
                             <a data-bs-toggle="modal" data-bs-target="#eliminar{{ $compra['codigo'] }}" title="Eliminar">

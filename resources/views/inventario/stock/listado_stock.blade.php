@@ -10,6 +10,7 @@
                 <div class="col-auto">
                     <form method="GET" action="{{ url('stock') }}" class="input-group">
                         <select name="suc" class="form-select form-select-sm mr-2">
+                            <option value="" selected>Seleccionar Sucursales...</option>
                             @foreach ($sucursales['data'] as $sucursal)
                             <option value="{{ $sucursal['codigo'] }}" {{ request('suc') == $sucursal['codigo'] ? 'selected' : '' }}>
                                 {{ $sucursal['nombre'] }}
@@ -17,7 +18,9 @@
                             @endforeach
                         </select>
                         <select name="tipo_p" class="form-select form-select-sm mr-2">
+                            <option value="" selected>Seleccionar Tipo Prod...</option>
                             <option value="1" {{ request('tipo_p') == '1' ? 'selected' : '' }}>MATERIA PRIMA</option>
+                            <option value="3" {{ request('tipo_p') == '3' ? 'selected' : '' }}>SEMITERMINADO</option>
                             <option value="2" {{ request('tipo_p') == '2' ? 'selected' : '' }}>PROD. TERMINADO</option>
                         </select>
                         <button type="submit" class="btn btn-sm btn-success">Filtrar Productos</button>
@@ -57,7 +60,9 @@
                         <td>{{ $stock['sucursal']}}</td>
                         <td>
                             @if( $stock['tipo'] == 'PRODUCTO TERMINADO')
-                                <span class="badge bg-info rounded-3 fw-semibold" style="font-size: 10px;">{{ $stock['tipo']}}</span>
+                                <span class="badge bg-primary rounded-3 fw-semibold" style="font-size: 10px;">{{ $stock['tipo']}}</span>
+                            @elseif($stock['tipo'] == 'SEMITERMINADO')
+                                <span class="badge bg-success rounded-3 fw-semibold" style="font-size: 10px;">{{ $stock['tipo']}}</span>
                             @else
                                 <span class="badge bg-warning rounded-3 fw-semibold" style="font-size: 10px;">{{ $stock['tipo']}}</span>
                             @endif

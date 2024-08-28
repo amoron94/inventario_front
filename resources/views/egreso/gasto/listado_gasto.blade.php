@@ -12,11 +12,11 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
+            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle" data-order-direction="desc">
                 <thead class="bg-primary" style="font-size: 12px;">
                     <tr class="text-white">
-                        <th>Servicio</th>
                         <th>Fecha</th>
+                        <th>Servicio</th>
                         <th>Monto (Bs.)</th>
                         <th>Observaciones</th>
                         <th>Opciones</th>
@@ -25,8 +25,8 @@
                 <tbody style="font-size: 11px;">
                     @foreach($gastos['data'] as $gasto)
                     <tr>
-                        <td>{{ $gasto['servicio']}}</td>
                         <td><b>{{ $gasto['fecha']}}</b></td>
+                        <td>{{ $gasto['servicio']}}</td>
                         <td>{{ $gasto['monto']}}</td>
                         <td>{{ $gasto['descripcion']}}</td>
                         <td>

@@ -58,7 +58,8 @@ class CompraController extends Controller
         $pdf = FacadePdf::loadView('egreso.compra.descargar_comp', compact('gastos'));
 
         // Descarga el PDF
-        return $pdf->download('Orden_Compra.pdf');
+        //return $pdf->download('Orden_Compra.pdf');
+        return $pdf->stream('Orden_Compra.pdf');
     }
 
     public function destroy($id)

@@ -20,7 +20,7 @@ class StockController extends Controller
         // Obtener los parámetros de filtrado desde la solicitud
         $sucursal_codigo = $request->input('suc');
         $tipo_producto = $request->input('tipo_p');
-
+        //dd($tipo_producto);
         // Construir la URL de la API con los parámetros de filtro si están presentes
         $url_stock = $this->base_url . 'inventario/listado_stock.php?sucursal=' . $sucursal_codigo . '&tipo=' . $tipo_producto;
 

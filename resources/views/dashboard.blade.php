@@ -137,6 +137,12 @@
 						</ul>
 					</li>
 
+                    <li class="sidebar-item">
+						<a class="sidebar-link" href="{{ url('produccion') }}">
+                            <i class="align-middle" data-feather="layers"></i> <span class="align-middle">Produccion</span>
+                        </a>
+					</li>
+
                     @endif
 
                     <li class="sidebar-header">
@@ -350,6 +356,8 @@
                 });
             @endif
 
+            let orderDirection = $('#tab').data('order-direction') || 'asc';
+
             $('#tab').DataTable({
                 responsive: true,
                 lengthMenu: [5, 10, 50, 100],
@@ -357,6 +365,13 @@
                 "language": {
                     "url": "https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json"
                 },
+                "order": [[0, orderDirection]], // Ordena por la primera columna (índice 0) en orden descendente
+                "columnDefs": [
+                    {
+                        "targets": 'order', // Apunta a la clase 'order' para definir el orden
+                        "orderable": true   // Asegura que la columna es ordenable
+                    }
+                ],
                 layout: {
                     bottomEnd: {
                         paging: {

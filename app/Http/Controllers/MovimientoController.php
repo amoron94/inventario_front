@@ -55,7 +55,7 @@ class MovimientoController extends Controller
         $pdf = FacadePdf::loadView('inventario.movimiento.descargar_mov', compact('movimientos'));
 
         // Descarga el PDF
-        return $pdf->download('movimientos_sucursales.pdf');
+        return $pdf->stream('movimientos_sucursales.pdf');
     }
 
     public function destroy($id)

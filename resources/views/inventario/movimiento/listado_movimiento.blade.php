@@ -10,12 +10,12 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
+            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle" data-order-direction="desc">
                 <thead class="bg-primary" style="font-size: 12px;">
                     <tr class="text-white">
+                        <th>Fecha Movimiento</th>
                         <th>Sucursal Salida</th>
                         <th>Sucursal Entrada</th>
-                        <th>Fecha Movimiento</th>
                         <th>Observaciones</th>
                         <th>Opciones</th>
                     </tr>
@@ -23,12 +23,12 @@
                 <tbody style="font-size: 11px;">
                     @foreach($movimientos['data'] as $movimiento)
                     <tr>
+                        <td><b>{{ $movimiento['fecha']}}</b></td>
                         <td>{{ $movimiento['s_salida']}}</td>
                         <td>{{ $movimiento['s_entrada']}}</td>
-                        <td><b>{{ $movimiento['fecha']}}</b></td>
                         <td>{{ $movimiento['obs']}}</td>
                         <td>
-                            <a href="{{ route('ver_movimiento', ['id' => $movimiento['codigo']]) }}" title="Ver">
+                            <a href="{{ route('descargar_mov', ['id' => $movimiento['codigo']]) }}" title="Ver" target="_blank">
                                 <i class="text-primary" data-feather="eye"></i>
                             </a>
                             <a data-bs-toggle="modal" data-bs-target="#eliminar{{ $movimiento['codigo'] }}" title="Eliminar">

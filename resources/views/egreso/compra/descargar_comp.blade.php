@@ -71,7 +71,7 @@
 <body>
     @foreach($gastos['data'] as $gasto)
     <div class="header">
-        <h3>Orden de Compra Nº {{ $gasto['nro'] }}</h3>
+        <h3>Orden de Compra Nº 00{{ $gasto['nro'] }}</h3>
     </div>
     <div class="content">
 

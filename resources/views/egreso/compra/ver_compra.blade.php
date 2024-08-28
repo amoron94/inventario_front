@@ -11,7 +11,7 @@
 
     <div class="card-body print-area">
         <div class="container-fluid p-0">
-            <center><h2 class="d-inline align-middle">Orden de Compra Nº {{ $gasto['nro'] }}</h2></center>
+            <center><h2 class="d-inline align-middle">Orden de Compra Nº 00{{ $gasto['nro'] }}</h2></center>
         </div>
 
         <p class="mt-4"><b>FECHA: </b>{{ $gasto['fecha'] }}</p>

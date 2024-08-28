@@ -3,39 +3,28 @@
 
     <?php $usuario = session('usuario_logueado'); ?>
     <div class="card-header">
-        <h3 class="d-inline align-middle">Registrar Movimiento de Productos</h3>
+        <h3 class="d-inline align-middle">Registrar Receta</h3>
     </div>
 
     <div class="card-body" style="margin-top: -20px;">
         <form action="" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <div class="col-lg-5 col-xs-12">
+                <div class="col-lg-8 col-xs-12">
                     <div class="form-group">
-                        <label for="form-label">Sucursal de Salida</label>
-                        <select name="s_salida" class="form-select form-select-sm" required>
-                            <option value="" disabled selected>Seleccionar...</option>
-                            @foreach ($sucursales['data'] as $sucursal)
-                            <option value="{{ $sucursal['codigo'] }}">{{ $sucursal['nombre'] }}</option>
-                            @endforeach
-                        </select>
+                        <label for="form-label">Nombre de la Receta</label>
+                        <input type="text" name="nombre" class="form-control form-control-sm" required>
                     </div>
                 </div>
-                <div class="col-lg-5 col-xs-12">
+                <div class="col-lg-4 col-xs-12">
                     <div class="form-group">
-                        <label for="form-label">Sucursal de Entrada</label>
-                        <select name="s_entrada" class="form-select form-select-sm"  disabled required>
+                        <label for="form-label">Producto</label>
+                        <select name="producto_terminado" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" required>
                             <option value="" disabled selected>Seleccionar...</option>
-                            @foreach ($sucursales['data'] as $sucursal)
-                            <option value="{{ $sucursal['codigo'] }}">{{ $sucursal['nombre'] }}</option>
+                            @foreach ($productos['data'] as $producto)
+                            <option value="{{ $producto['codigo'] }}">{{ $producto['descripcion'] }}</option>
                             @endforeach
                         </select>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-xs-12">
-                    <div class="form-group">
-                        <label for="form-label">Fecha</label>
-                        <input type="date" name="fecha" class="form-control form-control-sm"  value="{{ date('Y-m-d') }}" required>
                     </div>
                 </div>
             </div>
@@ -49,13 +38,16 @@
             </div>
 
             <div class="container border-success pt-3" style="border: 1px solid ">
-                <h4 class="d-inline align-middle">Detalle de Productos</h4>
+                <h4 class="d-inline align-middle">Seleccionar Materia Prima</h4>
                 <div class="row pt-2">
-                    <div class="col-lg-4 col-xs-12">
+                    <div class="col-lg-6 col-xs-12">
                         <div class="form-group">
                             <label for="form-label">Producto</label>
                             <select name="producto" class="selectpicker show-tick form-control form-control-sm" data-live-search="true">
                                 <option value="" disabled selected>Seleccionar...</option>
+                                @foreach ($m_primas['data'] as $m_prima)
+                                <option value="{{ $m_prima['codigo'] }}">{{ $m_prima['descripcion'] }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -65,12 +57,8 @@
                         <input type="text" name="unidad" class="form-control form-control-sm" disabled>
                     </div>
                     <div class="col-lg-2 col-xs-12">
-                        <label for="form-label">Stock</label>
-                        <input type="number" name="stock" class="form-control form-control-sm" step="0.01" min="0" disabled>
-                    </div>
-                    <div class="col-lg-2 col-xs-12">
                         <label for="form-label">Cantidad</label>
-                        <input type="number" name="cantidad" class="form-control form-control-sm" step="0.01" min="0">
+                        <input type="number" name="cantidad" class="form-control form-control-sm" step="0.001" min="0">
                     </div>
                     <div class="col-lg-2 col-xs-12" style="margin-top: 10px;text-align: center;align-content: center;">
                         <button type="button" class="btn btn-primary btn-sm" id="agregarProducto"><i data-feather="plus"></i> Agregar</button>
@@ -101,7 +89,6 @@
 
                 </div>
             </div>
-
             <div class="d-flex justify-content-end mt-3">
                 <button type="button" class="btn btn-outline-dark btn-sm me-2" onclick="window.history.back();">Cancelar</button>
                 <button type="submit" class="btn btn-success btn-sm">Guardar</button>
@@ -112,58 +99,24 @@
 
 @push('scripts')
     <script>
-        // Función para obtener los productos de una sucursal
-        function obtenerProductos(sucursalId) {
-            var url = `http://localhost/inv_backend/controlador/inventario/get_producto_sucursal.php?sucursal=${sucursalId}`;
-            return fetch(url)
-                .then(response => response.json())
-                .then(data => data.data);
-        }
 
-        // Función para obtener la información de un producto
-        function obtenerProductoInfo(sucursalId, productoId) {
-            var url = `http://localhost/inv_backend/controlador/inventario/get_stock_prod_suc.php?sucursal=${sucursalId}&producto=${productoId}`;
-            return fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    return data.data.find(p => p.cod_producto == productoId);
-                });
-        }
+        const productos = @json($m_primas['data']);
 
-        // Actualizar productos al cambiar la sucursal de salida
-        document.querySelector('select[name="s_salida"]').addEventListener('change', function() {
-            var sucursalId = this.value;
-            var sucursalEntradaSelect = document.querySelector('select[name="s_entrada"]');
-            sucursalEntradaSelect.disabled = false;
-
-            obtenerProductos(sucursalId).then(productos => {
-                var productoSelect = document.querySelector('select[name="producto"]');
-                productoSelect.innerHTML = '<option value="" disabled selected>Seleccionar...</option>';
-
-                productos.forEach(producto => {
-                    productoSelect.innerHTML += `<option value="${producto.cod_producto}">${producto.producto}</option>`;
-                });
-
-                // Reinicializar el selectpicker
-                $('.selectpicker').selectpicker('refresh');
-            });
-        });
-
-        // Actualizar unidad y stock al seleccionar un producto
+        // Actualizar unidad al seleccionar un producto
         document.querySelector('select[name="producto"]').addEventListener('change', function() {
             var productoId = this.value;
-            var sucursalId = document.querySelector('select[name="s_salida"]').value;
 
-            if (sucursalId && productoId) {
-                obtenerProductoInfo(sucursalId, productoId).then(producto => {
-                    if (producto) {
-                        document.querySelector('input[name="unidad"]').value = producto.medida + ' (' + producto.av + ')';
-                        document.querySelector('input[name="stock"]').value = producto.stock;
-                        document.querySelector('input[name="cod_producto"]').value = producto.cod_producto;
-                    }
-                });
+            if (productoId) {
+                // Buscar el producto seleccionado en el JSON
+                const producto = productos.find(p => p.codigo === productoId);
+
+                if (producto) {
+                    document.querySelector('input[name="unidad"]').value = producto.medida + ' (' + producto.av + ')';
+                    document.querySelector('input[name="cod_producto"]').value = producto.codigo;
+                }
             }
         });
+
 
         //agregar productos y cantidad a la tabla detalle
         document.getElementById('agregarProducto').addEventListener('click', function() {
@@ -171,13 +124,13 @@
             var productoSelect = document.querySelector('select[name="producto"]');
             var unidadInput = document.querySelector('input[name="unidad"]');
             var cantidadInput = document.querySelector('input[name="cantidad"]');
-            var stockInput = document.querySelector('input[name="stock"]');
+
 
             var cod_producto = codProductoInput.value;
             var producto = productoSelect.options[productoSelect.selectedIndex].text;
             var unidad = unidadInput.value;
             var cantidad = parseFloat(cantidadInput.value); // Convertir a número
-            var stock = parseFloat(stockInput.value); // Convertir a número
+
 
             if (cod_producto && producto && unidad && cantidad) {
                 var tableBody = document.querySelector('#detalle tbody');
@@ -188,52 +141,35 @@
                     var cantidadActualTd = filaExistente.querySelectorAll('td')[3];
                     var cantidadActual = parseFloat(cantidadActualTd.innerText);
 
-                    if (cantidadActual + cantidad <= stock) {
-                        cantidadActualTd.innerText = cantidadActual + cantidad;
-                    } else {
-                        Swal.fire({
-                            icon: "error",
-                            title: "La cantidad total supera al stock del producto",
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-                    }
+                    cantidadActualTd.innerText = cantidadActual + cantidad;
+
                 } else {
                     // Si el producto no existe en la tabla, agregar una nueva fila
-                    if (cantidad <= stock) {
-                        var newRow = `<tr>
-                                        <td hidden>${cod_producto}</td>
-                                        <td>${producto}</td>
-                                        <td>${unidad}</td>
-                                        <td>${cantidad}</td>
-                                        <td>
-                                            <center>
-                                            <a class="eliminarProducto">
-                                                <i class="align-middle text-danger" data-feather="trash-2"></i>
-                                            </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
 
-                        tableBody.insertAdjacentHTML('beforeend', newRow);
-                        feather.replace();
-                    } else {
-                        Swal.fire({
-                            icon: "error",
-                            title: "La cantidad supera al stock del producto",
-                            showConfirmButton: false,
-                            timer: 2000
-                        });
-                    }
+                    var newRow = `<tr>
+                                    <td hidden>${cod_producto}</td>
+                                    <td>${producto}</td>
+                                    <td>${unidad}</td>
+                                    <td>${cantidad}</td>
+                                    <td>
+                                        <center>
+                                        <a class="eliminarProducto">
+                                            <i class="align-middle text-danger" data-feather="trash-2"></i>
+                                        </a>
+                                        </center>
+                                    </td>
+                                </tr>`;
+
+                    tableBody.insertAdjacentHTML('beforeend', newRow);
+                    feather.replace();
                 }
 
                 // Limpiar los campos después de agregar
                 productoSelect.value = "";
                 unidadInput.value = "";
-                stockInput.value = "";
                 cantidadInput.value = "";
                 $('.selectpicker').selectpicker('refresh');
-                
+
             } else {
                 Swal.fire({
                     icon: "question",
@@ -258,9 +194,8 @@
             event.preventDefault(); // Evita el envío normal del formulario
 
             // Capturar los valores del formulario
-            var s_salida = document.querySelector('select[name="s_salida"]').value;
-            var s_entrada = document.querySelector('select[name="s_entrada"]').value;
-            var fecha = document.querySelector('input[name="fecha"]').value;
+            var nombre = document.querySelector('input[name="nombre"]').value;
+            var producto_terminado = document.querySelector('select[name="producto_terminado"]').value;
             var observaciones = document.querySelector('textarea[name="observaciones"]').value;
 
             // Capturar el usuario responsable
@@ -278,16 +213,15 @@
 
             // Estructurar los datos a enviar
             var data = {
-                s_salida: s_salida,
-                s_entrada: s_entrada,
-                fecha: fecha,
+                nombre: nombre,
+                producto_terminado: producto_terminado,
                 observaciones: observaciones,
                 productos: productos,
                 usuario_responsable: usuario_responsable
             };
 
             // Enviar los datos con AJAX usando fetch
-            fetch('http://localhost/inv_backend/controlador/inventario/movimiento_sucursal_prod.php', {
+            fetch('http://localhost/inv_backend/controlador/produccion/agregar_receta.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -300,17 +234,17 @@
                 if (result.success) {
                     Swal.fire({
                         icon: "success",
-                        title: "Movimiento guardado correctamente",
+                        title: "Receta creada correctamente",
                         showConfirmButton: false,
                         timer: 2000
                     }).then(() => {
                         // Recargar la página después de mostrar el mensaje de éxito
-                        window.location.href = "{{ url('movimiento_stock') }}";
+                        window.location.href = "{{ url('produccion') }}";
                     });
                 } else {
                     Swal.fire({
                         icon: "error",
-                        title: "Error al guardar el movimiento",
+                        title: "Error al guardar la receta",
                         text: result.message,
                         showConfirmButton: false,
                         timer: 2000
@@ -328,8 +262,8 @@
                 });
             });
         });
+
     </script>
 @endpush
 
 @stop
-
