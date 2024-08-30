@@ -69,10 +69,10 @@
                         </td>
                         <td>{{ $stock['medida']}} <b>({{ $stock['av'] }})</b></td>
                         <td style="width: 100px">
-                            <input type="number" name="stock[]" value="{{ $stock['stock'] }}" data-codigo="{{ $stock['codigo'] }}" class="form-control form-control-sm" required step="0.01" min="0" style="font-size: 11px;" disabled>
+                            <input type="number" name="stock[]" value="{{ number_format($stock['stock'], 2) }}" data-codigo="{{ $stock['codigo'] }}" class="form-control form-control-sm" required step="0.001" min="0" style="font-size: 11px;" disabled>
                         </td>
                         <td style="width: 100px">
-                            <input type="number" name="stock_min[]" value="{{ $stock['stock_m'] }}" data-codigo="{{ $stock['codigo'] }}" class="form-control form-control-sm" min="0" style="font-size: 11px;" disabled>
+                            <input type="number" name="stock_min[]" value="{{ $stock['stock_m'] }}" data-codigo="{{ $stock['codigo'] }}" class="form-control form-control-sm" step="0.001" min="0" style="font-size: 11px;" disabled>
                         </td>
                     </tr>
                     @endforeach

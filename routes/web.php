@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ComboController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\EmpresaController;
@@ -135,3 +136,10 @@ Route::get('produccion', [ProduccionController::class, 'index'])->middleware('cu
 Route::get('/nueva_produccion', [ProduccionController::class, 'nuevo'])->middleware('custom.auth')->name('nueva_receta');
 Route::get('/ver_receta/{id}', [ProduccionController::class, 'ver'])->middleware('custom.auth')->name('ver_receta');
 Route::delete('/eliminar-receta/{id}', [ProduccionController::class, 'destroy'])->name('eliminar_receta');
+
+
+
+Route::get('combo', [ComboController::class, 'index'])->middleware('custom.auth');
+Route::get('/nuevo_combo', [ComboController::class, 'nuevo'])->middleware('custom.auth')->name('nuevo_combo');
+Route::get('/ver_combo/{id}', [ComboController::class, 'ver'])->middleware('custom.auth')->name('ver_combo');
+Route::delete('/eliminar-combo/{id}', [ComboController::class, 'destroy'])->name('eliminar_combo');

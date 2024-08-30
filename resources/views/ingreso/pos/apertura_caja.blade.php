@@ -132,8 +132,8 @@
 
         .cont-cart{
             background: #d8e4d9;
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
         .cart{
@@ -197,6 +197,18 @@
         }
 
         .btn-orden:hover{
+            color: #fff;
+            font-family: 'Poppins', sans-serif !important;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-coment{
+            background: #001885;
+            color: #fff;
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        .btn-coment:hover{
             color: #fff;
             font-family: 'Poppins', sans-serif !important;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
@@ -460,36 +472,68 @@
                             <span id="montoCambio" class="precio" style="margin-left: 80px;"><b>0.00 Bs.</b></span>
                         </div>
 
-                        <div class="col-lg-12 col-md-12 mt-1 p-1 metodopago" style="height: 125px">
+                        <div class="col-lg-12 col-md-12 mt-1 p-1 metodopago" style="height: 100px">
                             <small><b>Metodo de Pago:</b></small>
                                 <center>
                                     <div class="radio-img">
-                                            <input type="radio" id="efectivo" name="tipo" value="1" checked required>
-                                            <label for="efectivo">
-                                                <img src="{{asset('img/icons/dinero.png')}}" alt="Option 1" class="img-pos">
-                                            </label>
-                                            <span class="badge bg-success rounded-3 fw-semibold pt-1" style="font-size: 9px;">Efectivo</span>
+                                        <input type="radio" id="efectivo" name="tipo" value="1" checked required>
+                                        <label for="efectivo" data-toggle="tooltip" data-placement="top" title="Efectivo">
+                                            <img src="{{asset('img/icons/dinero.png')}}" alt="Option 1" class="img-pos">
+                                        </label>
                                     </div>
                                     <div class="radio-img">
                                             <input type="radio" id="tarjeta" name="tipo" value="2">
-                                            <label for="tarjeta">
+                                            <label for="tarjeta" data-toggle="tooltip" data-placement="top" title="Tarjeta">
                                                 <img src="{{asset('img/icons/tarjeta.png')}}" alt="Option 2" class="img-pos">
                                             </label>
-                                            <span class="badge bg-success rounded-3 fw-semibold pt-1" style="font-size: 9px;">Tarjeta</span>
+
                                     </div>
                                     <div class="radio-img">
                                         <input type="radio" id="qr" name="tipo" value="3">
-                                        <label for="qr">
+                                        <label for="qr" data-toggle="tooltip" data-placement="top" title="QR">
                                             <img src="{{asset('img/icons/qr.png')}}" alt="Option 3" class="img-pos">
                                         </label>
-                                        <span class="badge bg-success rounded-3 fw-semibold pt-1" style="font-size: 9px;">QR</span>
+
                                     </div>
                                 </center>
 
                         </div>
                     </div>
+                    <div class="px-1">
+                        <button class="btn btn-block btn-coment" data-bs-toggle="modal" data-bs-target="#coment">
+                            <i class="text-linght" data-feather="message-square"></i> Agregar Comentarios
+                        </button>
 
-                    <div class="p-1">
+                        <!--Modal Comentario-->
+                        <div class="modal fade" id="coment" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header modal-colored-header bg-primary">
+                                        <h3 class="modal-title fs-5 text-white">Agregar Comentarios</h3>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label for="form-label">Observaciones</label>
+                                                        <textarea name="comentario" class="form-control form-control-sm" rows="3" placeholder="Ingrese sus observaciones aquí"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="px-1 pt-1">
                         <button id="realizarOrdenBtn" class="btn btn-block btn-orden">Realizar Orden</button>
                     </div>
                 </div>
@@ -528,6 +572,8 @@
         <span>Total: <b><span id="recibo-total"></span> Bs.</b></span><br>
         <span>Monto Pagado: <b><span id="recibo-pagado"></span> Bs.</b></span><br>
         <span>Cambio: <b><span id="recibo-vuelto"></span> Bs.</b></span>
+        <br><br>
+        <span>Comentarios: <b><span id="recibo-comentario"></span> </b></span>
         <hr>
         <center>
             <span><b>{{ $empresas['data']['slogan'] }}</b></span><br><br>
@@ -909,6 +955,9 @@
             });
             document.getElementById('fechaRecibo').textContent = fechaFormateada;
 
+            let comentario = $('textarea[name="comentario"]').val();
+            document.getElementById('recibo-comentario').textContent = comentario;
+
             // Obtener el nombre del cliente seleccionado
             let selectCliente = document.querySelector('select[name="clienteAg"]');
             let clienteSeleccionado = selectCliente.options[selectCliente.selectedIndex].text;
@@ -941,6 +990,7 @@
             let montoPagado = parseFloat($('#montoPagado').val());
             let tipo = $('input[name="tipo"]:checked').val();
             let totalPagar = parseFloat($('#totalPagar').text().replace(' Bs.', '').trim());
+            let comentario = $('textarea[name="comentario"]').val();
 
             // Validaciones
             if (carrito.length === 0) {
@@ -985,7 +1035,8 @@
                                 caja: caja,
                                 totalVenta: totalPagar,
                                 montoPagado: montoPagado,
-                                tipo: tipo
+                                tipo: tipo,
+                                comentario: comentario
                             }),
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',

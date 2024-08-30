@@ -75,15 +75,15 @@
         </center>
     </div>
     <div class="content">
-        @foreach($recetas['data'] as $receta)
-        <center><p class="mt-4"><b>{{ $receta['nombre'] }}</b></p></center>
-        <p><b>PRODUCTO TERMINADO: </b>{{ $receta['producto'] }}</p>
-        <p><b>OBSERVACIONES: </b>{{ $receta['obs'] }}</p>
-        <p><b>RESPONSABLE DE LA CREACION: </b>{{ $receta['responsable'] }}</p>
+        @foreach($combos['data'] as $combo)
+        <center><p class="mt-4"><b>{{ $combo['nombre'] }}</b></p></center>
+        <p><b>PRODUCTO TERMINADO: </b>{{ $combo['producto'] }}</p>
+        <p><b>OBSERVACIONES: </b>{{ $combo['obs'] }}</p>
+        <p><b>RESPONSABLE DE LA CREACION: </b>{{ $combo['responsable'] }}</p>
 
         <!-- Tabla para mostrar los detalles de la receta -->
         <div class="table-responsive">
-            <h4>Detalles de la Receta</h4>
+            <h4>Detalles del Combo</h4>
             <table>
                 <thead>
                     <tr>
@@ -93,7 +93,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($receta['detalles'] as $detalle)
+                    @foreach($combo['detalles'] as $detalle)
                         <tr>
                             <td>{{ $detalle['producto'] }}</td>
                             <td>{{ $detalle['medida'] }} <b>({{ $detalle['av'] }})</b></td>
