@@ -33,12 +33,14 @@
                             {{ $proveedor['tel_contacto']}}</b> - <b class="text-danger">{{ $proveedor['cargo_contacto']}}</b>
                         </td>
                         <td>
-                            <a data-bs-toggle="modal" data-bs-target="#editar{{ $proveedor['codigo'] }}" title="Editar">
-                                <i class="text-primary" data-feather="edit-2"></i>
-                            </a>
-                            <a data-bs-toggle="modal" data-bs-target="#eliminar{{ $proveedor['codigo'] }}" title="Eliminar">
-                                <i class="text-danger" data-feather="trash-2"></i>
-                            </a>
+                            <center>
+                                <a data-bs-toggle="modal" data-bs-target="#editar{{ $proveedor['codigo'] }}" title="Editar">
+                                    <i class="text-primary" data-feather="edit-2"></i>
+                                </a>
+                                <a data-bs-toggle="modal" data-bs-target="#eliminar{{ $proveedor['codigo'] }}" title="Eliminar">
+                                    <i class="text-danger" data-feather="trash-2"></i>
+                                </a>
+                            </center>
                         </td>
 
                         <!--Modal Editar-->

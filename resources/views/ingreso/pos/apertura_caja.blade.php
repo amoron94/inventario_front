@@ -672,6 +672,9 @@
 
     <script>
 
+        // Pasar la URL base desde Blade a JavaScript
+        let baseUrl = "{{ $baseUrl }}";
+
         $('#AgregarNuevoCliente').on('click', function (e) {
             e.preventDefault(); // Evita el comportamiento por defecto del botón
 
@@ -692,7 +695,7 @@
 
             // Enviar la solicitud AJAX
             $.ajax({
-                url: 'http://localhost/inv_backend/controlador/ingreso/nuevo_cliente_pos.php', // URL a la que se enviará la solicitud
+                url: `${baseUrl}ingreso/nuevo_cliente_pos.php`, // URL a la que se enviará la solicitud
                 type: 'POST',
                 data: JSON.stringify({
                     _token: '{{ csrf_token() }}', // Añadir el token CSRF si estás en Laravel
@@ -1025,7 +1028,7 @@
                     if (result.isConfirmed) {
                         // Enviar petición AJAX
                         $.ajax({
-                            url: 'http://localhost/inv_backend/controlador/ingreso/agregar_venta.php', // Cambia esta URL a la de tu endpoint
+                            url: `${baseUrl}ingreso/agregar_venta.php`, // Cambia esta URL a la de tu endpoint
                             type: 'POST',
                             data: JSON.stringify({
                                 _token: '{{ csrf_token() }}', // Añadir el token CSRF si estás en Laravel
@@ -1092,6 +1095,9 @@
     </script>
 
     <script>
+        // Pasar la URL base desde Blade a JavaScript
+        let baseUrlArqueo = "{{ $baseUrl }}";
+
         function actualizarTotal() {
             let total = 0;
 
@@ -1182,7 +1188,7 @@
 
                         // Realizar la petición fetch
                         $.ajax({
-                            url:'http://localhost/inv_backend/controlador/ingreso/cierre_caja.php',
+                            url:`${baseUrlArqueo}ingreso/cierre_caja.php`,
                             method: 'POST',
                             data: JSON.stringify(datos),
                             contentType: 'application/json; charset=utf-8',

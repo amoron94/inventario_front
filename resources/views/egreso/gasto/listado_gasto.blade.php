@@ -6,7 +6,7 @@
             <button class="btn btn-sm btn-success float-end" data-bs-toggle="modal" data-bs-target="#nuevo">Nuevo</button>
             <h3 class="d-inline align-middle">Listado Gastos</h3>
             <br>
-            <span class="text-danger"><b>Nota: Se vizualizan solo gastos de los ultimos 3 meses</b></span>
+            <span class="text-danger"><b>Nota: Se vizualizan los gastos de los ultimos 3 meses</b></span>
         </div>
     </div>
 

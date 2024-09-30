@@ -34,7 +34,7 @@ class ComboController extends Controller
         $response_p_term = Http::get($this->base_url . 'produccion/listado_p_terminado.php');
         $p_termins = $response_p_term->json();
 
-        return view('produccion.nuevo_combo', compact('productos', 'p_termins'));
+        return view('produccion.nuevo_combo', compact('productos', 'p_termins'))->with('baseUrl', $this->base_url);
     }
 
     public function ver($id)

@@ -125,6 +125,9 @@
 
 @push('scripts')
     <script>
+        // Pasar la URL base desde Blade a JavaScript
+        var baseUrl = "{{ $baseUrl }}";
+
         // Actualizar el metodo de pago al seleccionar un proveedor
         document.querySelector('select[name="proveedor"]').addEventListener('change', function() {
             const proveedores = @json($proveedores['data']);
@@ -147,7 +150,7 @@
 
         // Función para obtener los productos de una sucursal
         function obtenerProductos(sucursalId) {
-            var url = `http://localhost/inv_backend/controlador/inventario/get_producto_sucursal.php?sucursal=${sucursalId}`;
+            var url = `${baseUrl}inventario/get_producto_sucursal.php?sucursal=${sucursalId}`;
             return fetch(url)
                 .then(response => response.json())
                 .then(data => data.data);
@@ -176,7 +179,7 @@
 
         // Función para obtener la información de un producto
         function obtenerProductoInfo(sucursalId, productoId) {
-            var url = `http://localhost/inv_backend/controlador/inventario/get_stock_prod_suc.php?sucursal=${sucursalId}&producto=${productoId}`;
+            var url = `${baseUrl}inventario/get_stock_prod_suc.php?sucursal=${sucursalId}&producto=${productoId}`;
             return fetch(url)
                 .then(response => response.json())
                 .then(data => {
@@ -322,7 +325,7 @@
             };
 
             // Enviar los datos con AJAX usando fetch
-            fetch('http://localhost/inv_backend/controlador/egreso/agregar_compra.php', {
+            fetch(`${baseUrl}egreso/agregar_compra.php`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

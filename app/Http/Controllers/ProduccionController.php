@@ -34,7 +34,7 @@ class ProduccionController extends Controller
         $response_m_prima = Http::get($this->base_url . 'produccion/listado_prod_materia.php');
         $m_primas = $response_m_prima->json();
 
-        return view('produccion.nueva_receta', compact('productos', 'm_primas'));
+        return view('produccion.nueva_receta', compact('productos', 'm_primas'))->with('baseUrl', $this->base_url);
     }
 
     public function ver($id)

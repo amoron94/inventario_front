@@ -32,6 +32,6 @@ class StockController extends Controller
         $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php');
         $sucursales = $response_suc->json();
 
-        return view('inventario.stock.listado_stock', compact('stocks','sucursales'));
+        return view('inventario.stock.listado_stock', compact('stocks','sucursales'))->with('baseUrl', $this->base_url);
     }
 }

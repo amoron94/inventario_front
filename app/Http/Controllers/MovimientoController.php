@@ -34,7 +34,7 @@ class MovimientoController extends Controller
         $response_pro = Http::get($this->base_url . 'producto/listado_producto.php');
         $productos = $response_pro->json();
 
-        return view('inventario.movimiento.nuevo_movimiento', compact('sucursales','productos'));
+        return view('inventario.movimiento.nuevo_movimiento', compact('sucursales','productos'))->with('baseUrl', $this->base_url);
     }
 
     public function ver($id)

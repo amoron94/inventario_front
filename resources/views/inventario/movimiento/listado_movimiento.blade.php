@@ -28,12 +28,14 @@
                         <td>{{ $movimiento['s_entrada']}}</td>
                         <td>{{ $movimiento['obs']}}</td>
                         <td>
-                            <a href="{{ route('descargar_mov', ['id' => $movimiento['codigo']]) }}" title="Ver" target="_blank">
-                                <i class="text-primary" data-feather="eye"></i>
-                            </a>
-                            <a data-bs-toggle="modal" data-bs-target="#eliminar{{ $movimiento['codigo'] }}" title="Eliminar">
-                                <i class="text-danger" data-feather="trash-2"></i>
-                            </a>
+                            <center>
+                                <a href="{{ route('descargar_mov', ['id' => $movimiento['codigo']]) }}" title="Ver" target="_blank">
+                                    <i class="text-primary" data-feather="eye"></i>
+                                </a>
+                                <a data-bs-toggle="modal" data-bs-target="#eliminar{{ $movimiento['codigo'] }}" title="Eliminar">
+                                    <i class="text-danger" data-feather="trash-2"></i>
+                                </a>
+                            </center>
                         </td>
 
                         <!--Modal Eliminar-->

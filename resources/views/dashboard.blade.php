@@ -70,11 +70,6 @@
 
 				<ul class="sidebar-nav">
                     @if($usuario['data']['tipo'] != 'CAJERO')
-                    <li class="sidebar-item">
-						<a class="sidebar-link" href="{{ url('usuario') }}">
-                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">Usuario</span>
-                        </a>
-					</li>
 
                     <li class="sidebar-item">
 						<a data-bs-target="#productos" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
@@ -117,11 +112,6 @@
                             </svg>
 						</a>
 						<ul id="inventario" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
-							<li class="sidebar-item">
-                                <a class="sidebar-link sub-pag" href="{{ url('sucursal') }}">
-                                    <i class="align-middle" data-feather="home"></i> Sucursal
-                                </a>
-                            </li>
                             <li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="{{ url('stock') }}">
                                     <i class="align-middle" data-feather="list"></i> Stock
@@ -181,7 +171,7 @@
 						</a>
 						<ul id="ventas" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
 							<li class="sidebar-item">
-                                <a class="sidebar-link sub-pag" href="#">
+                                <a class="sidebar-link sub-pag" href="{{ url('cliente') }}">
                                     <i class="align-middle" data-feather="users"></i> Cliente
                                 </a>
                             </li>
@@ -190,7 +180,18 @@
                                     <i class="align-middle" data-feather="grid"></i> POS
                                 </a>
                             </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="#">
+                                    <i class="align-middle" data-feather="inbox"></i> Ventas
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="{{ url('caja') }}">
+                                    <i class="align-middle" data-feather="codepen"></i> Cajas
+                                </a>
+                            </li>
 						</ul>
+
 					</li>
 
                     @if($usuario['data']['tipo'] != 'CAJERO')
@@ -234,7 +235,34 @@
 						</ul>
 					</li>
 
-
+                    <li class="sidebar-item">
+						<a data-bs-target="#reporte" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
+							<i class="align-middle" data-feather="calendar"></i> <span class="align-middle txt-flecha">Reportes</span>
+                            <svg class="feather feather-chevron-down align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                            <svg class="feather feather-chevron-up align-middle sidebar-badge" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="18 15 12 9 6 15"></polyline>
+                            </svg>
+						</a>
+						<ul id="reporte" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="{{ url('#') }}">
+                                    <i class="align-middle" data-feather="shopping-bag"></i> Ingresos
+                                </a>
+                            </li>
+							<li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="{{ url('#') }}">
+                                    <i class="align-middle" data-feather="shopping-cart"></i> Egresos
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="{{ url('#') }}">
+                                    <i class="align-middle" data-feather="sliders"></i> Inventario
+                                </a>
+                            </li>
+						</ul>
+					</li>
                     @endif
 
 
@@ -267,7 +295,10 @@
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
                                 @if($usuario['data']['tipo'] != 'CAJERO')
+                                <a class="dropdown-item" href="{{ url('usuario') }}"><i class="align-middle me-1" data-feather="users"></i> Usuarios</a>
+                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ url('empresa') }}"><i class="align-middle me-1" data-feather="home"></i> Empresa</a>
+                                <a class="dropdown-item" href="{{ url('sucursal') }}"><i class="align-middle me-1" data-feather="git-merge"></i> Sucursal</a>
                                 @endif
                                 <div class="dropdown-divider"></div>
 								<a class="dropdown-item text-danger" href="{{ url('cerrar-sesion') }}"><i class="align-middle me-1 text-danger" data-feather="power"></i> Cerrar Sesion</a>
@@ -279,6 +310,7 @@
 
 			<main class="content">
 				<div class="container-fluid p-0">
+
                     <div class="row">
 						<div class="col-12">
 							<div class="card">
@@ -287,6 +319,9 @@
 						</div>
 					</div>
 
+                    @if(View::hasSection('card'))
+                        @yield('card')
+                    @endif
 				</div>
 			</main>
 
@@ -295,16 +330,13 @@
 					<div class="row text-muted">
 						<div class="col-6 text-start">
 							<p class="mb-0">
-								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>DigitalDev</strong></a> &copy; 2024
+								<a class="text-muted" href="#" target="_blank"><strong>DigitalDev</strong></a> &copy; 2024
 							</p>
 						</div>
 						<div class="col-6 text-end">
 							<ul class="list-inline">
 								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Soporte</a>
-								</li>
-								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Politica Provacidad</a>
+									<a class="text-muted" href="#" target="_blank">Soporte</a>
 								</li>
 							</ul>
 						</div>

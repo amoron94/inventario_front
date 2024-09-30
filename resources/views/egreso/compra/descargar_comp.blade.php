@@ -102,7 +102,7 @@
         </div>
         <!-- Tabla para mostrar los detalles del movimiento -->
         <div class="table-responsive">
-            <h4>Detalles del Movimiento</h4>
+            <h4>Detalles de la Compra</h4>
             <table>
                 <thead>
                     <tr>

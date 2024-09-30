@@ -5,6 +5,8 @@
         <div class="container-fluid p-0">
             <button class="btn btn-sm btn-success float-end" onclick="window.location.href='{{ route('nueva_compra') }}'">Nuevo</button>
             <h3 class="d-inline align-middle">Listado de Compras</h3>
+            <br>
+            <span class="text-danger"><b>Nota: Se vizualizan las compras del año actual</b></span>
         </div>
     </div>
 
@@ -30,12 +32,14 @@
                         <td>{{ $compra['fecha']}}</td>
                         <td><b>{{ $compra['total_gasto']}}</b></td>
                         <td>
-                            <a href="{{ route('descargar_comp', ['id' => $compra['codigo']]) }}" title="Ver" target="_blank">
-                                <i class="text-primary" data-feather="eye"></i>
-                            </a>
-                            <a data-bs-toggle="modal" data-bs-target="#eliminar{{ $compra['codigo'] }}" title="Eliminar">
-                                <i class="text-danger" data-feather="trash-2"></i>
-                            </a>
+                            <center>
+                                <a href="{{ route('descargar_comp', ['id' => $compra['codigo']]) }}" title="Ver" target="_blank">
+                                    <i class="text-primary" data-feather="eye"></i>
+                                </a>
+                                <a data-bs-toggle="modal" data-bs-target="#eliminar{{ $compra['codigo'] }}" title="Eliminar">
+                                    <i class="text-danger" data-feather="trash-2"></i>
+                                </a>
+                            </center>
                         </td>
 
 

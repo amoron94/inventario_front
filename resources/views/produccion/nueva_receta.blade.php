@@ -99,6 +99,8 @@
 
 @push('scripts')
     <script>
+        // Pasar la URL base desde Blade a JavaScript
+        var baseUrl = "{{ $baseUrl }}";
 
         const productos = @json($m_primas['data']);
 
@@ -221,7 +223,7 @@
             };
 
             // Enviar los datos con AJAX usando fetch
-            fetch('http://localhost/inv_backend/controlador/produccion/agregar_receta.php', {
+            fetch(`${baseUrl}produccion/agregar_receta.php`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -45,12 +45,14 @@
                         <td>{{ $producto['medida']}} <b>({{ $producto['av'] }})</b></td>
                         <td>{{ $producto['categoria']}}</td>
                         <td>
-                            <a data-bs-toggle="modal" data-bs-target="#editar{{ $producto['codigo'] }}" title="Editar">
-                                <i class="text-primary" data-feather="edit-2"></i>
-                            </a>
-                            <a data-bs-toggle="modal" data-bs-target="#eliminar{{ $producto['codigo'] }}" title="Eliminar">
-                                <i class="text-danger" data-feather="trash-2"></i>
-                            </a>
+                            <center>
+                                <a data-bs-toggle="modal" data-bs-target="#editar{{ $producto['codigo'] }}" title="Editar">
+                                    <i class="text-primary" data-feather="edit-2"></i>
+                                </a>
+                                <a data-bs-toggle="modal" data-bs-target="#eliminar{{ $producto['codigo'] }}" title="Eliminar">
+                                    <i class="text-danger" data-feather="trash-2"></i>
+                                </a>
+                            </center>
                         </td>
 
                         <!--Modal Editar-->

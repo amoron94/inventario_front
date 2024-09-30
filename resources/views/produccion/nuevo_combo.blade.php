@@ -99,6 +99,9 @@
 @push('scripts')
 
     <script>
+        // Pasar la URL base desde Blade a JavaScript
+        var baseUrl = "{{ $baseUrl }}";
+
         const productos = @json($p_termins['data']);
 
         // Actualizar unidad al seleccionar un producto
@@ -218,7 +221,7 @@
             };
 
             // Enviar los datos con AJAX usando fetch
-            fetch('http://localhost/inv_backend/controlador/produccion/agregar_combo.php', {
+            fetch(`${baseUrl}produccion/agregar_combo.php`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

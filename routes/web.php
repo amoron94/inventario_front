@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CajaController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ComboController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\CondominioController;
@@ -36,7 +38,7 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('grafdash');
 })->middleware('custom.auth');
 
 
@@ -143,3 +145,15 @@ Route::get('combo', [ComboController::class, 'index'])->middleware('custom.auth'
 Route::get('/nuevo_combo', [ComboController::class, 'nuevo'])->middleware('custom.auth')->name('nuevo_combo');
 Route::get('/ver_combo/{id}', [ComboController::class, 'ver'])->middleware('custom.auth')->name('ver_combo');
 Route::delete('/eliminar-combo/{id}', [ComboController::class, 'destroy'])->name('eliminar_combo');
+
+
+
+Route::get('caja', [CajaController::class, 'index'])->middleware('custom.auth');
+Route::get('/descargar_caja/{id}', [CajaController::class, 'descargar_caja'])->middleware('custom.auth')->name('descargar_caja');
+
+
+
+Route::get('cliente', [ClienteController::class, 'index'])->middleware('custom.auth');
+Route::post('/guardar-cliente', [ClienteController::class, 'store'])->name('guardar_cliente');
+Route::patch('/editar-cliente/{id}', [ClienteController::class, 'update'])->name('editar_cliente');
+Route::delete('/eliminar-cliente/{id}', [ClienteController::class, 'destroy'])->name('eliminar_cliente');

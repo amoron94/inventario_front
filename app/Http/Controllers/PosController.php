@@ -52,7 +52,7 @@ class PosController extends Controller
         $response_bi = Http::get($this->base_url . 'ingreso/listado_billete.php');
         $billetes = $response_bi->json();
 
-        return view('ingreso.pos.apertura_caja', compact('empresas', 'cajas', 'sucursales', 'categorias', 'productos', 'billetes', 'clientes'));
+        return view('ingreso.pos.apertura_caja', compact('empresas', 'cajas', 'sucursales', 'categorias', 'productos', 'billetes', 'clientes'))->with('baseUrl', $this->base_url);
     }
 
     public function crearCaja(Request $request)

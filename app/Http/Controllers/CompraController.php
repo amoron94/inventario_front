@@ -37,7 +37,7 @@ class CompraController extends Controller
         $response_pro = Http::get($this->base_url . 'producto/listado_producto.php');
         $productos = $response_pro->json();
 
-        return view('egreso.compra.nueva_compra', compact('proveedores','sucursales','productos'));
+        return view('egreso.compra.nueva_compra', compact('proveedores','sucursales','productos'))->with('baseUrl', $this->base_url);
     }
 
     public function ver($id)

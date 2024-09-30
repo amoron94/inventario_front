@@ -84,6 +84,8 @@
 
 @push('scripts')
     <script>
+        // Pasar la URL base desde Blade a JavaScript
+        var baseUrl = "{{ $baseUrl }}";
 
         document.getElementById('edit-stock-btn').addEventListener('click', function() {
             // Arreglo para almacenar los productos seleccionados
@@ -107,7 +109,7 @@
             // Verificar si hay productos seleccionados
             if (selectedProducts.length > 0) {
                 // Enviar los datos mediante AJAX
-                fetch('http://localhost/inv_backend/controlador/inventario/editar_stock.php', {
+                fetch(`${baseUrl}inventario/editar_stock.php`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
