@@ -6,6 +6,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ComboController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\CondominioController;
+use App\Http\Controllers\DashController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\GastoController;
 use App\Http\Controllers\LoginController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\UnidadController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\VentaController;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
@@ -37,9 +39,7 @@ use Illuminate\Support\Facades\Route;
     return view('welcome');
 });*/
 
-Route::get('/dashboard', function () {
-    return view('grafdash');
-})->middleware('custom.auth');
+Route::get('/dashboard', [DashController::class, 'index'])->middleware('custom.auth');
 
 
 Route::get('/', [LoginController::class, 'logeo'])->name('login_page');
@@ -157,3 +157,9 @@ Route::get('cliente', [ClienteController::class, 'index'])->middleware('custom.a
 Route::post('/guardar-cliente', [ClienteController::class, 'store'])->name('guardar_cliente');
 Route::patch('/editar-cliente/{id}', [ClienteController::class, 'update'])->name('editar_cliente');
 Route::delete('/eliminar-cliente/{id}', [ClienteController::class, 'destroy'])->name('eliminar_cliente');
+
+
+
+Route::get('venta', [VentaController::class, 'index'])->middleware('custom.auth');
+Route::get('/descargar_venta/{id}', [VentaController::class, 'descargar_ven'])->middleware('custom.auth')->name('descargar_ven');
+Route::delete('/eliminar-venta/{id}', [VentaController::class, 'destroy'])->name('eliminar_venta');
