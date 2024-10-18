@@ -347,6 +347,23 @@
     </div>
 
 
+<!-- Modal de Bootstrap -->
+<div class="modal fade" id="stockMinimoModal" tabindex="-1" aria-labelledby="stockMinimoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+            <div class="modal-header modal-colored-header bg-success">
+                <h3 class="modal-title fs-5 text-white" id="exampleModalLabel">Productos con Stock Mínimo</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí se mostrará la tabla con los productos -->
+                @if(session('productos'))
+                    {!! session('productos') !!} <!-- Imprime la tabla de productos -->
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -388,6 +405,10 @@
         });
 
         $(document).ready(function() {
+            @if(session('productos'))
+                $('#stockMinimoModal').modal('show'); // Muestra el modal si hay productos con stock mínimo
+            @endif
+
             @if(session('success'))
                 Swal.fire({
                     icon: "success",

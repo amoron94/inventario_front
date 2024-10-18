@@ -42,7 +42,15 @@ class LoginController extends Controller
             // Establecer el tiempo de expiración de la sesión (por ejemplo, 24 horas)
             session(['session_expires_at' => now()->addHours(6)]);
 
-            return redirect('/dashboard');
+            $response_prod = Http::get($this->base_url . 'listado_stock_minimo.php');
+            $productos = $response_prod->json();
+            //dd($productos);
+
+            if($productos['success']){
+                return redirect('/dashboard')->with('productos', $productos['data']);
+            }else{
+                return redirect('/dashboard');
+            }
         } else {
             return back()->with('error', $data['errors']);
         }
