@@ -18,6 +18,7 @@
                         <th>Tipo</th>
                         <th>Direccion</th>
                         <th>Telefono</th>
+                        <th>Redes Sociales</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -44,6 +45,12 @@
                         </td>
                         <td>{{ $usuario['direccion']}}</td>
                         <td>{{ $usuario['telefono']}}</td>
+                        <td>
+                            <center>
+                                <a href="https://www.facebook.com/<?php echo $usuario['facebook']; ?>" target="_blank" class="badge bg-primary me-1 my-1"><i class="text-light align-middle" data-feather="facebook"></i></a>
+                                <a href="https://www.instagram.com/<?php echo $usuario['instagram']; ?>" target="_blank" class="badge bg-danger me-1 my-1"><i class="text-light align-middle" data-feather="instagram"></i></a>
+                            </center>
+                        </td>
                         <td>
                             @if($usuario['cod_tipo'] != 1)
                             <a data-bs-toggle="modal" data-bs-target="#editar{{ $usuario['codigo'] }}" title="Editar">

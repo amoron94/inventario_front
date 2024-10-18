@@ -293,7 +293,7 @@
 
                             </a>
 							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
+								<a class="dropdown-item" href="{{ url('perfil') }}"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
                                 @if($usuario['data']['tipo'] != 'CAJERO')
                                 <a class="dropdown-item" href="{{ url('usuario') }}"><i class="align-middle me-1" data-feather="users"></i> Usuarios</a>
                                 <div class="dropdown-divider"></div>

@@ -11,6 +11,7 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\GastoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovimientoController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProduccionController;
 use App\Http\Controllers\ProductoController;
@@ -163,3 +164,9 @@ Route::delete('/eliminar-cliente/{id}', [ClienteController::class, 'destroy'])->
 Route::get('venta', [VentaController::class, 'index'])->middleware('custom.auth');
 Route::get('/descargar_venta/{id}', [VentaController::class, 'descargar_ven'])->middleware('custom.auth')->name('descargar_ven');
 Route::delete('/eliminar-venta/{id}', [VentaController::class, 'destroy'])->name('eliminar_venta');
+
+
+
+Route::get('perfil', [PerfilController::class, 'index'])->middleware('custom.auth');
+Route::patch('/editar-perfil/{id}', [PerfilController::class, 'update'])->middleware('custom.auth')->name('editar_perfil');
+Route::patch('/editar-pass/{id}', [PerfilController::class, 'cambiar_pass'])->middleware('custom.auth')->name('cambiar_pass');

@@ -84,6 +84,45 @@
     <div class="col-xl-12 col-xxl-5 d-flex">
         <div class="w-100">
             <div class="row">
+                <div class="col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <center><h3 class="card-title">Grafico de Comisiones de Empleados por Semana</h3></center>
+
+                            <div class="align-self-center w-100">
+                                <div class="py-3">
+                                    <div class="chart chart-xs"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                        <canvas id="chartjs-dashboard-pie" width="345" height="150" style="display: block; width: 345px; height: 150px;" class="chartjs-render-monitor"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <center><h3 class="card-title">Metodo de Pago mas Utilizado</h3></center>
+
+                            <div class="align-self-center w-100">
+                                <div class="py-3">
+                                    <div class="chart chart-xs"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                        <canvas id="chartjs-dashboard-pie-pago" width="345" height="150" style="display: block; width: 345px; height: 150px;" class="chartjs-render-monitor"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-xxl-5 d-flex">
+        <div class="w-100">
+            <div class="row">
                 <div class="col-sm-12 col-12">
                     <div class="card">
                         <div class="card-body">
@@ -94,31 +133,18 @@
                                     <thead class="bg-primary" style="font-size: 12px;">
                                         <tr class="text-white">
                                             <th>Servicio</th>
-                                            <th>Cant. Realizado</th>
+                                            <th style="width: 15%">Cant. Realizado</th>
                                             <th>Cant. Recaudado (Bs.)</th>
                                         </tr>
                                     </thead>
                                     <tbody style="font-size: 11px;">
+                                        @foreach($productos['data'] as $producto)
                                         <tr>
-                                            <td>Ximena Flores</td>
-                                            <td>75</td>
-                                            <td>4306 <b>Bs.</b></td>
+                                            <td>{{ $producto['producto']}}</td>
+                                            <td class="text-danger">{{ $producto['total_cantidad']}}</td>
+                                            <td>{{ $producto['total_monto']}} <b>Bs.</b></td>
                                         </tr>
-                                        <tr>
-                                            <td>Ximena Flores</td>
-                                            <td>38</td>
-                                            <td>4306 <b>Bs.</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ximena Flores</td>
-                                            <td>24</td>
-                                            <td>4306 <b>Bs.</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ximena Flores</td>
-                                            <td>15</td>
-                                            <td>4306 <b>Bs.</b></td>
-                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -176,13 +202,50 @@
 					responsive: !window.MSInputMethodContext,
 					maintainAspectRatio: false,
 					legend: {
-						display: false
+						display: true
 					},
-					cutoutPercentage: 70
+					cutoutPercentage: 0
 				}
 			});
 		});
 	</script>
+
+    <script>
+        // Obteniendo los datos desde PHP a JavaScript
+        const tpagos = @json($tpagos['data']);
+
+        // Extraer labels y data de los tipos de pago
+        const labels = tpagos.map(item => item.tipo_pago);
+        const data = tpagos.map(item => parseFloat(item.total_monto));
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Pie chart
+            new Chart(document.getElementById("chartjs-dashboard-pie-pago"), {
+                type: "pie",
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            window.theme.success,
+                            window.theme.primary,
+                            "#E8EAED"
+                        ],
+                        borderWidth: 5,
+                        borderColor: window.theme.white
+                    }]
+                },
+                options: {
+                    responsive: !window.MSInputMethodContext,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: true
+                    },
+                    cutoutPercentage: 0
+                }
+            });
+        });
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
