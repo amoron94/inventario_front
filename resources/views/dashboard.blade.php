@@ -124,6 +124,11 @@
                                 </a>
                             </li>
                             @endif
+                            <li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="{{ url('lote') }}">
+                                    <i class="align-middle" data-feather="database"></i> Lotes de Productos
+                                </a>
+                            </li>
 						</ul>
 					</li>
 
@@ -183,6 +188,11 @@
                             <li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="{{ url('venta') }}">
                                     <i class="align-middle" data-feather="inbox"></i> Ventas
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link sub-pag" href="{{ url('cobro') }}">
+                                    <i class="align-middle" data-feather="inbox"></i> Cobros Pendientes
                                 </a>
                             </li>
                             <li class="sidebar-item">
@@ -351,7 +361,7 @@
 <div class="modal fade" id="stockMinimoModal" tabindex="-1" aria-labelledby="stockMinimoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
-            <div class="modal-header modal-colored-header bg-success">
+            <div class="modal-header modal-colored-header bg-danger">
                 <h3 class="modal-title fs-5 text-white" id="exampleModalLabel">Productos con Stock Mínimo</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

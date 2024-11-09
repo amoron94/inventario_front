@@ -3,13 +3,14 @@
 use App\Http\Controllers\CajaController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\CobroController;
 use App\Http\Controllers\ComboController;
 use App\Http\Controllers\CompraController;
-use App\Http\Controllers\CondominioController;
 use App\Http\Controllers\DashController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\GastoController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LoteController;
 use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\PosController;
@@ -170,3 +171,15 @@ Route::delete('/eliminar-venta/{id}', [VentaController::class, 'destroy'])->name
 Route::get('perfil', [PerfilController::class, 'index'])->middleware('custom.auth');
 Route::patch('/editar-perfil/{id}', [PerfilController::class, 'update'])->middleware('custom.auth')->name('editar_perfil');
 Route::patch('/editar-pass/{id}', [PerfilController::class, 'cambiar_pass'])->middleware('custom.auth')->name('cambiar_pass');
+
+
+
+Route::get('lote', [LoteController::class, 'index'])->middleware('custom.auth');
+Route::get('/ver_lote/{id}/{nombre}', [LoteController::class, 'ver'])->middleware('custom.auth')->name('ver_lote');
+Route::patch('/editar-lote/{id}', [LoteController::class, 'update'])->name('editar_lote');
+Route::delete('/eliminar-lote/{id}', [LoteController::class, 'destroy'])->name('eliminar_lote');
+
+
+
+Route::get('cobro', [CobroController::class, 'index'])->middleware('custom.auth');
+Route::patch('/pagar-cobro/{id}', [CobroController::class, 'pagar'])->name('pagar_cobro');

@@ -37,9 +37,13 @@ class DashController extends Controller
         $vmeses = $response_meses->json();
         //dd($compras);
 
+        $response_cmeses = Http::get($this->base_url . 'compras_meses.php');
+        $cmeses = $response_cmeses->json();
+        //dd($compras);
+
         // Verificar la respuesta
         if ($ventas['success']) {
-            return view('grafdash', compact('ventas','compras','productos','tpagos','vmeses'));
+            return view('grafdash', compact('ventas','compras','productos','tpagos','vmeses','cmeses'));
         }else{
             return back()->with('error', 'No se puede conectar con la BD');
         }

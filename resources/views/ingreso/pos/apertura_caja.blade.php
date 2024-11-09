@@ -423,7 +423,7 @@
                                 <i class="text-linght" data-feather="user-plus"></i>
                             </button>
 
-                            <!--Modal Nuevo-->
+                            <!--Modal Nuevo Cliente-->
                             <div class="modal fade" id="nuevoCliente" tabindex="-1" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-scrollable">
                                     <div class="modal-content">
@@ -501,7 +501,7 @@
                     </div>
                     <div class="px-1">
                         <button class="btn btn-block btn-coment" data-bs-toggle="modal" data-bs-target="#coment">
-                            <i class="text-linght" data-feather="message-square"></i> Agregar Comentarios
+                            <i class="text-linght" data-feather="message-square"></i> Mas Informacion de la Venta
                         </button>
 
                         <!--Modal Comentario-->
@@ -509,7 +509,7 @@
                             <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header modal-colored-header bg-primary">
-                                        <h3 class="modal-title fs-5 text-white">Agregar Comentarios</h3>
+                                        <h3 class="modal-title fs-5 text-white">Agregar Inf.</h3>
                                         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -517,8 +517,30 @@
                                             <div class="row">
                                                 <div class="col-lg-12 col-xs-12">
                                                     <div class="form-group">
-                                                        <label for="form-label">Observaciones</label>
+                                                        <label for="form-label">Observaciones de la venta</label>
                                                         <textarea name="comentario" class="form-control form-control-sm" rows="3" placeholder="Ingrese sus observaciones aquí"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-xs-12">
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" name="por_pagar" id="porPagarSwitch" onchange="toggleMontoFechaFields()">
+                                                        <label class="form-check-label" for="flexSwitchCheckDefault">¿Desea que esta venta quede pendiente de pago?</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3 p-2" id="montoFechaContainer" style="background: #ffcdc5" hidden>
+                                                <div class="col-lg-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label for="form-label">Monto de Pago (Parcial)</label>
+                                                        <input type="number" class="form-control form-control-sm" name="monto_parcial" min="0">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label for="form-label">Fecha de Pago (Estimado)</label>
+                                                        <input type="date" name="fecha_cobro" class="form-control form-control-sm" value="{{ date('Y-m-d', strtotime('+7 days')) }}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -967,6 +989,11 @@
             document.getElementById('nombreRecibo').textContent = clienteSeleccionado;
         }
 
+        //Visualizar Pensiente Pago
+        function toggleMontoFechaFields() {
+            const montoFechaContainer = document.getElementById("montoFechaContainer");
+            montoFechaContainer.hidden = !document.getElementById("porPagarSwitch").checked;
+        }
 
         //Realizar Orden
         document.getElementById('realizarOrdenBtn').addEventListener('click', function() {
@@ -994,6 +1021,15 @@
             let tipo = $('input[name="tipo"]:checked').val();
             let totalPagar = parseFloat($('#totalPagar').text().replace(' Bs.', '').trim());
             let comentario = $('textarea[name="comentario"]').val();
+
+            //---------------------------------------------------------------
+            let por_pagar       = 0;
+            let monto_parcial   = $('input[name="monto_parcial"]').val();
+            let fecha_cobro     = $('input[name="fecha_cobro"]').val();
+
+            if(document.getElementById("porPagarSwitch").checked){
+                por_pagar = 1;
+            }
 
             // Validaciones
             if (carrito.length === 0) {
@@ -1039,7 +1075,11 @@
                                 totalVenta: totalPagar,
                                 montoPagado: montoPagado,
                                 tipo: tipo,
-                                comentario: comentario
+                                comentario: comentario,
+
+                                por_pagar: por_pagar,
+                                monto_parcial: monto_parcial,
+                                fecha_cobro: fecha_cobro
                             }),
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',

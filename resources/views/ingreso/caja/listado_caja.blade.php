@@ -14,6 +14,7 @@
             <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle" data-order-direction="desc">
                 <thead class="bg-primary" style="font-size: 12px;">
                     <tr class="text-white">
+                        <th>Nro Caja</th>
                         <th>F. Apertura</th>
                         <th>F. Cierre</th>
                         <th>Sucursal</th>
@@ -26,6 +27,7 @@
                 <tbody style="font-size: 11px;">
                     @foreach($cajas['data'] as $caja)
                     <tr>
+                        <td>{{ $caja['nro']}}</td>
                         <td>{{ $caja['fecha_a']}}</td>
                         <td>{{ $caja['fecha_c']}}</td>
                         <td>{{ $caja['sucursal']}}</td>

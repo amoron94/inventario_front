@@ -26,7 +26,6 @@
                         <input type="password" id="contra" name="pass" placeholder="Contraseña" value="Alan1234" required>
                         <i class="ti ti-eye-off" id="togglePassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer;color: black;"></i>
                     </div>
-                    <p style="text-align: end;"><a href="#">¿Has olvidado tu contraseña?</a></p>
 
                     <button type="submit">Acceso</button>
                 </form>

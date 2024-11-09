@@ -46,6 +46,9 @@ class ProductoController extends Controller
         $img = $request->file('img');
         $img->move(public_path('img/productos'), $fechaHora . "_" . $img->getClientOriginalName());
 
+        // Capturar el valor del checkbox, si no está clickeado será 0
+        $cont_inventario = $request->has('cont_inventario') ? 1 : 0;
+
         //dd($request->all());
         $response = Http::post($this->base_url . 'producto/nuevo_producto.php', [
             'tipo'      => $request->tipo,
@@ -55,7 +58,8 @@ class ProductoController extends Controller
             'precio'    => $request->precio,
             'stock_i'   => isset($request->stock_i) ? $request->stock_i : 0,
             'stock_m'   => $request->stock_m,
-            'img'       => $fechaHora . "_" . $img->getClientOriginalName()
+            'img'       => $fechaHora . "_" . $img->getClientOriginalName(),
+            'cont_inv'  => $cont_inventario,
         ]);
 
         $producto = $response->json();
@@ -80,13 +84,17 @@ class ProductoController extends Controller
             $img_prod = $fechaHora . "_" . $img->getClientOriginalName();
         }
 
+        // Capturar el valor del checkbox, si no está clickeado será 0
+        $cont_inventario = $request->has('cont_inventario') ? 1 : 0;
+
         try {
             $response = Http::patch($this->base_url . 'producto/editar_producto.php', [
                 'codigo'        => $id,
                 'nombre'    => $request->nombre,
                 'categoria' => $request->categoria,
                 'precio'    => $request->precio,
-                'img'       => $img_prod
+                'img'       => $img_prod,
+                'cont_inv'  => $cont_inventario,
             ]);
 
             $response->throw();

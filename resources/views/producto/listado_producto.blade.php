@@ -69,6 +69,18 @@
                                         <div class="modal-body">
                                             <div class="container">
                                                 <div class="row">
+                                                    <div class="col-lg-12 col-xs-12 mb-3">
+                                                        <div class="form-check form-switch">
+                                                            @if($producto['cont_inventario'] == 1)
+                                                            <input class="form-check-input" type="checkbox" name="cont_inventario" checked>
+                                                            @else
+                                                            <input class="form-check-input" type="checkbox" name="cont_inventario">
+                                                            @endif
+                                                            <label class="form-check-label" for="flexSwitchCheckDefault">Desea que sea parte de los reportes de stock minimo?</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-lg-6 col-xs-12">
                                                         <div class="form-group">
                                                             <label for="form-label">Nombre</label>
@@ -245,6 +257,14 @@
                                         <label for="form-label">Stock Mínimo</label>
                                         <input type="number" id="stockMinimo" name="stock_m" class="form-control form-control-sm" min="0" required>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-xs-12">
+                                    <div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" name="cont_inventario">
+										<label class="form-check-label" for="flexSwitchCheckDefault">Desea que sea parte de los reportes de stock minimo?</label>
+									</div>
                                 </div>
                             </div>
                         </div>
