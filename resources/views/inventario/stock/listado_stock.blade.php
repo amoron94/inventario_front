@@ -34,7 +34,7 @@
         <button id="edit-stock-btn" class="btn btn-sm btn-primary mb-1">Editar Stock de Productos</button>
         <div class="table-responsive">
             <table class="table table-sm table-striped table-bordered table-hover align-middle">
-                <thead class="bg-primary" style="font-size: 12px;">
+                <thead class="bg-colorbase" style="font-size: 12px;">
                     <tr class="text-white">
                         <th><center><input type="checkbox" id="select-all"></center></th>
                         <th>Nombre</th>

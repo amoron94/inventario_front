@@ -26,3 +26,7 @@
     width: 50px !important; /* Adjust size as needed */
     height: 50px !important; /* Adjust size as needed */
 }
+
+.bg-colorbase{
+    background-color:#4CAF50;
+}

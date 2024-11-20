@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ERP - login</title>
-    <link rel="icon" href="{{ asset('img/photos/logo_digitaldev.jpg') }}" type="image/x-icon"/>
+    <title>Gestock</title>
+    <link rel="icon" href="{{ asset('img/photos/logo_gestock_b.png') }}" type="image/x-icon"/>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('css/login.css')}}" />
@@ -17,7 +17,7 @@
 
         <div class="login-box">
             <div class="cont-box">
-                <img src="{{asset('img/photos/logo_digitaldev.jpg')}}" alt="logo" width="70" height="70">
+                <img src="{{asset('img/photos/logo_gestock.png')}}" alt="logo" width="90" height="90">
                 <h1>Iniciar sesión</h1>
                 <form action="{{route('acceder')}}" method="POST">
                     @csrf

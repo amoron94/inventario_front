@@ -11,7 +11,7 @@
     <div class="card-body">
         <div class="table-responsive">
             <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle" data-order-direction="asc">
-                <thead class="bg-primary" style="font-size: 12px;">
+                <thead class="bg-colorbase" style="font-size: 12px;">
                     <tr class="text-white">
                         <th>Nombre</th>
                         <th>Telefono</th>

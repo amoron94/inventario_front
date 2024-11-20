@@ -13,7 +13,7 @@
     <div class="card-body">
         <div class="table-responsive">
             <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle" data-order-direction="desc">
-                <thead class="bg-primary" style="font-size: 12px;">
+                <thead class="bg-colorbase" style="font-size: 12px;">
                     <tr class="text-white">
                         <th>Orden</th>
                         <th>Proveedor</th>

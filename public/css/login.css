@@ -37,7 +37,7 @@ img{
 }
 
 p {
-    color: #212B36;
+    color: #4CAF50;
     font-weight: 400;
     margin-top: 10px;
     margin-bottom: 30px;
@@ -57,25 +57,25 @@ p {
 .login-box input[type="text"]:focus,
 .login-box input[type="email"]:focus,
 .login-box input[type="password"]:focus {
-    border-color: #212B36;
+    border-color: #4CAF50;
     outline: none;
 }
 
 .login-box input[type="text"]:hover,
 .login-box input[type="email"]:hover,
 .login-box input[type="password"]:hover {
-    border-color: #212B36;
+    border-color: #4CAF50;
     outline: none;
 }
 
 .login-box input[type="text"]:focus::placeholder,
 .login-box input[type="email"]:focus::placeholder,
 .login-box input[type="password"]:focus::placeholder {
-    color: #212B36;
+    color: #4CAF50;
 }
 
 .login-box form p a{
-    color: #212B36;
+    color: #4CAF50;
     font-weight: 500;
     text-align: end;
     font-style: italic;
@@ -84,7 +84,7 @@ p {
 .login-box button {
     width: 100%;
     padding: 10px;
-    background-color: #212B36;
+    background-color: #4CAF50;
     border: none;
     color: #fff;
     font-weight: 700;
@@ -96,7 +96,7 @@ p {
 }
 
 .login-box button:hover{
-    background-color: rgb(69, 79, 91);
+    background-color: #429745;
 }
 
 .image-box {

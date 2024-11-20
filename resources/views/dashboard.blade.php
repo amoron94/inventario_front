@@ -7,7 +7,7 @@
 
     <title>Panel Principal</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="icon" href="{{ asset('img/photos/logo_digitaldev.jpg') }}" type="image/x-icon"/>
+    <link rel="icon" href="{{ asset('img/photos/logo_gestock_b.png') }}" type="image/x-icon"/>
     <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -25,6 +25,8 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
         .sidebar-link .feather-chevron-down,
         .sidebar-link .feather-chevron-up {
             transition: transform 0.3s;
@@ -53,6 +55,52 @@
         a.sidebar-link.sub-pag {
             padding-left: 50px;
         }
+
+
+
+        .logo-menu{
+            background: #222E3C;
+            padding: 14px 0px;
+            font-family: auto;
+        }
+
+        .logo-container {
+            display: flex;           /* Activa Flexbox */
+            align-items: center;     /* Centra verticalmente */
+            justify-content: center; /* Centra horizontalmente */
+            gap: 10px;               /* Espacio entre la imagen y el texto */
+        }
+
+        .logo_ges{
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo-titulo{
+            color: #4CAF50;
+            font-size: 30px;
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        @media (max-width: 768px) {
+
+            .logo-menu{
+                background: #222E3C;
+                padding: 15px 0px;
+                font-family: auto;
+            }
+
+            .logo_ges{
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo-titulo{
+                color: #4CAF50;
+                font-size: 25px;
+                font-family: 'Poppins', sans-serif !important;
+            }
+        }
     </style>
 
     @stack('styles')
@@ -64,11 +112,14 @@
     <div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
-				<a class="sidebar-brand" href="{{ url('dashboard') }}">
-                    <img src="{{ asset('img/photos/logo_remove-1.png') }}" width="200" height="60">
+				<a class="sidebar-brand logo-menu" href="{{ url('dashboard') }}">
+                    <div class="logo-container">
+                        <img src="{{asset('img/photos/logo_gestock_b.png')}}" class="logo_ges">
+                        <span class="logo-titulo"><b> ESTOCK</b></span>
+                    </div>
                 </a>
 
-				<ul class="sidebar-nav">
+				<ul class="sidebar-nav" style="margin-top: 20px">
                     @if($usuario['data']['tipo'] != 'CAJERO')
 
                     <li class="sidebar-item">

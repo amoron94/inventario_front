@@ -91,7 +91,7 @@
 
                             <div class="table-responsive">
                                 <table class="table table-sm table-striped table-bordered table-hover align-middle">
-                                    <thead class="bg-primary" style="font-size: 12px;">
+                                    <thead class="bg-colorbase" style="font-size: 12px;">
                                         <tr class="text-white">
                                             <th>Servicio</th>
                                             <th style="width: 25%">Cant. Realizado</th>
@@ -292,7 +292,7 @@
                     datasets: [{
                         data: data,
                         backgroundColor: [
-                            window.theme.success,
+                            "#4CAF50",
                             window.theme.primary,
                             "#E8EAED"
                         ],
