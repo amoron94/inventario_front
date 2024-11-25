@@ -41,7 +41,7 @@ class PerfilController extends Controller
         if ($img_perfil != null) {
             $fechaHora = date('dmYHis');
             $img = $request->file('img');
-            $img->move(public_path('img/empresa'), $fechaHora . "_" . $img->getClientOriginalName());
+            $img->move(public_path('img/usuario'), $fechaHora . "_" . $img->getClientOriginalName());
 
             $img_perfil = $fechaHora . "_" . $img->getClientOriginalName();
         }

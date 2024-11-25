@@ -140,7 +140,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12 col-xs-12">
                                                         <center>
-                                                            <img src="{{ asset('img/usuario/' . $usuario['img']) }}" alt="img-producto" class="img-fluid rounded-3" width="200" height="200"/>
+                                                            <img src="{{ asset('img/usuario/' . $usuario['img']) }}" alt="img-usuario" class="img-fluid rounded-3" width="200" height="200"/>
                                                         </center>
                                                     </div>
                                                 </div>

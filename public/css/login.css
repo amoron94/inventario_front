@@ -104,6 +104,11 @@ p {
     background: url('../img/photos/login.jpg') no-repeat center center/cover;
 }
 
+.image-box-s{
+    flex: 1;
+    background: url('../img/photos/pos.jpg') no-repeat center center/cover;
+}
+
 @media (max-width: 768px) {
     .login-box{
         background: url('../img/photos/login.jpg') no-repeat center center/cover;

@@ -120,7 +120,7 @@
                 </a>
 
 				<ul class="sidebar-nav" style="margin-top: 20px">
-                    @if($usuario['data']['tipo'] != 'CAJERO')
+
 
                     <li class="sidebar-item">
 						<a data-bs-target="#productos" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
@@ -146,6 +146,8 @@
 						</ul>
 					</li>
 
+
+
                     <li class="sidebar-item">
 						<a class="sidebar-link" href="{{ url('producto') }}">
                             <i class="align-middle" data-feather="package"></i> <span class="align-middle">Productos</span>
@@ -168,12 +170,15 @@
                                     <i class="align-middle" data-feather="list"></i> Stock
                                 </a>
                             </li>
+                            @if($usuario['data']['tipo'] != 'CAJERO')
+
                             @if ($usuario['data']['sucursales'] == 'SI')
 							<li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="{{ url('movimiento_stock') }}">
                                     <i class="align-middle" data-feather="truck"></i> Movimiento
                                 </a>
                             </li>
+                            @endif
                             @endif
                             <li class="sidebar-item">
                                 <a class="sidebar-link sub-pag" href="{{ url('lote') }}">
@@ -183,6 +188,7 @@
 						</ul>
 					</li>
 
+                    @if($usuario['data']['tipo'] != 'CAJERO')
                     <li class="sidebar-item">
 						<a data-bs-target="#produccion" data-bs-toggle="collapse" class="sidebar-link collapsed flecha" aria-expanded="false">
 							<i class="align-middle" data-feather="layers"></i> <span class="align-middle txt-flecha">Produccion</span>

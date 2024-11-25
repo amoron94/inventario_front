@@ -17,11 +17,14 @@ class SucursalController extends Controller
 
     public function index()
     {
-        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php?cod_empresa='.$empresa);
         $sucursales = $response_suc->json();
         //dd($u_medidas);
 
-        $response_enc = Http::get($this->base_url . 'combo/listado_encargado.php');
+        $response_enc = Http::get($this->base_url . 'combo/listado_encargado.php?cod_empresa='.$empresa);
         $encargados = $response_enc->json();
 
         // Verificar la respuesta

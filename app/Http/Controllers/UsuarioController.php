@@ -17,8 +17,10 @@ class UsuarioController extends Controller
 
     public function index()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_usu = Http::get($this->base_url . 'listado_usuario.php');
+        $response_usu = Http::get($this->base_url . 'listado_usuario.php?cod_empresa='.$empresa);
         $usuarios = $response_usu->json();
 
         return view('listado_usuario', compact('usuarios'));

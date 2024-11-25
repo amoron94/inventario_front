@@ -52,7 +52,13 @@ class LoginController extends Controller
                 return redirect('/dashboard');
             }
         } else {
-            return back()->with('error', $data['errors']);
+
+            if($data['errors'] == 'Tu suscripción ha expirado'){
+                return redirect('/reactivar');
+            }else{
+                return back()->with('error', $data['errors']);
+            }
+
         }
 
 
