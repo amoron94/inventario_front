@@ -17,8 +17,10 @@ class ProveedorController extends Controller
 
     public function index()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_prov = Http::get($this->base_url . 'egreso/listado_proveedor.php');
+        $response_prov = Http::get($this->base_url . 'egreso/listado_proveedor.php?cod_empresa='.$empresa);
         $proveedores = $response_prov->json();
 
         return view('egreso.proveedor.listado_proveedor', compact('proveedores'));
@@ -26,7 +28,8 @@ class ProveedorController extends Controller
 
     public function store(Request $request)
     {
-        //$usuario = session('usuario_logueado');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
         //dd($request->all());
         $response = Http::post($this->base_url . 'egreso/nuevo_proveedor.php', [
@@ -40,7 +43,9 @@ class ProveedorController extends Controller
 
             'contacto'          => $request->contacto,
             'telfcont'          => $request->telfcont,
-            'cargo'             => $request->cargo
+            'cargo'             => $request->cargo,
+
+            'cod_empresa'       => $empresa
         ]);
 
         $proveedores = $response->json();

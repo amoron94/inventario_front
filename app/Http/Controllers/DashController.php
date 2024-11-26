@@ -17,27 +17,30 @@ class DashController extends Controller
 
     public function index()
     {
-        $response_ven = Http::get($this->base_url . 'ventas.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_ven = Http::get($this->base_url . 'ventas.php?cod_empresa='.$empresa);
         $ventas = $response_ven->json();
         //dd($ventas);
 
-        $response_comp = Http::get($this->base_url . 'compras.php');
+        $response_comp = Http::get($this->base_url . 'compras.php?cod_empresa='.$empresa);
         $compras = $response_comp->json();
         //dd($compras);
 
-        $response_prod = Http::get($this->base_url . 'productos_vendidos.php');
+        $response_prod = Http::get($this->base_url . 'productos_vendidos.php?cod_empresa='.$empresa);
         $productos = $response_prod->json();
         //dd($compras);
 
-        $response_tpago = Http::get($this->base_url . 'tipo_pagos.php');
+        $response_tpago = Http::get($this->base_url . 'tipo_pagos.php?cod_empresa='.$empresa);
         $tpagos = $response_tpago->json();
         //dd($compras);
 
-        $response_meses = Http::get($this->base_url . 'ventas_meses.php');
+        $response_meses = Http::get($this->base_url . 'ventas_meses.php?cod_empresa='.$empresa);
         $vmeses = $response_meses->json();
         //dd($compras);
 
-        $response_cmeses = Http::get($this->base_url . 'compras_meses.php');
+        $response_cmeses = Http::get($this->base_url . 'compras_meses.php?cod_empresa='.$empresa);
         $cmeses = $response_cmeses->json();
         //dd($compras);
 

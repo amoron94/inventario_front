@@ -17,14 +17,17 @@ class ProductoController extends Controller
 
     public function index()
     {
-        $response_pro = Http::get($this->base_url . 'producto/listado_producto.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_pro = Http::get($this->base_url . 'producto/listado_producto.php?cod_empresa='.$empresa);
         $productos = $response_pro->json();
         //dd($productos);
 
-        $response_med = Http::get($this->base_url . 'parametro/listado_uni_medida.php');
+        $response_med = Http::get($this->base_url . 'parametro/listado_uni_medida.php?cod_empresa='.$empresa);
         $u_medidas = $response_med->json();
 
-        $response_cat = Http::get($this->base_url . 'parametro/listado_categoria.php');
+        $response_cat = Http::get($this->base_url . 'parametro/listado_categoria.php?cod_empresa='.$empresa);
         $categorias = $response_cat->json();
 
         $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php');
@@ -40,7 +43,8 @@ class ProductoController extends Controller
 
     public function store(Request $request)
     {
-        //$usuario = session('usuario_logueado');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
         $fechaHora = date('dmYHis');
         $img = $request->file('img');
@@ -60,6 +64,7 @@ class ProductoController extends Controller
             'stock_m'   => $request->stock_m,
             'img'       => $fechaHora . "_" . $img->getClientOriginalName(),
             'cont_inv'  => $cont_inventario,
+            'empresa'   => $empresa,
         ]);
 
         $producto = $response->json();

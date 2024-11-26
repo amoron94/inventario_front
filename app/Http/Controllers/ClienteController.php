@@ -17,8 +17,10 @@ class ClienteController extends Controller
 
     public function index()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_cli = Http::get($this->base_url . 'ingreso/listado_cliente.php');
+        $response_cli = Http::get($this->base_url . 'ingreso/listado_cliente.php?cod_empresa='.$empresa);
         $clientes = $response_cli->json();
 
         return view('ingreso.cliente.listado_cliente', compact('clientes'));
@@ -26,7 +28,8 @@ class ClienteController extends Controller
 
     public function store(Request $request)
     {
-        //$usuario = session('usuario_logueado');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
         $response = Http::post($this->base_url . 'ingreso/nuevo_cliente.php', [
             'nombre'        => $request->nombre,
@@ -34,6 +37,7 @@ class ClienteController extends Controller
             'email'         => $request->email,
             'sexo'          => $request->sexo,
             'fecha'         => $request->fecha,
+            'empresa'       => $empresa
         ]);
 
         $clientes = $response->json();

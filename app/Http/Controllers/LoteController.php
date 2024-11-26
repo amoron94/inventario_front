@@ -17,17 +17,20 @@ class LoteController extends Controller
 
     public function index()
     {
-        $response_pro = Http::get($this->base_url . 'inventario/listado_producto_lote.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_pro = Http::get($this->base_url . 'inventario/listado_producto_lote.php?cod_empresa='.$empresa);
         $productos = $response_pro->json();
         //dd($productos);
 
-        $response_med = Http::get($this->base_url . 'parametro/listado_uni_medida.php');
+        $response_med = Http::get($this->base_url . 'parametro/listado_uni_medida.php?cod_empresa='.$empresa);
         $u_medidas = $response_med->json();
 
-        $response_cat = Http::get($this->base_url . 'parametro/listado_categoria.php');
+        $response_cat = Http::get($this->base_url . 'parametro/listado_categoria.php?cod_empresa='.$empresa);
         $categorias = $response_cat->json();
 
-        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php');
+        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php?cod_empresa='.$empresa);
         $sucursales = $response_suc->json();
 
         // Verificar la respuesta

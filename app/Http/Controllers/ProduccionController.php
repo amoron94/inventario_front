@@ -18,8 +18,10 @@ class ProduccionController extends Controller
 
     public function index()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_pro = Http::get($this->base_url . 'produccion/listado_produccion.php');
+        $response_pro = Http::get($this->base_url . 'produccion/listado_produccion.php?cod_empresa='.$empresa);
         $producciones = $response_pro->json();
 
         return view('produccion.listado_receta', compact('producciones'));
@@ -27,11 +29,13 @@ class ProduccionController extends Controller
 
     public function nuevo()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_prod = Http::get($this->base_url . 'produccion/listado_prod_receta.php');
+        $response_prod = Http::get($this->base_url . 'produccion/listado_prod_receta.php?cod_empresa='.$empresa);
         $productos = $response_prod->json();
 
-        $response_m_prima = Http::get($this->base_url . 'produccion/listado_prod_materia.php');
+        $response_m_prima = Http::get($this->base_url . 'produccion/listado_prod_materia.php?cod_empresa='.$empresa);
         $m_primas = $response_m_prima->json();
 
         return view('produccion.nueva_receta', compact('productos', 'm_primas'))->with('baseUrl', $this->base_url);
@@ -39,10 +43,13 @@ class ProduccionController extends Controller
 
     public function ver($id)
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
         $response_rec = Http::get($this->base_url . 'produccion/ver_receta.php?codigo='.$id);
         $recetas = $response_rec->json();
 
-        $response_emp = Http::get($this->base_url . 'listado_empresa.php');
+        $response_emp = Http::get($this->base_url . 'listado_empresa.php?cod_empresa='.$empresa);
         $empresas = $response_emp->json();
 
         // Genera el PDF

@@ -17,7 +17,10 @@ class CategoriaController extends Controller
 
     public function index()
     {
-        $response_cat = Http::get($this->base_url . 'parametro/listado_categoria.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_cat = Http::get($this->base_url . 'parametro/listado_categoria.php?cod_empresa='.$empresa);
         $categorias = $response_cat->json();
         //dd($categorias);
 
@@ -31,10 +34,12 @@ class CategoriaController extends Controller
 
     public function store(Request $request)
     {
-        //$usuario = session('usuario_logueado');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
         $response = Http::post($this->base_url . 'parametro/nueva_categoria.php', [
             'descripcion'   => $request->descripcion,
+            'empresa'       => $empresa,
         ]);
 
         $u_medidas = $response->json();

@@ -20,14 +20,15 @@ class PosController extends Controller
         $usuario = session('usuario_logueado');
 
         $cod_user = $usuario['data']['codigo'];
+        $empresa = $usuario['data']['cod_empresa'];
         //dd($cod_user);
 
-        $response_emp = Http::get($this->base_url . 'listado_empresa.php');
+        $response_emp = Http::get($this->base_url . 'listado_empresa.php?cod_empresa='.$empresa);
         $empresas = $response_emp->json();
 
         $response_caja = Http::get($this->base_url . 'ingreso/listado_caja.php?codigo='.$cod_user);
         $cajas = $response_caja->json();
-
+        //dd($cajas);
         $cod_sucursal = isset($cajas['data']['cod_sucursal']) ? $cajas['data']['cod_sucursal'] : "0";
 
         //----------------------------- POS -----------------------------------
@@ -38,12 +39,12 @@ class PosController extends Controller
         $response_pro = Http::get($this->base_url . 'ingreso/get_productos.php?codigo='.$cod_sucursal);
         $productos = $response_pro->json();
 
-        $response_cli = Http::get($this->base_url . 'ingreso/listado_cliente_pos.php');
+        $response_cli = Http::get($this->base_url . 'ingreso/listado_cliente_pos.php?cod_empresa='.$empresa);
         $clientes = $response_cli->json();
 
         //----------------------------- Sirve Apertura --------------------------------
 
-        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php');
+        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php?cod_empresa='.$empresa);
         $sucursales = $response_suc->json();
 
 
@@ -59,12 +60,14 @@ class PosController extends Controller
     {
         $usuario = session('usuario_logueado');
         $cod_user = $usuario['data']['codigo'];
+        $empresa = $usuario['data']['cod_empresa'];
 
         //dd($request->all());
         $response = Http::post($this->base_url . 'ingreso/nueva_caja.php', [
             'cod_user'          => $cod_user,
             'sucursal'          => $request->sucursal,
-            'monto'             => $request->monto
+            'monto'             => $request->monto,
+            'empresa'           => $empresa
         ]);
 
         $cajas = $response->json();

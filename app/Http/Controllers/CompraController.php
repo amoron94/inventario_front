@@ -18,8 +18,10 @@ class CompraController extends Controller
 
     public function index()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_comp = Http::get($this->base_url . 'egreso/listado_compra.php');
+        $response_comp = Http::get($this->base_url . 'egreso/listado_compra.php?cod_empresa='.$empresa);
         $compras = $response_comp->json();
 
         return view('egreso.compra.listado_compra', compact('compras'));
@@ -27,14 +29,16 @@ class CompraController extends Controller
 
     public function nuevo()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_prov = Http::get($this->base_url . 'egreso/listado_proveedor.php');
+        $response_prov = Http::get($this->base_url . 'egreso/listado_proveedor.php?cod_empresa='.$empresa);
         $proveedores = $response_prov->json();
 
-        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php');
+        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php?cod_empresa='.$empresa);
         $sucursales = $response_suc->json();
 
-        $response_pro = Http::get($this->base_url . 'producto/listado_producto.php');
+        $response_pro = Http::get($this->base_url . 'producto/listado_producto.php?cod_empresa='.$empresa);
         $productos = $response_pro->json();
 
         return view('egreso.compra.nueva_compra', compact('proveedores','sucursales','productos'))->with('baseUrl', $this->base_url);
@@ -51,10 +55,13 @@ class CompraController extends Controller
 
     public function descargar_comp($id)
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
         $response_gas = Http::get($this->base_url . 'egreso/ver_compra.php?codigo='.$id);
         $gastos = $response_gas->json();
 
-        $response_emp = Http::get($this->base_url . 'listado_empresa.php');
+        $response_emp = Http::get($this->base_url . 'listado_empresa.php?cod_empresa='.$empresa);
         $empresas = $response_emp->json();
 
         // Genera el PDF

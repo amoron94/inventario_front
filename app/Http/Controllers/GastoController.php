@@ -17,11 +17,13 @@ class GastoController extends Controller
 
     public function index()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_gas = Http::get($this->base_url . 'egreso/listado_gasto.php');
+        $response_gas = Http::get($this->base_url . 'egreso/listado_gasto.php?cod_empresa='.$empresa);
         $gastos = $response_gas->json();
 
-        $response_ser = Http::get($this->base_url . 'egreso/listado_servicio.php');
+        $response_ser = Http::get($this->base_url . 'egreso/listado_servicio.php?cod_empresa='.$empresa);
         $servicios = $response_ser->json();
 
         return view('egreso.gasto.listado_gasto', compact('gastos', 'servicios'));
@@ -29,7 +31,8 @@ class GastoController extends Controller
 
     public function store(Request $request)
     {
-        //$usuario = session('usuario_logueado');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
         //dd($request->all());
         $response = Http::post($this->base_url . 'egreso/nuevo_gasto.php', [
@@ -37,6 +40,7 @@ class GastoController extends Controller
             'monto'         => $request->monto,
             'fecha'         => $request->fecha,
             'descripcion'   => $request->descripcion,
+            'empresa'       => $empresa,
         ]);
 
         $gastos = $response->json();

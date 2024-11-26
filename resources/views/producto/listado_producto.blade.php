@@ -223,8 +223,11 @@
                                 <div class="col-lg-3 col-xs-12">
                                     <div class="form-group">
                                         <label for="form-label">Unidad de Medida</label>
-                                        <select id="medidaSelect" name="medida" class="form-select form-select-sm" required>
-                                            <!-- Opciones se llenarán dinámicamente -->
+                                        <select name="medida" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" required>
+                                            <option value="" disabled selected>Seleccionar...</option>
+                                            @foreach ($u_medidas['data']  as $u_medida)
+                                            <option value="{{ $u_medida['codigo'] }}">{{ $u_medida['descripcion'] }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -232,6 +235,7 @@
                                     <div class="form-group">
                                         <label for="form-label">Categoría</label>
                                         <select name="categoria" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" required>
+                                            <option value="" disabled selected>Seleccionar...</option>
                                             @foreach ($categorias['data']  as $categoria)
                                             <option value="{{ $categoria['codigo'] }}">{{ $categoria['descripcion'] }}</option>
                                             @endforeach
@@ -279,7 +283,7 @@
     </div>
 
 @push('scripts')
-    <script>
+    <!--<script>
         document.addEventListener("DOMContentLoaded", function() {
             const medidaSelect = document.getElementById("medidaSelect");
             const radioMateriaPrima = document.getElementById("m_prima"); //1
@@ -329,7 +333,7 @@
             // Carga inicial
             actualizarMedidas();
         });
-    </script>
+    </script>-->
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

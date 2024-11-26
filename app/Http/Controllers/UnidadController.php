@@ -17,7 +17,10 @@ class UnidadController extends Controller
 
     public function index()
     {
-        $response_med = Http::get($this->base_url . 'parametro/listado_uni_medida.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_med = Http::get($this->base_url . 'parametro/listado_uni_medida.php?cod_empresa='.$empresa);
         $u_medidas = $response_med->json();
         //dd($u_medidas);
 
@@ -31,11 +34,13 @@ class UnidadController extends Controller
 
     public function store(Request $request)
     {
-        //$usuario = session('usuario_logueado');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
         $response = Http::post($this->base_url . 'parametro/nuevo_uni_medida.php', [
             'descripcion'   => $request->descripcion,
-            'av'            => $request->av
+            'av'            => $request->av,
+            'empresa'       => $empresa,
         ]);
 
         $u_medidas = $response->json();

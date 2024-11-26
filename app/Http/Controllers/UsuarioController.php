@@ -28,7 +28,8 @@ class UsuarioController extends Controller
 
     public function store(Request $request)
     {
-        //$usuario = session('usuario_logueado');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
         $fechaHora = date('dmYHis');
         $img = $request->file('img');
@@ -44,6 +45,7 @@ class UsuarioController extends Controller
             'telefono'          => $request->telefono,
             'tipo'              => $request->tipo,
             'pass'              => $request->contra,
+            'empresa'           => $empresa,
             'img'               => $fechaHora . "_" . $img->getClientOriginalName()
         ]);
 

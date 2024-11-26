@@ -17,7 +17,10 @@ class CobroController extends Controller
 
     public function index()
     {
-        $response_cob = Http::get($this->base_url . 'ingreso/listado_cobros.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_cob = Http::get($this->base_url . 'ingreso/listado_cobros.php?cod_empresa='.$empresa);
         $cobros = $response_cob->json();
         //dd($cobros);
 

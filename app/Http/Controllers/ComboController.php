@@ -18,8 +18,10 @@ class ComboController extends Controller
 
     public function index()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_com = Http::get($this->base_url . 'produccion/listado_combo.php');
+        $response_com = Http::get($this->base_url . 'produccion/listado_combo.php?cod_empresa='.$empresa);
         $combos = $response_com->json();
 
         return view('produccion.listado_combo', compact('combos'));
@@ -27,11 +29,13 @@ class ComboController extends Controller
 
     public function nuevo()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_prod = Http::get($this->base_url . 'produccion/listado_prod_combo.php');
+        $response_prod = Http::get($this->base_url . 'produccion/listado_prod_combo.php?cod_empresa='.$empresa);
         $productos = $response_prod->json();
 
-        $response_p_term = Http::get($this->base_url . 'produccion/listado_p_terminado.php');
+        $response_p_term = Http::get($this->base_url . 'produccion/listado_p_terminado.php?cod_empresa='.$empresa);
         $p_termins = $response_p_term->json();
 
         return view('produccion.nuevo_combo', compact('productos', 'p_termins'))->with('baseUrl', $this->base_url);
@@ -39,10 +43,13 @@ class ComboController extends Controller
 
     public function ver($id)
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
         $response_com = Http::get($this->base_url . 'produccion/ver_combo.php?codigo='.$id);
         $combos = $response_com->json();
 
-        $response_emp = Http::get($this->base_url . 'listado_empresa.php');
+        $response_emp = Http::get($this->base_url . 'listado_empresa.php?cod_empresa='.$empresa);
         $empresas = $response_emp->json();
 
         // Genera el PDF

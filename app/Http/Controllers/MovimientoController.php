@@ -19,7 +19,10 @@ class MovimientoController extends Controller
 
     public function index()
     {
-        $response_mov = Http::get($this->base_url . 'inventario/listado_movimiento.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_mov = Http::get($this->base_url . 'inventario/listado_movimiento.php?cod_empresa='.$empresa);
         $movimientos = $response_mov->json();
 
         return view('inventario.movimiento.listado_movimiento', compact('movimientos'));
@@ -28,10 +31,13 @@ class MovimientoController extends Controller
     public function nuevo()
     {
 
-        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php?cod_empresa='.$empresa);
         $sucursales = $response_suc->json();
 
-        $response_pro = Http::get($this->base_url . 'producto/listado_producto.php');
+        $response_pro = Http::get($this->base_url . 'producto/listado_producto.php?cod_empresa='.$empresa);
         $productos = $response_pro->json();
 
         return view('inventario.movimiento.nuevo_movimiento', compact('sucursales','productos'))->with('baseUrl', $this->base_url);
@@ -39,7 +45,10 @@ class MovimientoController extends Controller
 
     public function ver($id)
     {
-        $response_mov = Http::get($this->base_url . 'inventario/ver_movimiento.php?codigo='.$id);
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_mov = Http::get($this->base_url . 'inventario/ver_movimiento.php?codigo='.$id . '&cod_empresa=' . $empresa);
         $movimientos = $response_mov->json();
         //dd($movimientos);
         // Pasar los datos a la vista de impresión
@@ -48,10 +57,13 @@ class MovimientoController extends Controller
 
     public function descargar_mov($id)
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
         $response_mov = Http::get($this->base_url . 'inventario/ver_movimiento.php?codigo='.$id);
         $movimientos = $response_mov->json();
 
-        $response_emp = Http::get($this->base_url . 'listado_empresa.php');
+        $response_emp = Http::get($this->base_url . 'listado_empresa.php?cod_empresa='.$empresa);
         $empresas = $response_emp->json();
 
         // Genera el PDF

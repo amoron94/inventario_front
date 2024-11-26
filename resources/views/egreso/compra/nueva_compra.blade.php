@@ -302,6 +302,7 @@
 
             // Capturar el usuario responsable
             var usuario_responsable = `{{$usuario['data']['codigo']}}`;
+            var cod_empresa = `{{$usuario['data']['cod_empresa']}}`;
 
             // Capturar los productos de la tabla
             var productos = [];
@@ -321,7 +322,8 @@
                 fecha: fecha,
                 observaciones: observaciones,
                 productos: productos,
-                usuario_responsable: usuario_responsable
+                usuario_responsable: usuario_responsable,
+                empresa: cod_empresa
             };
 
             // Enviar los datos con AJAX usando fetch

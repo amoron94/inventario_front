@@ -37,14 +37,16 @@ class SucursalController extends Controller
 
     public function store(Request $request)
     {
-        //$usuario = session('usuario_logueado');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
         $response = Http::post($this->base_url . 'inventario/nuevo_sucursal.php', [
             'nombre'        => $request->nombre,
             'encargado'     => $request->encargado,
             'telefono'      => $request->telefono,
             'direccion'     => $request->direccion,
-            'ciudad'        => $request->ciudad
+            'ciudad'        => $request->ciudad,
+            'empresa'       => $empresa
         ]);
 
         $sucursal = $response->json();

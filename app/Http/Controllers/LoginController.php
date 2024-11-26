@@ -42,7 +42,9 @@ class LoginController extends Controller
             // Establecer el tiempo de expiración de la sesión (por ejemplo, 24 horas)
             session(['session_expires_at' => now()->addHours(6)]);
 
-            $response_prod = Http::get($this->base_url . 'listado_stock_minimo.php');
+            $empresa = $data['data']['cod_empresa'];
+
+            $response_prod = Http::get($this->base_url . 'listado_stock_minimo.php?cod_empresa='.$empresa);
             $productos = $response_prod->json();
             //dd($productos);
 

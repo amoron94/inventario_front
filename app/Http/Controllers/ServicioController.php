@@ -17,7 +17,10 @@ class ServicioController extends Controller
 
     public function index()
     {
-        $response_ser = Http::get($this->base_url . 'egreso/listado_servicio.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_ser = Http::get($this->base_url . 'egreso/listado_servicio.php?cod_empresa='.$empresa);
         $servicios = $response_ser->json();
 
         return view('egreso.servicio.listado_servicio', compact('servicios'));
@@ -25,18 +28,19 @@ class ServicioController extends Controller
 
     public function store(Request $request)
     {
-        //$usuario = session('usuario_logueado');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
         //dd($request->all());
         $response = Http::post($this->base_url . 'egreso/nuevo_servicio.php', [
-            'descripcion'      => $request->descripcion,
-
+            'descripcion'       => $request->descripcion,
+            'empresa'           => $empresa
         ]);
 
         $producto = $response->json();
 
         if ($producto['success']) {
-            return back()->with('success', 'Producto Registrado');
+            return back()->with('success', 'Servicio Registrado');
         } else {
             return back()->with('error', 'Error al guardar los datos');
         }

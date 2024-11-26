@@ -18,8 +18,10 @@ class CajaController extends Controller
 
     public function index()
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
 
-        $response_caja = Http::get($this->base_url . 'ingreso/listado_arqueo_caja.php');
+        $response_caja = Http::get($this->base_url . 'ingreso/listado_arqueo_caja.php?cod_empresa='.$empresa);
         $cajas = $response_caja->json();
 
         return view('ingreso.caja.listado_caja', compact('cajas'));

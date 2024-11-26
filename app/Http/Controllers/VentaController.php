@@ -18,7 +18,10 @@ class VentaController extends Controller
 
     public function index()
     {
-        $response_ven = Http::get($this->base_url . 'ingreso/listado_venta.php');
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
+        $response_ven = Http::get($this->base_url . 'ingreso/listado_venta.php?cod_empresa='.$empresa);
         $ventas = $response_ven->json();
         //dd($ventas);
 
@@ -32,10 +35,13 @@ class VentaController extends Controller
 
     public function descargar_ven($id)
     {
+        $usuario = session('usuario_logueado');
+        $empresa = $usuario['data']['cod_empresa'];
+
         $response_ven = Http::get($this->base_url . 'ingreso/ver_venta.php?codigo='.$id);
         $ventas = $response_ven->json();
 
-        $response_emp = Http::get($this->base_url . 'listado_empresa.php');
+        $response_emp = Http::get($this->base_url . 'listado_empresa.php?cod_empresa='.$empresa);
         $empresas = $response_emp->json();
 
         // Genera el PDF

@@ -7,7 +7,7 @@
     <title>POS - Venta</title>
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="icon" href="{{ asset('img/photos/logo_digitaldev.jpg') }}" type="image/x-icon"/>
+    <link rel="icon" href="{{ asset('img/photos/logo_gestock_b.png') }}" type="image/x-icon"/>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -271,6 +271,7 @@
     <input type="text" name="sucursal" value="{{ $cajas['data']['cod_sucursal'] }}" hidden>
     <input type="text" name="caja" value="{{ $cajas['data']['codigo'] }}" hidden>
     <input type="text" name="responsable" value="{{ $cajas['data']['cod_usuario'] }}" hidden>
+    <input type="text" name="cod_empresa" value="{{ $cajas['data']['cod_empresa'] }}" hidden>
 
     <div class="container-fluid vh-100 d-flex flex-column">
 
@@ -703,7 +704,7 @@
             // Obtener los valores de los campos del formulario
             let nombreC = $('input[name="nombreC"]').val();
             let telefonoC = $('input[name="telefonoC"]').val();
-
+            let cod_empresa = $('input[name="cod_empresa"]').val();
             // Validación rápida (opcional)
             if (nombreC === '') {
                 Swal.fire({
@@ -722,7 +723,8 @@
                 data: JSON.stringify({
                     _token: '{{ csrf_token() }}', // Añadir el token CSRF si estás en Laravel
                     nombre: nombreC,
-                    telefono: telefonoC
+                    telefono: telefonoC,
+                    empresa: cod_empresa
                 }),
                 success: function (response) {
                     // Manejar la respuesta del servidor aquí
@@ -1017,6 +1019,7 @@
             let sucursal = $('input[name="sucursal"]').val();
             let caja = $('input[name="caja"]').val();
             let responsable = $('input[name="responsable"]').val();
+            let cod_empresa = $('input[name="cod_empresa"]').val();
             let montoPagado = parseFloat($('#montoPagado').val());
             let tipo = $('input[name="tipo"]:checked').val();
             let totalPagar = parseFloat($('#totalPagar').text().replace(' Bs.', '').trim());
@@ -1071,6 +1074,7 @@
                                 productos: carrito,
                                 cliente: cliente,
                                 sucursal: sucursal,
+                                empresa: cod_empresa,
                                 caja: caja,
                                 totalVenta: totalPagar,
                                 montoPagado: montoPagado,
