@@ -2,12 +2,43 @@
 
 @section('card')
 
+<?php $usuario = session('usuario_logueado'); ?>
+
+@if($usuario['data']['dias'] <= 20)
+<div class="row">
+    <div class="col-xl-12 col-xxl-5 d-flex">
+        <div class="w-100">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    <div class="card animate__animated animate__fadeInRightBig" style="background: #b10c1c">
+                        <div class="card-body">
+                            <center>
+
+                                <h3 style="color: #ffffff; font-weight: bold;">¡Tu suscripción está por vencer!</h3>
+
+                                <h2 style="color: #ffffff">Solo te quedan <strong>{{$usuario['data']['dias']}} días</strong> antes de que tu suscripción expire.</h2>
+
+                                <p style="color: #ffffff; font-size: 16px;">
+                                    Asegúrate de renovar para seguir disfrutando de nuestros servicios sin interrupciones.
+                                </p>
+
+                                <a href="{{ url('reactivar') }}" class="btn btn-light mt-3" style="color: #b10c1c">Renovar Ahora</a>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
 <div class="row">
     <div class="col-xl-12 col-xxl-5 d-flex">
         <div class="w-100">
             <div class="row">
                 <div class="col-sm-4 col-6">
-                    <div class="card" style="background: #d5f1d5">
+                    <div class="card animate__animated animate__slideInDown" style="background: #d5f1d5">
                         <div class="card-body">
                             <center>
                             <h5 class="card-title" style="color: #008000">Ventas del Dia</h5>
@@ -17,7 +48,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4 col-6">
-                    <div class="card" style="background: #d5f1d5">
+                    <div class="card animate__animated animate__slideInDown" style="background: #d5f1d5">
                         <div class="card-body">
                             <center>
                             <h5 class="card-title" style="color: #008000">Ventas del Mes</h5>
@@ -27,7 +58,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4 col-12">
-                    <div class="card" style="background: #d5f1d5">
+                    <div class="card animate__animated animate__slideInDown" style="background: #d5f1d5">
                         <div class="card-body">
                             <center>
                             <h5 class="card-title" style="color: #008000">Ventas del Año</h5>
@@ -46,7 +77,7 @@
         <div class="w-100">
             <div class="row">
                 <div class="col-sm-4 col-6">
-                    <div class="card" style="background: #ffcdc5">
+                    <div class="card animate__animated animate__slideInUp" style="background: #ffcdc5">
                         <div class="card-body">
                             <center>
                             <h5 class="card-title" style="color: #b10c1c">Gastos del Dia</h5>
@@ -56,7 +87,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4 col-6">
-                    <div class="card" style="background: #ffcdc5">
+                    <div class="card animate__animated animate__slideInUp" style="background: #ffcdc5">
                         <div class="card-body">
                             <center>
                             <h5 class="card-title" style="color: #b10c1c">Gastos del Mes</h5>
@@ -66,7 +97,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4 col-12">
-                    <div class="card" style="background: #ffcdc5">
+                    <div class="card animate__animated animate__slideInUp" style="background: #ffcdc5">
                         <div class="card-body">
                             <center>
                             <h5 class="card-title" style="color: #b10c1c">Gastos del Año</h5>

@@ -12,7 +12,7 @@
 
             @foreach ($productos['data'] as $producto)
             <!-- Repite este bloque para cada producto -->
-            <div class="col-6 col-lg-2">
+            <div class="col-6 col-lg-2 animate__animated animate__fadeIn">
                 <a href="{{ route('ver_lote', ['id' => $producto['codigo'], 'nombre' => urlencode($producto['producto'])]) }}" class="text-decoration-none">
                 <div class="product-card">
                     <span class="precio"><b>{{ $producto['producto'] }}</b></span>

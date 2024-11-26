@@ -1,9 +1,13 @@
 @extends('dashboard')
 @section('contenido')
 
+<?php $usuario = session('usuario_logueado'); ?>
+
     <div class="card-header">
         <div class="container-fluid p-0">
+            @if($usuario['data']['plan'] > 1)
             <button class="btn btn-sm btn-success float-end" data-bs-toggle="modal" data-bs-target="#nuevoS">Nuevo</button>
+            @endif
             <h3 class="d-inline align-middle">Listado Sucursal</h3>
         </div>
     </div>

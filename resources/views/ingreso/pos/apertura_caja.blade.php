@@ -23,6 +23,8 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
@@ -613,7 +615,7 @@
                 <div class="col-lg-4 col-xs-12">
                 </div>
                 <div class="col-lg-4 col-xs-12">
-                    <div class="card">
+                    <div class="card animate__animated animate__fadeInUpBig">
                         <div class="card-header">
                             <div class="container-fluid p-0">
                                 <center><h3 class="d-inline align-middle">Aperturar caja</h3></center>
