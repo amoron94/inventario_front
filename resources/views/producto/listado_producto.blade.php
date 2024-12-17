@@ -37,6 +37,8 @@
                                 <span class="badge bg-primary rounded-3 fw-semibold" style="font-size: 10px;">{{ $producto['tipo']}}</span>
                             @elseif($producto['tipo'] == 'SEMITERMINADO')
                             <span class="badge bg-success rounded-3 fw-semibold" style="font-size: 10px;">{{ $producto['tipo']}}</span>
+                            @elseif($producto['tipo'] == 'SERVICIO')
+                            <span class="badge bg-danger rounded-3 fw-semibold" style="font-size: 10px;">{{ $producto['tipo']}}</span>
                             @else
                                 <span class="badge bg-warning rounded-3 fw-semibold" style="font-size: 10px;">{{ $producto['tipo']}}</span>
                             @endif
@@ -208,6 +210,13 @@
                                                 <img src="{{asset('img/icons/bienes.png')}}" alt="Option 3">
                                             </label>
                                             <span class="badge bg-success rounded-3 fw-semibold" style="font-size: 10px;">Producto Terminado</span>
+                                        </div>
+                                        <div class="radio-img">
+                                            <input type="radio" id="servicio" name="tipo" value="4">
+                                            <label for="servicio">
+                                                <img src="{{asset('img/icons/servicio.png')}}" alt="Option 4">
+                                            </label>
+                                            <span class="badge bg-success rounded-3 fw-semibold" style="font-size: 10px;">Servicio</span>
                                         </div>
                                     </center>
                                     <hr>

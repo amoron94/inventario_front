@@ -10,11 +10,11 @@
 
     <div class="card-body">
         <div class="table-responsive">
-            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle" data-order-direction="desc">
+            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle" data-order-direction="asc">
                 <thead class="bg-primary" style="font-size: 12px;">
                     <tr class="text-white">
-                        <th>Fecha Vencimiento</th>
                         <th>Nro Lote</th>
+                        <th>Fecha Vencimiento</th>
                         <th>Sucursal</th>
                         <th>Cantidad</th>
                         <th>Opciones</th>
@@ -23,8 +23,8 @@
                 <tbody style="font-size: 11px;">
                     @foreach($lotes['data'] as $lote)
                     <tr>
-                        <td><b>{{ $lote['f_vencimiento']}}</b></td>
                         <td>{{ $lote['nro']}}</td>
+                        <td><b>{{ $lote['f_vencimiento']}}</b></td>
                         <td>{{ $lote['sucursal']}}</td>
                         <td>{{ $lote['cantidad'] }} <b class="text-danger">({{ $lote['av'] }})</b></td>
                         <td>

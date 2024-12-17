@@ -12,22 +12,24 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 <body>
 
         <div class="login-box">
             <div class="cont-box">
-                <img src="{{asset('img/photos/logo_gestock.png')}}" alt="logo" width="90" height="90">
-                <h1>Iniciar sesión</h1>
+                <img src="{{asset('img/photos/logo_gestock.png')}}" class="animate__animated animate__backInDown" alt="logo" width="90" height="90">
+                <h1 class="animate__animated animate__fadeIn">Iniciar sesión</h1>
                 <form action="{{route('acceder')}}" method="POST">
                     @csrf
-                    <input type="email" name="email" placeholder="Dirección de correo electrónico" value="alan.developer13@gmail.com" required>
+                    <input class="animate__animated animate__fadeIn" type="email" name="email" placeholder="Dirección de correo electrónico" value="alan.developer13@gmail.com" required>
                     <div style="position: relative;">
-                        <input type="password" id="contra" name="pass" placeholder="Contraseña" value="Alan1234" required>
+                        <input class="animate__animated animate__fadeIn" type="password" id="contra" name="pass" placeholder="Contraseña" value="Alan1234" required>
                         <i class="ti ti-eye-off" id="togglePassword" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer;color: black;"></i>
                     </div>
 
-                    <button type="submit">Acceso</button>
+                    <button type="submit" class="animate__animated animate__fadeIn">Acceso</button>
                 </form>
             </div>
 

@@ -67,15 +67,23 @@
         </center>
         <hr>
         <div class="line-item">
-            <span>Total Esperado: </span>
+            <span>Total Esperado de Ventas: </span>
             <span>{{ $caja['total_sistema'] }} Bs.</span>
         </div>
         <div class="line-item">
-            <span>Total Caja: </span>
+            <span>Total en Caja (Arqueo): </span>
             <span>{{ $caja['monto_c'] }} Bs.</span>
         </div>
         <div class="line-item">
-            <span>Diferencia: </span>
+            <span>
+                @if ($caja['diferencia'] == 0)
+                    Sin Diferencia:
+                @elseif ($caja['diferencia'] > 0)
+                    Sobrante:
+                @else
+                    Faltante:
+                @endif
+            </span>
             <span>{{ $caja['diferencia'] }} Bs.</span>
         </div>
         <hr>

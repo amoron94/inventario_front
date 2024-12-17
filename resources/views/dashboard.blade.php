@@ -84,6 +84,22 @@
             font-family: 'Poppins', sans-serif !important;
         }
 
+        .navbar-title {
+            font-family: 'Poppins', sans-serif !important;
+            position: absolute;
+            left: 50%;
+            font-weight: bold;
+            transform: translateX(-50%);
+            margin: 0; /* Elimina márgenes adicionales */
+        }
+
+        .back-title{
+            background: #4CAF50;
+            color: #fff;
+            border-radius: 5px;
+            padding: 3px 5px;
+        }
+
         @media (max-width: 768px) {
 
             .logo-menu{
@@ -316,17 +332,17 @@
 						</a>
 						<ul id="reporte" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
 							<li class="sidebar-item">
-                                <a class="sidebar-link sub-pag" href="{{ url('#') }}">
+                                <a class="sidebar-link sub-pag" href="{{ url('rep_venta') }}">
                                     <i class="align-middle" data-feather="shopping-bag"></i> Ingresos
                                 </a>
                             </li>
 							<li class="sidebar-item">
-                                <a class="sidebar-link sub-pag" href="{{ url('#') }}">
+                                <a class="sidebar-link sub-pag" href="{{ url('rep_compra') }}">
                                     <i class="align-middle" data-feather="shopping-cart"></i> Egresos
                                 </a>
                             </li>
                             <li class="sidebar-item">
-                                <a class="sidebar-link sub-pag" href="{{ url('#') }}">
+                                <a class="sidebar-link sub-pag" href="{{ url('rep_inventario') }}">
                                     <i class="align-middle" data-feather="sliders"></i> Inventario
                                 </a>
                             </li>
@@ -344,6 +360,8 @@
 				<a class="sidebar-toggle js-sidebar-toggle">
                     <i class="hamburger align-self-center"></i>
                 </a>
+
+                <h4 class="navbar-title text-center mx-auto back-title">{{ $usuario['data']['empresa'] }}</h4>
 
 				<div class="navbar-collapse collapse ">
 					<ul class="navbar-nav navbar-align">

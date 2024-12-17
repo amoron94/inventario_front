@@ -20,6 +20,10 @@ class DashController extends Controller
         $usuario = session('usuario_logueado');
         $empresa = $usuario['data']['cod_empresa'];
 
+        $response_lo = Http::get($this->base_url . 'listado_lotes_vencer.php?cod_empresa='.$empresa);
+        $lotes = $response_lo->json();
+        //dd($lotes);
+
         $response_ven = Http::get($this->base_url . 'ventas.php?cod_empresa='.$empresa);
         $ventas = $response_ven->json();
         //dd($ventas);
@@ -46,7 +50,7 @@ class DashController extends Controller
 
         // Verificar la respuesta
         if ($ventas['success']) {
-            return view('grafdash', compact('ventas','compras','productos','tpagos','vmeses','cmeses'));
+            return view('grafdash', compact('lotes','ventas','compras','productos','tpagos','vmeses','cmeses'));
         }else{
             return back()->with('error', 'No se puede conectar con la BD');
         }

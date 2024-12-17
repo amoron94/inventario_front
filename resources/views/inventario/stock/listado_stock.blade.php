@@ -22,6 +22,7 @@
                             <option value="1" {{ request('tipo_p') == '1' ? 'selected' : '' }}>MATERIA PRIMA</option>
                             <option value="3" {{ request('tipo_p') == '3' ? 'selected' : '' }}>SEMITERMINADO</option>
                             <option value="2" {{ request('tipo_p') == '2' ? 'selected' : '' }}>PROD. TERMINADO</option>
+                            <option value="4" {{ request('tipo_p') == '4' ? 'selected' : '' }}>SERVICIO</option>
                         </select>
                         <button type="submit" class="btn btn-sm btn-success">Filtrar Productos</button>
                     </form>
@@ -63,6 +64,8 @@
                                 <span class="badge bg-primary rounded-3 fw-semibold" style="font-size: 10px;">{{ $stock['tipo']}}</span>
                             @elseif($stock['tipo'] == 'SEMITERMINADO')
                                 <span class="badge bg-success rounded-3 fw-semibold" style="font-size: 10px;">{{ $stock['tipo']}}</span>
+                            @elseif($stock['tipo'] == 'SERVICIO')
+                                <span class="badge bg-danger rounded-3 fw-semibold" style="font-size: 10px;">{{ $stock['tipo']}}</span>
                             @else
                                 <span class="badge bg-warning rounded-3 fw-semibold" style="font-size: 10px;">{{ $stock['tipo']}}</span>
                             @endif

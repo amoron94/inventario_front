@@ -17,6 +17,7 @@ use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProduccionController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SucursalController;
@@ -192,3 +193,10 @@ Route::middleware(['verifyRole.auth:CAJERO'])->group(function () {
 
 Route::get('cobro', [CobroController::class, 'index'])->middleware('custom.auth');
 Route::patch('/pagar-cobro/{id}', [CobroController::class, 'pagar'])->name('pagar_cobro');
+
+
+
+//------------------------------ Reportes --------------------------------
+Route::get('rep_venta', [ReporteController::class, 'venta'])->middleware('custom.auth');
+Route::get('rep_compra', [ReporteController::class, 'compra'])->middleware('custom.auth');
+Route::get('rep_inventario', [ReporteController::class, 'inventario'])->middleware('custom.auth');

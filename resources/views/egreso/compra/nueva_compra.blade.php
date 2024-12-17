@@ -51,11 +51,11 @@
                 </div>
             </div>
 
-            <div class="border-success px-3 pt-1" style="border:2px solid">
-                <h5 class="text-success"><b>Detalle de Productos</b></h5>
+            <div class="border-primary px-3 pt-1" style="border:2px solid">
+                <h5 class="text-primary"><b>Detalle de Productos</b></h5>
 
                 <div class="row">
-                    <div class="col-lg-4 col-xs-12">
+                    <div class="col-lg-9 col-xs-12">
                         <div class="form-group">
                             <label for="form-label">Producto</label>
                             <select name="producto" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" disabled>
@@ -63,10 +63,14 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-xs-12">
+                    <div class="col-lg-3 col-xs-12">
                         <label for="form-label">Unidad</label>
                         <input type="text" name="cod_producto" class="form-control form-control-sm" hidden>
                         <input type="text" name="unidad" class="form-control form-control-sm" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 col-xs-12">
                     </div>
                     <div class="col-lg-2 col-xs-12">
                         <label for="form-label">Cantidad</label>
@@ -76,12 +80,18 @@
                         <label for="form-label">Precio</label>
                         <input type="number" name="precio" class="form-control form-control-sm" step="0.01" min="0">
                     </div>
-                    <div class="col-lg-2 col-xs-12" style="margin-top: 10px; text-align: center; align-content: center;">
+                    <div class="col-lg-2 col-xs-12">
+                        <label for="form-label">Vencimiento</label>
+                        <input type="date" name="vencimiento" class="form-control form-control-sm" value="{{ date('Y-m-d') }}">
+                    </div>
+                    <div class="col-lg-2 col-xs-12" style="margin-top: 25px; text-align: center; align-content: center;">
                         <button type="button" class="btn btn-primary btn-sm" id="agregarProducto"><i data-feather="plus"></i> Agregar</button>
+                    </div>
+                    <div class="col-lg-2 col-xs-12">
                     </div>
                 </div>
 
-                <div class="row mt-1">
+                <div class="row mt-3">
                     <div class="col-lg-1 col-xs-12">
                     </div>
                     <div class="col-lg-10 col-xs-12">
@@ -94,6 +104,7 @@
                                         <th style="width: 15%">Unidad</th>
                                         <th style="width: 10%">Cantidad</th>
                                         <th style="width: 10%">Precio</th>
+                                        <th style="width: 10%">Vencimiento</th>
                                         <th style="width: 10%">Total</th>
                                         <th style="width: 10%">Eliminar</th>
                                     </tr>
@@ -102,7 +113,7 @@
                                 </tbody>
                                 <tfoot style="font-size: 12px; background: #a2c0eb">
                                     <tr>
-                                        <td colspan="4" class="text-end text-dark"><span style="font-size: 18px"><b>Total a Cancelar</b></span></td>
+                                        <td colspan="5" class="text-end text-dark"><span style="font-size: 18px"><b>Total a Cancelar</b></span></td>
                                         <td id="totalCancelar" class="text-dark"><span style="font-size: 18px"><b>0.00</b></span></td>
                                         <td class="text-dark"><span style="font-size: 18px"><b>Bs.</b></span></td>
                                     </tr>
@@ -211,6 +222,7 @@
             var unidadInput = document.querySelector('input[name="unidad"]');
             var cantidadInput = document.querySelector('input[name="cantidad"]');
             var precioInput = document.querySelector('input[name="precio"]');
+            var vencimientoInput = document.querySelector('input[name="vencimiento"]');
 
             var cod_producto = codProductoInput.value;
             var producto = productoSelect.options[productoSelect.selectedIndex].text;
@@ -218,6 +230,7 @@
             var cantidad = parseFloat(cantidadInput.value); // Convertir a número
             var precio = parseFloat(precioInput.value); // Convertir a número
             var total = cantidad * precio;
+            var vencimiento = vencimientoInput.value;
 
             if (cod_producto && producto && unidad && cantidad && precio) {
                 var tableBody = document.querySelector('#detalle tbody');
@@ -229,7 +242,8 @@
                     cantidad += cantidadExistente;
                     filaExistente.querySelector('td:nth-child(4)').textContent = cantidad.toFixed(2);
                     filaExistente.querySelector('td:nth-child(5)').textContent = nuevoPrecio.toFixed(2);
-                    filaExistente.querySelector('td:nth-child(6)').textContent = (cantidad * nuevoPrecio).toFixed(2);
+                    filaExistente.querySelector('td:nth-child(6)').textContent = vencimiento;
+                    filaExistente.querySelector('td:nth-child(7)').textContent = (cantidad * nuevoPrecio).toFixed(2);
                 } else {
                     var fila = document.createElement('tr');
                     fila.innerHTML = `
@@ -238,6 +252,7 @@
                         <td>${unidad}</td>
                         <td>${cantidad.toFixed(2)}</td>
                         <td>${precio.toFixed(2)}</td>
+                        <td>${vencimiento}</td>
                         <td>${total.toFixed(2)}</td>
                         <td>
                             <center>
@@ -259,6 +274,7 @@
                 cantidadInput.value = '';
                 precioInput.value = '';
                 codProductoInput.value = '';
+                vencimientoInput.value = '';
                 $('.selectpicker').selectpicker('refresh');
 
             } else {
@@ -284,7 +300,7 @@
             var totalCancelar = 0;
             var tableBody = document.querySelector('#detalle tbody');
             tableBody.querySelectorAll('tr').forEach(fila => {
-                totalCancelar += parseFloat(fila.querySelector('td:nth-child(6)').textContent);
+                totalCancelar += parseFloat(fila.querySelector('td:nth-child(7)').textContent);
             });
             document.getElementById('totalCancelar').innerHTML = `<span style="font-size: 18px"><b>${totalCancelar.toFixed(2)}</b></span>`;
         }
@@ -312,7 +328,8 @@
                 var cod_producto = row.querySelector('td:nth-child(1)').innerText;
                 var cantidad = parseFloat(row.querySelector('td:nth-child(4)').innerText);
                 var precio = parseFloat(row.querySelector('td:nth-child(5)').innerText);
-                productos.push({ cod_producto: cod_producto, cantidad: cantidad , precio: precio });
+                var vencimiento = row.querySelector('td:nth-child(6)').innerText;
+                productos.push({ cod_producto: cod_producto, cantidad: cantidad , precio: precio, vencimiento: vencimiento });
             });
 
             // Estructurar los datos a enviar

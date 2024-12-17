@@ -33,6 +33,37 @@
 </div>
 @endif
 
+@if($usuario['data']['lote'] > 0)
+<div class="card">
+    <div class="row">
+        <div class="col-xl-12 col-xxl-5 d-flex">
+            <div class="w-100">
+                <div class="row m-3">
+                    <center><h4 style="color: #b10c1c; font-weight: bold">Lotes por vencer en el mes</h4></center>
+                    @foreach($lotes['data'] as $lote)
+                    <div class="col-sm-4 col-6 mt-1">
+                        <a href="{{ route('ver_lote', ['id' => $lote['codigo'], 'nombre' => urlencode($lote['producto'])]) }}" class="text-decoration-none">
+                        <div class="card-body d-flex align-items-center justify-content-between rounded-2" style="background: #ffcdc5">
+                            <div class="d-flex align-items-center">
+                                <img src="{{ asset('img/productos/' . $lote['img']) }}" class="avatar rounded-2 me-3" style="width: 60px; height: 60px;">
+                                <div>
+                                    <span class="fw-bold" style="color: #b10c1c;font-size: 15px;">{{ $lote['producto']}}</span>
+                                    <br>
+                                    <span class="fw-bold text-dark" style="font-size: 10px;">{{ $lote['medida']}} ( {{ $lote['av']}} )</span>
+                                </div>
+                            </div>
+                            <span class="fw-bold" style="color: #b10c1c; font-size: 40px;">{{ $lote['cant']}}</span>
+                        </div>
+                        </a>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
 <div class="row">
     <div class="col-xl-12 col-xxl-5 d-flex">
         <div class="w-100">
