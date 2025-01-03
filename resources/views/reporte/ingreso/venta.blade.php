@@ -16,9 +16,12 @@
                     <option value="1">Detalle Ventas</option>
                     <option value="2">Ventas Eliminadas</option>
                     <option value="3">Producto mas Vendidos</option>
-                    <option value="4">Ventas por producto</option>
+                    <option value="4">Ventas por Productos</option>
+                    <option value="7">Ventas por Categoria de Productos</option>
                     <option value="5">Ventas por Sucursal</option>
+                    <option value="9">Ventas por Usuario (Cajero)</option>
                     <option value="6">Cuadre de Cajas</option>
+                    <option value="8">Clientes Eliminados</option>
                 </select>
                 <button id="buscar" class="btn btn-success btn-color">Buscar</button>
             </div>
@@ -62,6 +65,24 @@
                         @endforeach
                     </select>
                 </div>
+                <div class="form-group mr-5">
+                    <label for="form-label"><b>Categorias</b></label>
+                    <select name="categoria" class="selectpicker show-tick form-control" data-live-search="true">
+                        <option value="" selected>Todas los Caterias</option>
+                        @foreach ($categorias['data'] as $categorias)
+                        <option value="{{ $categorias['codigo'] }}">{{ $categorias['descripcion'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group mr-5">
+                    <label for="form-label"><b>Usuarios</b></label>
+                    <select name="usuario" class="selectpicker show-tick form-control" data-live-search="true">
+                        <option value="" selected>Todas los Usuarios</option>
+                        @foreach ($usuarios['data'] as $usuarios)
+                        <option value="{{ $usuarios['codigo'] }}">{{ $usuarios['nombre'] }} {{ $usuarios['apellido_p'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
     </div>
@@ -76,6 +97,8 @@
 
         $(document).ready(function () {
             $('select[name="producto"]').closest('.form-group').hide();
+            $('select[name="categoria"]').closest('.form-group').hide();
+            $('select[name="usuario"]').closest('.form-group').hide();
             // Capturar el evento de cambio en el select "buscar"
             $('select[name="buscar"]').on('change', function () {
                 let selectedValue = $(this).val();
@@ -87,36 +110,71 @@
                         $('select[name="cliente"]').closest('.form-group').show();
                         $('select[name="pago"]').closest('.form-group').show();
                         $('select[name="producto"]').closest('.form-group').hide();
+                        $('select[name="categoria"]').closest('.form-group').hide();
+                        $('select[name="usuario"]').closest('.form-group').hide();
                         break;
                     case '2':
                         $('select[name="sucursal"]').closest('.form-group').show();
                         $('select[name="cliente"]').closest('.form-group').show();
                         $('select[name="pago"]').closest('.form-group').show();
                         $('select[name="producto"]').closest('.form-group').hide();
+                        $('select[name="categoria"]').closest('.form-group').hide();
+                        $('select[name="usuario"]').closest('.form-group').hide();
                         break;
                     case '3':
                         $('select[name="sucursal"]').closest('.form-group').show();
                         $('select[name="cliente"]').closest('.form-group').hide();
                         $('select[name="pago"]').closest('.form-group').hide();
                         $('select[name="producto"]').closest('.form-group').hide();
+                        $('select[name="categoria"]').closest('.form-group').hide();
+                        $('select[name="usuario"]').closest('.form-group').hide();
                         break;
                     case '4':
                         $('select[name="sucursal"]').closest('.form-group').show();
                         $('select[name="cliente"]').closest('.form-group').hide();
                         $('select[name="pago"]').closest('.form-group').hide();
                         $('select[name="producto"]').closest('.form-group').show();
+                        $('select[name="categoria"]').closest('.form-group').hide();
+                        $('select[name="usuario"]').closest('.form-group').hide();
                         break;
                     case '5':
                         $('select[name="sucursal"]').closest('.form-group').hide();
                         $('select[name="cliente"]').closest('.form-group').hide();
                         $('select[name="pago"]').closest('.form-group').hide();
                         $('select[name="producto"]').closest('.form-group').hide();
+                        $('select[name="categoria"]').closest('.form-group').hide();
+                        $('select[name="usuario"]').closest('.form-group').hide();
                         break;
                     case '6':
                         $('select[name="sucursal"]').closest('.form-group').show();
                         $('select[name="cliente"]').closest('.form-group').hide();
                         $('select[name="pago"]').closest('.form-group').hide();
                         $('select[name="producto"]').closest('.form-group').hide();
+                        $('select[name="categoria"]').closest('.form-group').hide();
+                        $('select[name="usuario"]').closest('.form-group').hide();
+                        break;
+                    case '7':
+                        $('select[name="cliente"]').closest('.form-group').hide();
+                        $('select[name="pago"]').closest('.form-group').hide();
+                        $('select[name="producto"]').closest('.form-group').hide();
+                        $('select[name="categoria"]').closest('.form-group').show();
+                        $('select[name="usuario"]').closest('.form-group').hide();
+                        break;
+                    case '8':
+                        $('select[name="sucursal"]').closest('.form-group').hide();
+                        $('select[name="cliente"]').closest('.form-group').hide();
+                        $('select[name="pago"]').closest('.form-group').hide();
+                        $('select[name="producto"]').closest('.form-group').hide();
+                        $('select[name="categoria"]').closest('.form-group').hide();
+                        $('select[name="usuario"]').closest('.form-group').hide();
+                        break;
+                    case '9':
+                        $('select[name="sucursal"]').closest('.form-group').show();
+                        $('select[name="cliente"]').closest('.form-group').hide();
+                        $('select[name="pago"]').closest('.form-group').hide();
+                        $('select[name="producto"]').closest('.form-group').hide();
+                        $('select[name="categoria"]').closest('.form-group').hide();
+                        $('select[name="usuario"]').closest('.form-group').show();
                         break;
                 }
 
@@ -159,44 +217,53 @@
 
         document.getElementById('buscar').addEventListener('click', function() {
 
-        let buscar = $('select[name="buscar"]').val();
+            let buscar = $('select[name="buscar"]').val();
 
-        let cod_empresa = $('input[name="cod_empresa"]').val();
-        let sucursal = $('select[name="sucursal"]').val();
-        let cliente = $('select[name="cliente"]').val();
-        let tipo_pago = $('select[name="pago"]').val();
-        let producto = $('select[name="producto"]').val();;
-        let activo = 1;
+            let cod_empresa = $('input[name="cod_empresa"]').val();
+            let sucursal = $('select[name="sucursal"]').val();
+            let cliente = $('select[name="cliente"]').val();
+            let tipo_pago = $('select[name="pago"]').val();
+            let producto = $('select[name="producto"]').val();
+            let categoria = $('select[name="categoria"]').val();
+            let usuario = $('select[name="usuario"]').val();
+            let activo = 1;
 
-        switch (buscar) {
-            case '1':
-                ventas(baseUrl, inicio, fin, cod_empresa, sucursal, cliente, tipo_pago, activo);
-                break;
-            case '2':
-                activo = 0;
-                ventas(baseUrl, inicio, fin, cod_empresa, sucursal, cliente, tipo_pago, activo);
-                break;
-            case '3':
-                producto = '';
-                producto_vendido(baseUrl, inicio, fin, cod_empresa, sucursal, producto);
-                break;
-            case '4':
-                producto_vendido(baseUrl, inicio, fin, cod_empresa, sucursal, producto);
-                break;
-            case '5':
-                ventas_sucursal(baseUrl, inicio, fin, cod_empresa);
-                break;
-            case '6':
-                cierre_caja(baseUrl, inicio, fin, cod_empresa, sucursal);
-                break;
-            default:
-                console.warn("Opción no válida");
-                break;
-        }
+            switch (buscar) {
+                case '1':
+                    ventas(baseUrl, inicio, fin, cod_empresa, sucursal, cliente, tipo_pago, activo);
+                    break;
+                case '2':
+                    activo = 0;
+                    ventas(baseUrl, inicio, fin, cod_empresa, sucursal, cliente, tipo_pago, activo);
+                    break;
+                case '3':
+                    producto = '';
+                    producto_vendido(baseUrl, inicio, fin, cod_empresa, sucursal, producto);
+                    break;
+                case '4':
+                    producto_vendido(baseUrl, inicio, fin, cod_empresa, sucursal, producto);
+                    break;
+                case '5':
+                    ventas_sucursal(baseUrl, inicio, fin, cod_empresa);
+                    break;
+                case '6':
+                    cierre_caja(baseUrl, inicio, fin, cod_empresa, sucursal);
+                    break;
+                case '7':
+                    categoria_vendido(baseUrl, inicio, fin, cod_empresa, sucursal, categoria);
+                    break;
+                case '8':
+                    cliente_eliminado(baseUrl, inicio, fin, cod_empresa);
+                    break;
+                case '9':
+                    ventas_usuario(baseUrl, inicio, fin, cod_empresa, sucursal, usuario);
+                    break;
+                default:
+                    console.warn("Opción no válida");
+                    break;
+            }
 
-
-
-    });
+        });
 
     </script>
 
@@ -225,11 +292,22 @@
             .then(data => {
                 // Manejar la respuesta del servidor
                 if (data.success) {
+
                     // Referencia al contenedor de la tabla
                     const tablaResultados = document.getElementById('tablaResultados');
                     let totalVenta = data.total ? data.total : 0;
                     // Crear estructura HTML para la tabla
                     let tablaHTML = `
+
+                    <button class="btn btn-sm btn-danger mb-3"
+                        id="btnDescargarPDF" data-inicio="${inicio}" data-fin="${fin}" data-sucursal="${sucursal}"
+                        data-cliente="${cliente}" data-tipo-pago="${tipo_pago}" data-activo="${activo}" data-empresa="${cod_empresa}">
+                        Descargar Pdf</button>
+
+                    <button class="btn btn-sm btn-success mb-3"
+                        onclick="descargarExcelVentas('${baseUrl}', '${inicio}', '${fin}', '${sucursal}', '${cliente}', '${tipo_pago}', '${activo}', '${cod_empresa}')">
+                        Descargar Excel</button>
+
                     <div class="table-responsive">
                         <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
                             <thead class="bg-colorbase" style="font-size: 12px;">
@@ -293,6 +371,12 @@
                 });
             });
         }
+
+        // Nueva función para descargar Excel
+        function descargarExcelVentas(baseUrl, inicio, fin, sucursal, cliente, tipo_pago, activo, cod_empresa) {
+            const url = `${baseUrl}reporte/excel_ventas.php?inicio=${inicio}&fin=${fin}&sucursal=${sucursal}&cliente=${cliente}&tipo_pago=${tipo_pago}&activo=${activo}&empresa=${cod_empresa}`;
+            window.open(url, '_blank');
+        }
     </script>
 
     <script>
@@ -322,6 +406,14 @@
 
                     // Crear estructura HTML para la tabla
                     let tablaHTML = `
+                    <button class="btn btn-sm btn-danger mb-3"
+                        id="btnDescargarProd" data-inicio="${inicio}" data-fin="${fin}" data-sucursal="${sucursal}"
+                        data-empresa="${cod_empresa}" data-producto="${producto}">Descargar Pdf</button>
+
+                    <button class="btn btn-sm btn-success mb-3"
+                        onclick="descargarExcelProd('${baseUrl}', '${inicio}', '${fin}', '${sucursal}', '${producto}', '${cod_empresa}')">
+                        Descargar Excel</button>
+
                     <div class="table-responsive">
                         <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
                             <thead class="bg-colorbase" style="font-size: 12px;">
@@ -376,10 +468,16 @@
                 });
             });
         }
+
+        // Nueva función para descargar Excel
+        function descargarExcelProd(baseUrl, inicio, fin, sucursal, producto, cod_empresa) {
+            const url = `${baseUrl}reporte/excel_producto_vendido.php?inicio=${inicio}&fin=${fin}&sucursal=${sucursal}&producto=${producto}&empresa=${cod_empresa}`;
+            window.open(url, '_blank');
+        }
     </script>
 
     <script>
-        //Productos mas vendidos
+        //Ventas por Sucursal
         function ventas_sucursal(baseUrl, inicio, fin, cod_empresa){
             // Enviar los datos mediante AJAX
             fetch(`${baseUrl}reporte/ventas_sucursal.php`, {
@@ -403,6 +501,14 @@
                     let totalVenta = data.total ? data.total : 0;
                     // Crear estructura HTML para la tabla
                     let tablaHTML = `
+                    <button class="btn btn-sm btn-danger mb-3"
+                        id="btnDescargarSuc" data-inicio="${inicio}" data-fin="${fin}"
+                        data-empresa="${cod_empresa}">Descargar Pdf</button>
+
+                    <button class="btn btn-sm btn-success mb-3"
+                        onclick="descargarExcelSuc('${baseUrl}', '${inicio}', '${fin}', '${cod_empresa}')">
+                        Descargar Excel</button>
+
                     <div class="table-responsive">
                         <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
                             <thead class="bg-colorbase" style="font-size: 12px;">
@@ -456,6 +562,12 @@
                 });
             });
         }
+
+        // Nueva función para descargar Excel
+        function descargarExcelSuc(baseUrl, inicio, fin, cod_empresa) {
+            const url = `${baseUrl}reporte/excel_venta_sucursal.php?inicio=${inicio}&fin=${fin}&empresa=${cod_empresa}`;
+            window.open(url, '_blank');
+        }
     </script>
 
     <script>
@@ -484,6 +596,15 @@
                     let totalVenta = data.total ? data.total : 0;
                     // Crear estructura HTML para la tabla
                     let tablaHTML = `
+
+                    <button class="btn btn-sm btn-danger mb-3"
+                        id="btnDescargarCaja" data-inicio="${inicio}" data-fin="${fin}"
+                        data-empresa="${cod_empresa}" data-sucursal="${sucursal}">Descargar Pdf</button>
+
+                    <button class="btn btn-sm btn-success mb-3"
+                        onclick="descargarExcelCierre('${baseUrl}', '${inicio}', '${fin}', '${cod_empresa}', '${sucursal}')">
+                        Descargar Excel</button>
+
                     <div class="table-responsive">
                         <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
                             <thead class="bg-colorbase" style="font-size: 12px;">
@@ -556,6 +677,594 @@
                 });
             });
         }
+
+        // Nueva función para descargar Excel
+        function descargarExcelCierre(baseUrl, inicio, fin, cod_empresa, sucursal) {
+            const url = `${baseUrl}reporte/excel_cierre.php?inicio=${inicio}&fin=${fin}&empresa=${cod_empresa}&sucursal=${sucursal}`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+    <script>
+        function categoria_vendido(baseUrl, inicio, fin, cod_empresa, sucursal, categoria){
+            // Enviar los datos mediante AJAX
+            fetch(`${baseUrl}reporte/categoria_ventas.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Añadir token CSRF para seguridad
+                },
+                body: JSON.stringify({
+                    inicio: inicio,
+                    fin: fin,
+                    sucursal: sucursal,
+                    empresa: cod_empresa,
+                    categoria: categoria,
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Manejar la respuesta del servidor
+                if (data.success) {
+                    // Referencia al contenedor de la tabla
+                    const tablaResultados = document.getElementById('tablaResultados');
+
+                    // Crear estructura HTML para la tabla
+                    let tablaHTML = `
+                    <button class="btn btn-sm btn-danger mb-3"
+                        id="btnDescargarCat" data-inicio="${inicio}" data-fin="${fin}" data-sucursal="${sucursal}"
+                        data-empresa="${cod_empresa}" data-categoria="${categoria}">Descargar Pdf</button>
+
+                    <button class="btn btn-sm btn-success mb-3"
+                        onclick="descargarExcelCat('${baseUrl}', '${inicio}', '${fin}', '${cod_empresa}', '${sucursal}', '${categoria}')">
+                        Descargar Excel</button>
+
+                    <div class="table-responsive">
+                        <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
+                            <thead class="bg-colorbase" style="font-size: 12px;">
+                                <tr class="text-white">
+                                    <th style="align-content: center;"><center>CATEGORIA</center></th>
+                                    <th style="align-content: center;"><center>CANTIDAD</center></th>
+                                    <th style="align-content: center;"><center>TOTAL BS.</center></th>
+                                    <th style="align-content: center;"><center>SUCURSAL</center></th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 11px;">
+                    `;
+
+                    // Recorrer las ventas y crear filas dinámicamente
+                    data.ventas.forEach(venta => {
+                    tablaHTML += `
+                    <tr>
+                        <td>${venta.categoria}</td>
+                        <td><center>${venta.total_cantidad}</center></td>
+                        <td><center>${venta.total_monto}</center></td>
+                        <td>${venta.sucursal}</td>
+                    </tr>
+                    `;
+                    });
+
+                    // Cerrar la tabla
+                    tablaHTML += `
+                            </tbody>
+                        </table>
+                    </div>
+                    `;
+
+                    // Inyectar la tabla en el contenedor
+                    tablaResultados.innerHTML = tablaHTML;
+
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hubo un error al consultar el reporte',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error en la conexion con la BD',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+        }
+
+        // Nueva función para descargar Excel
+        function descargarExcelCat(baseUrl, inicio, fin, cod_empresa, sucursal, categoria) {
+            const url = `${baseUrl}reporte/excel_categoria.php?inicio=${inicio}&fin=${fin}&empresa=${cod_empresa}&sucursal=${sucursal}&categoria=${categoria}`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+    <script>
+        function cliente_eliminado(baseUrl, inicio, fin, cod_empresa){
+            // Enviar los datos mediante AJAX
+            fetch(`${baseUrl}reporte/cliente_eliminado.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Añadir token CSRF para seguridad
+                },
+                body: JSON.stringify({
+                    inicio: inicio,
+                    fin: fin,
+                    empresa: cod_empresa,
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Manejar la respuesta del servidor
+                if (data.success) {
+                    // Referencia al contenedor de la tabla
+                    const tablaResultados = document.getElementById('tablaResultados');
+
+                    // Crear estructura HTML para la tabla
+                    let tablaHTML = `
+                    <button class="btn btn-sm btn-danger mb-3"
+                        id="btnDescargarCli" data-inicio="${inicio}" data-fin="${fin}"
+                        data-empresa="${cod_empresa}">Descargar Pdf</button>
+
+                    <button class="btn btn-sm btn-success mb-3"
+                        onclick="descargarExcelCli('${baseUrl}', '${inicio}', '${fin}', '${cod_empresa}')">
+                        Descargar Excel</button>
+
+                    <div class="table-responsive">
+                        <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
+                            <thead class="bg-colorbase" style="font-size: 12px;">
+                                <tr class="text-white">
+                                    <th style="align-content: center;"><center>NOMBRE</center></th>
+                                    <th style="align-content: center;"><center>TELEFONO</center></th>
+                                    <th style="align-content: center;"><center>CORREO</center></th>
+                                    <th style="align-content: center;"><center>SEXO</center></th>
+                                    <th style="align-content: center;"><center>F. CUMPLEAÑOS</center></th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 11px;">
+                    `;
+
+                    // Recorrer las ventas y crear filas dinámicamente
+                    data.ventas.forEach(venta => {
+                    tablaHTML += `
+                    <tr>
+                        <td>${venta.nombre}</td>
+                        <td><center>${venta.telefono}</center></td>
+                        <td><center>${venta.correo}</center></td>
+                        <td>${venta.sexo}</td>
+                        <td>${venta.fecha}</td>
+                    </tr>
+                    `;
+                    });
+
+                    // Cerrar la tabla
+                    tablaHTML += `
+                            </tbody>
+                        </table>
+                    </div>
+                    `;
+
+                    // Inyectar la tabla en el contenedor
+                    tablaResultados.innerHTML = tablaHTML;
+
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hubo un error al consultar el reporte',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error en la conexion con la BD',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+        }
+
+        // Nueva función para descargar Excel
+        function descargarExcelCli(baseUrl, inicio, fin, cod_empresa) {
+            const url = `${baseUrl}reporte/excel_cliente_eliminado.php?inicio=${inicio}&fin=${fin}&empresa=${cod_empresa}`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+    <script>
+        function ventas_usuario(baseUrl, inicio, fin, cod_empresa, sucursal, usuario){
+            // Enviar los datos mediante AJAX
+            fetch(`${baseUrl}reporte/ventas_usuario.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Añadir token CSRF para seguridad
+                },
+                body: JSON.stringify({
+                    inicio: inicio,
+                    fin: fin,
+                    empresa: cod_empresa,
+                    sucursal: sucursal,
+                    usuario: usuario,
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Manejar la respuesta del servidor
+                if (data.success) {
+                    // Referencia al contenedor de la tabla
+                    const tablaResultados = document.getElementById('tablaResultados');
+
+                    // Crear estructura HTML para la tabla
+                    let tablaHTML = `
+                    <button class="btn btn-sm btn-danger mb-3"
+                        id="btnDescargarUsu" data-inicio="${inicio}" data-fin="${fin}" data-sucursal="${sucursal}"
+                        data-empresa="${cod_empresa}" data-usuario="${usuario}">Descargar Pdf</button>
+
+                    <button class="btn btn-sm btn-success mb-3"
+                        onclick="descargarExcelUsu('${baseUrl}', '${inicio}', '${fin}', '${cod_empresa}','${sucursal}', '${usuario}')">
+                        Descargar Excel</button>
+
+                    <div class="table-responsive">
+                        <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
+                            <thead class="bg-colorbase" style="font-size: 12px;">
+                                <tr class="text-white">
+                                    <th style="align-content: center;"><center>USUARIO</center></th>
+                                    <th style="align-content: center;"><center>CANTIDAD</center></th>
+                                    <th style="align-content: center;"><center>TOTAL BS.</center></th>
+                                    <th style="align-content: center;"><center>SUCURSAL</center></th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 11px;">
+                    `;
+
+                    // Recorrer las ventas y crear filas dinámicamente
+                    data.ventas.forEach(venta => {
+                    tablaHTML += `
+                    <tr>
+                        <td>${venta.usuario}</td>
+                        <td><center>${venta.total_cantidad}</center></td>
+                        <td><center>${venta.total_monto}</center></td>
+                        <td>${venta.sucursal}</td>
+                    </tr>
+                    `;
+                    });
+
+                    // Cerrar la tabla
+                    tablaHTML += `
+                            </tbody>
+                        </table>
+                    </div>
+                    `;
+
+                    // Inyectar la tabla en el contenedor
+                    tablaResultados.innerHTML = tablaHTML;
+
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hubo un error al consultar el reporte',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error en la conexion con la BD',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+        }
+
+        // Nueva función para descargar Excel
+        function descargarExcelUsu(baseUrl, inicio, fin, cod_empresa, sucursal, usuario) {
+            const url = `${baseUrl}reporte/excel_ventas_usuario.php?inicio=${inicio}&fin=${fin}&empresa=${cod_empresa}`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+    <script>
+        document.addEventListener('click', function (e) {
+            if (e.target && e.target.id === 'btnDescargarPDF') {
+                const button = e.target;
+
+                // Obtener los parámetros desde los atributos `data-`
+                const params = {
+                    inicio: button.getAttribute('data-inicio'),
+                    fin: button.getAttribute('data-fin'),
+                    sucursal: button.getAttribute('data-sucursal'),
+                    cliente: button.getAttribute('data-cliente'),
+                    tipo_pago: button.getAttribute('data-tipo-pago'),
+                    empresa: button.getAttribute('data-empresa'),
+                    activo: button.getAttribute('data-activo')
+                };
+
+                // Crear un formulario dinámico para enviar al controlador
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'det_venta_pdf'; // Asegúrate de usar la ruta correcta
+                form.target = '_blank'; // Abrir el PDF en una nueva pestaña
+
+                // Añadir token CSRF
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = '{{ csrf_token() }}';
+                form.appendChild(csrfInput);
+
+                // Agregar los parámetros al formulario
+                for (const key in params) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = params[key];
+                    form.appendChild(input);
+                }
+
+                // Añadir el formulario al cuerpo, enviarlo y eliminarlo
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+            }
+            else if(e.target && e.target.id === 'btnDescargarProd')
+            {
+
+                const button = e.target;
+
+                // Obtener los parámetros desde los atributos `data-`
+                const params = {
+                    inicio: button.getAttribute('data-inicio'),
+                    fin: button.getAttribute('data-fin'),
+                    sucursal: button.getAttribute('data-sucursal'),
+                    empresa: button.getAttribute('data-empresa'),
+                    producto: button.getAttribute('data-producto'),
+                };
+
+                // Crear un formulario dinámico para enviar al controlador
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'prod_vendido_pdf'; // Asegúrate de usar la ruta correcta
+                form.target = '_blank'; // Abrir el PDF en una nueva pestaña
+
+                // Añadir token CSRF
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = '{{ csrf_token() }}';
+                form.appendChild(csrfInput);
+
+                // Agregar los parámetros al formulario
+                for (const key in params) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = params[key];
+                    form.appendChild(input);
+                }
+
+                // Añadir el formulario al cuerpo, enviarlo y eliminarlo
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+
+            }
+            else if(e.target && e.target.id === 'btnDescargarSuc')
+            {
+
+                const button = e.target;
+
+                // Obtener los parámetros desde los atributos `data-`
+                const params = {
+                    inicio: button.getAttribute('data-inicio'),
+                    fin: button.getAttribute('data-fin'),
+                    empresa: button.getAttribute('data-empresa'),
+                };
+
+                // Crear un formulario dinámico para enviar al controlador
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'venta_sucursal_pdf'; // Asegúrate de usar la ruta correcta
+                form.target = '_blank'; // Abrir el PDF en una nueva pestaña
+
+                // Añadir token CSRF
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = '{{ csrf_token() }}';
+                form.appendChild(csrfInput);
+
+                // Agregar los parámetros al formulario
+                for (const key in params) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = params[key];
+                    form.appendChild(input);
+                }
+
+                // Añadir el formulario al cuerpo, enviarlo y eliminarlo
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+
+            }
+            else if(e.target && e.target.id === 'btnDescargarCaja')
+            {
+
+                const button = e.target;
+
+                // Obtener los parámetros desde los atributos `data-`
+                const params = {
+                    inicio: button.getAttribute('data-inicio'),
+                    fin: button.getAttribute('data-fin'),
+                    empresa: button.getAttribute('data-empresa'),
+                    sucursal: button.getAttribute('data-sucursal'),
+                };
+
+                // Crear un formulario dinámico para enviar al controlador
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'caja_pdf'; // Asegúrate de usar la ruta correcta
+                form.target = '_blank'; // Abrir el PDF en una nueva pestaña
+
+                // Añadir token CSRF
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = '{{ csrf_token() }}';
+                form.appendChild(csrfInput);
+
+                // Agregar los parámetros al formulario
+                for (const key in params) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = params[key];
+                    form.appendChild(input);
+                }
+
+                // Añadir el formulario al cuerpo, enviarlo y eliminarlo
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+
+            }
+            else if(e.target && e.target.id === 'btnDescargarCat')
+            {
+
+                const button = e.target;
+
+                // Obtener los parámetros desde los atributos `data-`
+                const params = {
+                    inicio: button.getAttribute('data-inicio'),
+                    fin: button.getAttribute('data-fin'),
+                    empresa: button.getAttribute('data-empresa'),
+                    sucursal: button.getAttribute('data-sucursal'),
+                    categoria: button.getAttribute('data-categoria'),
+                };
+
+                // Crear un formulario dinámico para enviar al controlador
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'categoria_pdf'; // Asegúrate de usar la ruta correcta
+                form.target = '_blank'; // Abrir el PDF en una nueva pestaña
+
+                // Añadir token CSRF
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = '{{ csrf_token() }}';
+                form.appendChild(csrfInput);
+
+                // Agregar los parámetros al formulario
+                for (const key in params) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = params[key];
+                    form.appendChild(input);
+                }
+
+                // Añadir el formulario al cuerpo, enviarlo y eliminarlo
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+
+            }
+            else if(e.target && e.target.id === 'btnDescargarCli')
+            {
+
+                const button = e.target;
+
+                // Obtener los parámetros desde los atributos `data-`
+                const params = {
+                    inicio: button.getAttribute('data-inicio'),
+                    fin: button.getAttribute('data-fin'),
+                    empresa: button.getAttribute('data-empresa'),
+                };
+
+                // Crear un formulario dinámico para enviar al controlador
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'cliente_pdf'; // Asegúrate de usar la ruta correcta
+                form.target = '_blank'; // Abrir el PDF en una nueva pestaña
+
+                // Añadir token CSRF
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = '{{ csrf_token() }}';
+                form.appendChild(csrfInput);
+
+                // Agregar los parámetros al formulario
+                for (const key in params) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = params[key];
+                    form.appendChild(input);
+                }
+
+                // Añadir el formulario al cuerpo, enviarlo y eliminarlo
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+
+            }
+            else if(e.target && e.target.id === 'btnDescargarUsu')
+            {
+
+                const button = e.target;
+
+                // Obtener los parámetros desde los atributos `data-`
+                const params = {
+                    inicio: button.getAttribute('data-inicio'),
+                    fin: button.getAttribute('data-fin'),
+                    empresa: button.getAttribute('data-empresa'),
+                    sucursal: button.getAttribute('data-sucursal'),
+                    usuario: button.getAttribute('data-usuario'),
+                };
+
+                // Crear un formulario dinámico para enviar al controlador
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'usuario_pdf'; // Asegúrate de usar la ruta correcta
+                form.target = '_blank'; // Abrir el PDF en una nueva pestaña
+
+                // Añadir token CSRF
+                const csrfInput = document.createElement('input');
+                csrfInput.type = 'hidden';
+                csrfInput.name = '_token';
+                csrfInput.value = '{{ csrf_token() }}';
+                form.appendChild(csrfInput);
+
+                // Agregar los parámetros al formulario
+                for (const key in params) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = params[key];
+                    form.appendChild(input);
+                }
+
+                // Añadir el formulario al cuerpo, enviarlo y eliminarlo
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+
+            }
+
+        });
     </script>
 
 @endpush

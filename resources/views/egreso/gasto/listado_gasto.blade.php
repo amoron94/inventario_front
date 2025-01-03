@@ -17,6 +17,7 @@
                     <tr class="text-white">
                         <th>Fecha</th>
                         <th>Servicio</th>
+                        <th>Sucursal</th>
                         <th>Monto (Bs.)</th>
                         <th>Observaciones</th>
                         <th>Opciones</th>
@@ -27,6 +28,7 @@
                     <tr>
                         <td><b>{{ $gasto['fecha']}}</b></td>
                         <td>{{ $gasto['servicio']}}</td>
+                        <td>{{ $gasto['sucursal']}}</td>
                         <td>{{ $gasto['monto']}}</td>
                         <td>{{ $gasto['descripcion']}}</td>
                         <td>
@@ -52,12 +54,11 @@
                                         <div class="modal-body">
                                             <div class="container">
                                                 <div class="row">
-                                                    <div class="col-lg-6 col-xs-12">
+                                                    <div class="col-lg-4 col-xs-12">
                                                         <div class="form-group">
                                                             <label for="form-label">Servicio</label>
                                                             <input type="text" id="servicio-{{ $gasto['codigo'] }}" name="servicio" value="{{ $gasto['cod_servicio'] }}" hidden>
                                                             <select id="select-servicio-{{ $gasto['codigo'] }}" name="ser" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" required>
-                                                                <option value="" disabled selected>Seleccionar...</option>
                                                                 @foreach ($servicios['data']  as $servicio)
                                                                     @if($servicio['codigo'] == $gasto['cod_servicio'])
                                                                         <option value="{{ $servicio['codigo'] }}" selected>{{ $servicio['descripcion'] }}</option>
@@ -68,13 +69,28 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3 col-xs-12">
+                                                    <div class="col-lg-4 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label for="form-label">Sucursal</label>
+                                                            <input type="text" id="sucursal-{{ $gasto['codigo'] }}" name="sucursal" value="{{ $gasto['cod_sucursal'] }}" hidden>
+                                                            <select id="select-sucursal-{{ $gasto['codigo'] }}" name="suc" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" required>
+                                                                @foreach ($sucursales['data']  as $sucursal)
+                                                                    @if($sucursal['codigo'] == $gasto['cod_sucursal'])
+                                                                        <option value="{{ $sucursal['codigo'] }}" selected>{{ $sucursal['nombre'] }}</option>
+                                                                    @else
+                                                                        <option value="{{ $sucursal['codigo'] }}">{{ $sucursal['nombre'] }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-2 col-xs-12">
                                                         <div class="form-group">
                                                             <label for="form-label">Monto</label>
                                                             <input type="number" name="monto" class="form-control form-control-sm" value="{{ $gasto['monto'] }}" required>
                                                         </div>
                                                     </div>
-                                                    <div class="col-lg-3 col-xs-12">
+                                                    <div class="col-lg-2 col-xs-12">
                                                         <div class="form-group">
                                                             <label for="form-label">Fecha</label>
                                                             <input type="date" name="fecha" class="form-control form-control-sm" value="{{ $gasto['fecha_g'] }}" required>
@@ -154,13 +170,24 @@
                     <div class="modal-body">
                         <div class="container">
                             <div class="row">
-                                <div class="col-lg-8 col-xs-12">
+                                <div class="col-lg-4 col-xs-12">
                                     <div class="form-group">
                                         <label for="form-label">Servicio</label>
                                         <select name="servicio" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" required>
                                             <option value="" disabled selected>Seleccionar...</option>
                                             @foreach ($servicios['data'] as $servicio)
                                             <option value="{{ $servicio['codigo'] }}">{{ $servicio['descripcion'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-xs-12">
+                                    <div class="form-group">
+                                        <label for="form-label">Sucursal</label>
+                                        <select name="sucursal" class="selectpicker show-tick form-control form-control-sm" data-live-search="true" required>
+                                            <option value="" selected>Todas las sucursales</option>
+                                            @foreach ($sucursales['data'] as $sucursal)
+                                            <option value="{{ $sucursal['codigo'] }}">{{ $sucursal['nombre'] }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -199,30 +226,13 @@
 
 @push('scripts')
     <script>
-        /*$('input[name="daterange"]').daterangepicker({
-            opens: 'auto',
-            locale: {
-                format: 'DD/MM/YYYY',  // Formato de fecha
-                separator: " - ",  // Separador entre las fechas en el rango
-                applyLabel: "Aplicar",  // Texto del botón de aplicar
-                cancelLabel: "Cancelar",  // Texto del botón de cancelar
-                fromLabel: "Desde",  // Texto "Desde" en el panel
-                toLabel: "Hasta",  // Texto "Hasta" en el panel
-                customRangeLabel: "Personalizado",  // Texto para el rango personalizado
-                weekLabel: "Sem",  // Etiqueta para las semanas
-                daysOfWeek: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],  // Días de la semana
-                monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                            "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],  // Meses
-                firstDay: 1  // Establecer Lunes como el primer día de la semana
-            }
-        }, function(start, end, label) {
-            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        });*/
-
         document.addEventListener("DOMContentLoaded", function() {
             @foreach($gastos['data'] as $gasto)
             document.getElementById('select-servicio-{{ $gasto['codigo'] }}').addEventListener('change', function() {
                 document.getElementById('servicio-{{ $gasto['codigo'] }}').value = this.value;
+            });
+            document.getElementById('select-sucursal-{{ $gasto['codigo'] }}').addEventListener('change', function() {
+                document.getElementById('sucursal-{{ $gasto['codigo'] }}').value = this.value;
             });
             @endforeach
         });

@@ -19,6 +19,10 @@
                     <option value="3">Producto mas Comprados</option>
                     <option value="4">Compras por producto</option>
                     <option value="5">Compras por Sucursal</option>
+                    <option value="6">Detalle de Gastos</option>
+                    <option value="7">Gastos por Sucursal</option>
+                    <option value="8">Gastos eliminados</option>
+                    <option value="9">Proveedores Eliminados</option>
                 </select>
                 <button id="buscar" class="btn btn-primary btn-color">Buscar</button>
             </div>
@@ -36,11 +40,11 @@
                     </select>
                 </div>
                 <div class="form-group mr-5">
-                    <label for="form-label"><b class="b">Cliente</b></label>
-                    <select name="cliente" class="selectpicker show-tick form-control" data-live-search="true">
-                        <option value="" selected>Todos los clientes</option>
-                        @foreach ($clientes['data'] as $cliente)
-                        <option value="{{ $cliente['codigo'] }}">{{ $cliente['nombre'] }}</option>
+                    <label for="form-label"><b class="b">Proveedor</b></label>
+                    <select name="proveedor" class="selectpicker show-tick form-control" data-live-search="true">
+                        <option value="" selected>Todos los Proveedores</option>
+                        @foreach ($proveedores['data'] as $proveedor)
+                        <option value="{{ $proveedor['codigo'] }}">{{ $proveedor['empresa'] }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -76,32 +80,32 @@
                 switch (selectedValue) {
                     case '1':
                         $('select[name="sucursal"]').closest('.form-group').show();
-                        $('select[name="cliente"]').closest('.form-group').show();
+                        $('select[name="proveedor"]').closest('.form-group').show();
                         $('select[name="producto"]').closest('.form-group').hide();
                         break;
                     case '2':
                         $('select[name="sucursal"]').closest('.form-group').show();
-                        $('select[name="cliente"]').closest('.form-group').show();
+                        $('select[name="proveedor"]').closest('.form-group').show();
                         $('select[name="producto"]').closest('.form-group').hide();
                         break;
                     case '3':
                         $('select[name="sucursal"]').closest('.form-group').show();
-                        $('select[name="cliente"]').closest('.form-group').hide();
+                        $('select[name="proveedor"]').closest('.form-group').hide();
                         $('select[name="producto"]').closest('.form-group').hide();
                         break;
                     case '4':
                         $('select[name="sucursal"]').closest('.form-group').show();
-                        $('select[name="cliente"]').closest('.form-group').hide();
+                        $('select[name="proveedor"]').closest('.form-group').hide();
                         $('select[name="producto"]').closest('.form-group').show();
                         break;
                     case '5':
                         $('select[name="sucursal"]').closest('.form-group').hide();
-                        $('select[name="cliente"]').closest('.form-group').hide();
+                        $('select[name="proveedor"]').closest('.form-group').hide();
                         $('select[name="producto"]').closest('.form-group').hide();
                         break;
                     case '6':
                         $('select[name="sucursal"]').closest('.form-group').show();
-                        $('select[name="cliente"]').closest('.form-group').hide();
+                        $('select[name="proveedor"]').closest('.form-group').hide();
                         $('select[name="producto"]').closest('.form-group').hide();
                         break;
                 }

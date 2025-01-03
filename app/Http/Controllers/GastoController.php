@@ -26,7 +26,10 @@ class GastoController extends Controller
         $response_ser = Http::get($this->base_url . 'egreso/listado_servicio.php?cod_empresa='.$empresa);
         $servicios = $response_ser->json();
 
-        return view('egreso.gasto.listado_gasto', compact('gastos', 'servicios'));
+        $response_suc = Http::get($this->base_url . 'inventario/listado_sucursal.php?cod_empresa=' . $empresa);
+        $sucursales = $response_suc->json();
+
+        return view('egreso.gasto.listado_gasto', compact('gastos', 'servicios', 'sucursales'));
     }
 
     public function store(Request $request)
@@ -37,6 +40,7 @@ class GastoController extends Controller
         //dd($request->all());
         $response = Http::post($this->base_url . 'egreso/nuevo_gasto.php', [
             'servicio'      => $request->servicio,
+            'sucursal'      => $request->sucursal,
             'monto'         => $request->monto,
             'fecha'         => $request->fecha,
             'descripcion'   => $request->descripcion,
@@ -60,6 +64,7 @@ class GastoController extends Controller
             $response = Http::patch($this->base_url . 'egreso/editar_gasto.php', [
                 'codigo'        => $id,
                 'servicio'      => $request->servicio,
+                'sucursal'      => $request->sucursal,
                 'monto'         => $request->monto,
                 'fecha'         => $request->fecha,
                 'descripcion'   => $request->descripcion

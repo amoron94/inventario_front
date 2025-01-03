@@ -17,7 +17,9 @@ use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProduccionController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\ReporteCompraController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\ReporteInventarioController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SucursalController;
@@ -198,5 +200,14 @@ Route::patch('/pagar-cobro/{id}', [CobroController::class, 'pagar'])->name('paga
 
 //------------------------------ Reportes --------------------------------
 Route::get('rep_venta', [ReporteController::class, 'venta'])->middleware('custom.auth');
-Route::get('rep_compra', [ReporteController::class, 'compra'])->middleware('custom.auth');
-Route::get('rep_inventario', [ReporteController::class, 'inventario'])->middleware('custom.auth');
+Route::post('det_venta_pdf', [ReporteController::class, 'det_venta_pdf'])->middleware('custom.auth');
+Route::post('prod_vendido_pdf', [ReporteController::class, 'prod_vendido_pdf'])->middleware('custom.auth');
+Route::post('venta_sucursal_pdf', [ReporteController::class, 'venta_sucursal_pdf'])->middleware('custom.auth');
+Route::post('caja_pdf', [ReporteController::class, 'caja_pdf'])->middleware('custom.auth');
+Route::post('categoria_pdf', [ReporteController::class, 'categoria_pdf'])->middleware('custom.auth');
+Route::post('cliente_pdf', [ReporteController::class, 'cliente_pdf'])->middleware('custom.auth');
+Route::post('usuario_pdf', [ReporteController::class, 'usuario_pdf'])->middleware('custom.auth');
+
+
+Route::get('rep_compra', [ReporteCompraController::class, 'compra'])->middleware('custom.auth');
+Route::get('rep_inventario', [ReporteInventarioController::class, 'inventario'])->middleware('custom.auth');
