@@ -24,7 +24,13 @@
                     @foreach($lotes['data'] as $lote)
                     <tr>
                         <td>{{ $lote['nro']}}</td>
-                        <td><b>{{ $lote['f_vencimiento']}}</b></td>
+                        <td>
+                            @if($lote['vencido'] == 1)
+                            <b class="badge bg-danger rounded-3 fw-semibold" style="font-size: 11px;">{{ $lote['f_vencimiento']}} (Lote Vencido)</b>
+                            @else
+                            <b>{{ $lote['f_vencimiento']}}</b>
+                            @endif
+                        </td>
                         <td>{{ $lote['sucursal']}}</td>
                         <td>{{ $lote['cantidad'] }} <b class="text-danger">({{ $lote['av'] }})</b></td>
                         <td>

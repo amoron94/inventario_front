@@ -250,12 +250,22 @@
 
         @media print {
             body * {
+                font-family: Arial, Helvetica, sans-serif !important;
                 visibility: hidden;
             }
             #recibo, #recibo * {
                 visibility: visible;
             }
             #recibo {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 58mm; /* Ajusta el ancho según tu impresora térmica */
+            }
+            #comanda, #comanda * {
+                visibility: visible;
+            }
+            #comanda {
                 position: absolute;
                 left: 0;
                 top: 0;
@@ -502,9 +512,14 @@
 
                         </div>
                     </div>
-                    <div class="px-1">
-                        <button class="btn btn-block btn-coment" data-bs-toggle="modal" data-bs-target="#coment">
-                            <i class="text-linght" data-feather="message-square"></i> Mas Informacion de la Venta
+                    <div class="d-flex justify-content-between px-1">
+                        <button class="btn btn-coment btn-coment me-1" data-bs-toggle="modal" data-bs-target="#coment">
+                            <i class="text-light" data-feather="message-square"></i> Mas Opciones
+                        </button>
+
+                        <!-- Botón Comanda -->
+                        <button class="btn btn-coment btn-coment" id="ComandaBtn">
+                            <i class="text-light" data-feather="printer"></i> Comanda
                         </button>
 
                         <!--Modal Comentario-->
@@ -567,6 +582,28 @@
         </div>
     </div>
 
+    <div id="comanda" style="display: none; width: 58mm;">
+        <center>
+            <h4>{{ $empresas['data']['nombre'] }}</h4>
+        </center>
+        <br>
+        <span>Fecha: <b><span id="fechaComanda"></span> </b></span><br>
+        <div class="table-responsive">
+            <table class="table table-sm table-striped table-bordered table-hover align-middle">
+                <thead class="bg-secondary" style="font-size: 9px;">
+                    <tr class="text-dark">
+                        <th>Producto</th>
+                        <th>Cant.</th>
+                    </tr>
+                </thead>
+                <tbody id="comanda-detalle" style="font-size: 8px;">
+                    <!-- Aquí se llenarán los detalles de la venta -->
+                </tbody>
+            </table>
+        </div>
+        <span>Comentarios: <b><span id="comanda-comentario"></span> </b></span>
+    </div>
+
     <div id="recibo" style="display: none; width: 58mm;">
 
         <center>
@@ -580,7 +617,7 @@
         <span>Nombre: <b><span id="nombreRecibo"></span> </b></span><br>
         <br>
         <div class="table-responsive">
-            <table id="tab" class="table table-sm table-striped table-bordered table-hover align-middle">
+            <table class="table table-sm table-striped table-bordered table-hover align-middle">
                 <thead class="bg-secondary" style="font-size: 9px;">
                     <tr class="text-dark">
                         <th>Producto</th>
@@ -780,7 +817,8 @@
 
         let todosLosProductos = @json($productos['data']); // Aquí guardas todos los productos
 
-        function filtrarProductos(productos) {
+        function filtrarProductos(productos)
+        {
             let seccionProductos = document.querySelector('.sect-prod');
             seccionProductos.innerHTML = '';
 
@@ -807,19 +845,22 @@
             filtrarProductosPorNombre(query);
         });
 
-        function filtrarProductosPorNombre(query) {
+        function filtrarProductosPorNombre(query)
+        {
             let productosFiltrados = todosLosProductos.filter(function(producto) {
                 return producto.producto.toLowerCase().includes(query);
             });
             filtrarProductos(productosFiltrados);
         }
 
-        function filtrarProductosPorCategoria(productos) {
+        function filtrarProductosPorCategoria(productos)
+        {
             todosLosProductos = productos;  // Actualiza los productos filtrados por categoría
             filtrarProductos(todosLosProductos);
         }
 
-        function asignarEventosAProductos() {
+        function asignarEventosAProductos()
+        {
             document.querySelectorAll('.product-card').forEach(card => {
                 card.addEventListener('click', function() {
                     const imgSrc = this.querySelector('img').getAttribute('src');
@@ -834,7 +875,8 @@
         }
 
         // Función para agregar o actualizar un producto en el carrito
-        function agregarProductoAlCarrito(codProd, imgSrc, nombreProducto, precioProducto) {
+        function agregarProductoAlCarrito(codProd, imgSrc, nombreProducto, precioProducto)
+        {
             let productoEnCarrito = document.querySelector(`.cart-prod .producto[data-nombre="${nombreProducto}"]`);
             if (productoEnCarrito) {
                 let inputCantidad = productoEnCarrito.querySelector('.input-cantidad');
@@ -902,7 +944,8 @@
             });
         });
 
-        function actualizarTotalCarrito() {
+        function actualizarTotalCarrito()
+        {
             let total = 0;
             document.querySelectorAll('.cart-prod .producto').forEach(function(producto) {
                 let precioProducto = parseFloat(producto.querySelector('.precio').textContent);
@@ -916,7 +959,8 @@
             calcularCambio(total);
         }
 
-        function calcularCambio(total) {
+        function calcularCambio(total)
+        {
             let montoPagado = parseFloat(document.getElementById('montoPagado').value);
             let cambio = 0;
             let mensaje = '';
@@ -952,8 +996,37 @@
             calcularCambio(total);
         });
 
+        function generarComanda(carrito)
+        {
+            let comandaDetalle = document.getElementById('comanda-detalle');
+            comandaDetalle.innerHTML = ''; // Limpiar contenido previo
 
-        function generarRecibo(carrito, totalVenta, montoPagado) {
+            carrito.forEach(function(producto) {
+                let row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${producto.producto}</td>
+                    <td>${producto.cantidad}</td>
+                `;
+                comandaDetalle.appendChild(row);
+            });
+
+            // Obtener la fecha actual
+            let fechaActualC = new Date();
+            let fechaFormateadaC = fechaActualC.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('fechaComanda').textContent = fechaFormateadaC;
+
+            let comentario = $('textarea[name="comentario"]').val();
+            document.getElementById('comanda-comentario').textContent = comentario;
+        }
+
+        function generarRecibo(carrito, totalVenta, montoPagado)
+        {
             let reciboDetalle = document.getElementById('recibo-detalle');
             reciboDetalle.innerHTML = ''; // Limpiar contenido previo
 
@@ -994,7 +1067,8 @@
         }
 
         //Visualizar Pensiente Pago
-        function toggleMontoFechaFields() {
+        function toggleMontoFechaFields()
+        {
             const montoFechaContainer = document.getElementById("montoFechaContainer");
             montoFechaContainer.hidden = !document.getElementById("porPagarSwitch").checked;
         }
@@ -1093,10 +1167,7 @@
                                 // Manejar la respuesta aquí
                                 if(response.success){
 
-                                    // Generar el contenido del recibo
                                     generarRecibo(carrito, totalPagar, montoPagado);
-
-                                    // Mostrar el recibo y enviar a impresión
                                     document.getElementById('recibo').style.display = 'block';
 
                                     Swal.fire({
@@ -1108,6 +1179,7 @@
                                         window.print(); // Imprimir el recibo
 
                                         // Ocultar el recibo después de la impresión
+                                        document.getElementById('comanda').style.display = 'none';
                                         document.getElementById('recibo').style.display = 'none';
 
                                         // Recargar la página después de mostrar el mensaje de éxito
@@ -1135,9 +1207,48 @@
                                 });
                             }
                         });
+                    }
+                });
+        });
+
+        //Realizar Orden
+        document.getElementById('ComandaBtn').addEventListener('click', function() {
+
+            // Obtener datos del carrito
+            let carrito = [];
+            document.querySelectorAll('.cart-prod .producto').forEach(function(producto) {
+                let codProd = producto.querySelector('input[name="cod_prod"]').value;
+                let nombreProducto = producto.querySelector('span').textContent;
+                let cantidad = parseInt(producto.querySelector('.input-cantidad').value);
+                let precioProducto = parseFloat(producto.querySelector('.precio').textContent.replace(' Bs.', '').trim());
+
+                if (codProd && cantidad > 0 && precioProducto) {
+                    carrito.push({ cod_prod: codProd, cantidad: cantidad, precio: precioProducto, producto: nombreProducto });
                 }
             });
+
+            // Validaciones
+            if (carrito.length === 0) {
+                Swal.fire({
+                    icon: "error",
+                    title: "El carrito está vacío.",
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+                return;
+            }else{
+                generarComanda(carrito);
+                document.getElementById('comanda').style.display = 'block';
+
+                window.print(); // Imprimir el recibo
+
+                // Ocultar el recibo después de la impresión
+                document.getElementById('comanda').style.display = 'none';
+
+            }
+
         });
+
     </script>
 
     <script>
